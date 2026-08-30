@@ -1,0 +1,52 @@
+{
+  "regra": [
+    "split por paciente antes de qualquer correcao de desequilibrio",
+    "validacao e teste mantidos sem balanceamento",
+    "correcao aplicada apenas no treino por pesos de classe/amostra"
+  ],
+  "metodo_split": "StratifiedGroupKFold",
+  "groups": "patient_id",
+  "rotulo_estratificacao": "rotulo_binario",
+  "proporcoes_alvo": {
+    "treino": 0.7,
+    "validacao": 0.15,
+    "teste": 0.15
+  },
+  "seed": 42,
+  "pesos_treino": {
+    "benigno": 0.968635,
+    "maligno": 1.033465
+  },
+  "distribuicao": [
+    {
+      "split": "treino",
+      "linhas": 525,
+      "proporcao_linhas": 0.6991,
+      "pacientes": 323,
+      "proporcao_pacientes": 0.6976,
+      "benigno": 271,
+      "maligno": 254,
+      "taxa_maligno": 0.4838
+    },
+    {
+      "split": "validacao",
+      "linhas": 114,
+      "proporcao_linhas": 0.1518,
+      "pacientes": 70,
+      "proporcao_pacientes": 0.1512,
+      "benigno": 59,
+      "maligno": 55,
+      "taxa_maligno": 0.4825
+    },
+    {
+      "split": "teste",
+      "linhas": 112,
+      "proporcao_linhas": 0.1491,
+      "pacientes": 70,
+      "proporcao_pacientes": 0.1512,
+      "benigno": 58,
+      "maligno": 54,
+      "taxa_maligno": 0.4821
+    }
+  ]
+}
