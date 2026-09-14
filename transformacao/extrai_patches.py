@@ -1,9 +1,39 @@
 from pathlib import Path
-
+import configparser
 import numpy as np
+import pandas as pd
+
 from scipy.ndimage import map_coordinates
 
 
+# ============================================================
+# COMPATIBILIDADE COM PYTHON / NUMPY RECENTES
+# ============================================================
+
+# O pylidc usa nomes antigos do NumPy.
+if not hasattr(np, "int"):
+    np.int = int
+
+if not hasattr(np, "float"):
+    np.float = float
+
+if not hasattr(np, "bool"):
+    np.bool = bool
+
+
+# O pylidc usa SafeConfigParser(),
+# que foi removido no Python 3.12.
+#
+# ConfigParser é o substituto atual equivalente.
+if not hasattr(configparser, "SafeConfigParser"):
+    configparser.SafeConfigParser = configparser.ConfigParser
+
+
+# IMPORTANTE:
+# pylidc deve ser importado DEPOIS das correções acima.
+import pylidc as pl
+
+from pylidc.utils import consensus
 # ============================================================
 # CONFIGURAÇÕES DO PROJETO
 # ============================================================
@@ -561,6 +591,569 @@ def extrair_patch_2_5d(
 
     return patch
 
+def obter_scan(scan_id):
+    """
+    Busca um exame no banco do pylidc pelo ID.
+
+    O scan_id armazenado no nosso CSV corresponde
+    ao campo Scan.id do pylidc.
+    """
+
+    # Faz uma consulta no banco SQLite interno do pylidc.
+    scan = (
+        pl.query(pl.Scan)
+        .filter(pl.Scan.id == int(scan_id))
+        .first()
+    )
+
+
+    # Se nada for encontrado, alguma coisa está errada
+    # com o scan_id ou com o banco local do pylidc.
+    if scan is None:
+        raise ValueError(
+            f"Scan id={scan_id} não encontrado no pylidc."
+        )
+
+
+    return scan
+
+def obter_cluster(scan, cluster_idx):
+    """
+    Recupera exatamente o cluster correspondente
+    ao nódulo selecionado anteriormente.
+    """
+
+    # Reexecutamos exatamente o mesmo agrupamento usado
+    # durante a etapa de seleção dos nódulos.
+    clusters = scan.cluster_annotations(
+        verbose=False
+    )
+
+
+    # Converte para inteiro porque o valor veio do CSV.
+    cluster_idx = int(
+        cluster_idx
+    )
+
+
+    # Verificação de segurança.
+    #
+    # Exemplo:
+    #
+    # se existem 4 clusters:
+    #
+    # índices válidos = 0, 1, 2, 3
+    if (
+        cluster_idx < 0
+        or cluster_idx >= len(clusters)
+    ):
+        raise IndexError(
+            f"cluster_idx={cluster_idx} inválido. "
+            f"O scan possui {len(clusters)} clusters."
+        )
+
+
+    return clusters[
+        cluster_idx
+    ]
+
+def calcular_centroide_consenso(
+    anns
+):
+    """
+    Calcula o centro do nódulo usando o consenso
+    de pelo menos 50% das anotações.
+
+    anns é uma lista de Annotation do pylidc
+    referentes ao mesmo nódulo.
+    """
+
+
+    # ========================================================
+    # CONSENSO ENTRE OS RADIOLOGISTAS
+    # ========================================================
+    #
+    # clevel=0.5 significa:
+    #
+    # um voxel pertence ao nódulo quando pelo menos
+    # 50% das segmentações dos radiologistas incluem
+    # aquele voxel.
+    #
+    # ret_masks=False:
+    # não precisamos guardar as máscaras individuais
+    # dos radiologistas.
+    #
+    # Recebemos:
+    #
+    # cmask = máscara 3D de consenso
+    # cbbox = posição dessa máscara dentro do exame
+    cmask, cbbox = consensus(
+        anns,
+        clevel=0.5,
+        ret_masks=False,
+    )
+
+
+    # ========================================================
+    # COORDENADAS DOS VOXELS DO NÓDULO
+    # ========================================================
+    #
+    # cmask é uma matriz booleana:
+    #
+    # False = não pertence ao nódulo
+    # True  = pertence ao nódulo
+    #
+    # np.argwhere retorna todas as coordenadas True.
+    coordenadas = np.argwhere(
+        cmask
+    )
+
+
+    # É extremamente improvável que isso aconteça,
+    # mas fazemos a validação por segurança.
+    if coordenadas.size == 0:
+        raise ValueError(
+            "A máscara de consenso ficou vazia."
+        )
+
+
+    # ========================================================
+    # CENTROIDE LOCAL
+    # ========================================================
+    #
+    # Calculamos a média das coordenadas de todos
+    # os voxels pertencentes ao consenso.
+    #
+    # Exemplo:
+    #
+    # [12.3, 14.7, 3.8]
+    #
+    # Porém essas coordenadas ainda são relativas
+    # à pequena bounding box do consenso.
+    centro_local = coordenadas.mean(
+        axis=0
+    )
+
+
+    # ========================================================
+    # OFFSET DA BOUNDING BOX
+    # ========================================================
+    #
+    # O consensus() não cria uma máscara do tamanho
+    # do tórax inteiro.
+    #
+    # Ele cria apenas uma pequena região contendo
+    # o nódulo.
+    #
+    # cbbox informa onde essa região fica no exame.
+    #
+    # Exemplo:
+    #
+    # cbbox[0] = slice(180, 210)
+    # cbbox[1] = slice(240, 270)
+    # cbbox[2] = slice(50, 60)
+    #
+    # Portanto precisamos somar:
+    #
+    # [180, 240, 50]
+    offset = np.array(
+        [
+            cbbox[0].start,
+            cbbox[1].start,
+            cbbox[2].start
+        ],
+        dtype=np.float32
+    )
+
+
+    # ========================================================
+    # CENTROIDE NO VOLUME COMPLETO
+    # ========================================================
+    #
+    # Agora convertemos:
+    #
+    # coordenada dentro da máscara
+    #
+    # para:
+    #
+    # coordenada dentro do exame inteiro.
+    centro_volume = (
+        centro_local
+        + offset
+    )
+
+
+    return centro_volume
+
+def extrair_nodulo_real(
+    linha
+):
+    """
+    Recebe uma linha do nodulos_com_split.csv
+    e gera o patch 2.5D correspondente.
+    """
+
+
+    print(
+        f"Processando {linha.nodule_id}..."
+    )
+
+
+    # ========================================================
+    # 1. LOCALIZA O EXAME
+    # ========================================================
+
+    scan = obter_scan(
+        linha.scan_id
+    )
+
+
+    # Verificação adicional:
+    #
+    # o paciente encontrado no pylidc deve ser
+    # exatamente o mesmo paciente informado no CSV.
+    if scan.patient_id != linha.patient_id:
+        raise ValueError(
+            "Paciente do CSV não corresponde ao Scan. "
+            f"CSV={linha.patient_id}, "
+            f"pylidc={scan.patient_id}"
+        )
+
+
+    print(
+        "Paciente:",
+        scan.patient_id
+    )
+
+    print(
+        "Scan:",
+        scan.id
+    )
+
+
+    # ========================================================
+    # 2. LOCALIZA O NÓDULO
+    # ========================================================
+
+    anns = obter_cluster(
+        scan,
+        linha.cluster_idx
+    )
+
+
+    print(
+        "Cluster:",
+        linha.cluster_idx
+    )
+
+    print(
+        "Anotações:",
+        len(anns)
+    )
+
+
+    # ========================================================
+    # 3. CONFERE A QUANTIDADE DE RADIOLOGISTAS
+    # ========================================================
+    #
+    # Essa é uma verificação muito importante.
+    #
+    # Se o CSV dizia que o nódulo possuía 4 anotações,
+    # esperamos encontrar exatamente 4 novamente.
+    if (
+        len(anns)
+        != int(linha.n_radiologistas)
+    ):
+        raise ValueError(
+            "Quantidade de anotações diferente "
+            "da registrada no CSV. "
+            f"CSV={linha.n_radiologistas}, "
+            f"agora={len(anns)}"
+        )
+
+
+    # ========================================================
+    # 4. CONFERE OS ESCORES DE MALIGNIDADE
+    # ========================================================
+    #
+    # Isso serve como uma segunda proteção contra
+    # selecionar o cluster errado.
+    escores_atuais = sorted(
+        int(ann.malignancy)
+        for ann in anns
+    )
+
+
+    # No CSV temos algo como:
+    #
+    # "5,5,5,4"
+    escores_csv = sorted(
+        int(valor)
+        for valor
+        in str(
+            linha.escores_individuais
+        ).split(",")
+    )
+
+
+    if (
+        escores_atuais
+        != escores_csv
+    ):
+        raise ValueError(
+            "Os escores do cluster não correspondem "
+            "aos escores salvos no CSV. "
+            f"CSV={escores_csv}, "
+            f"pylidc={escores_atuais}"
+        )
+
+
+    print(
+        "Cluster confirmado."
+    )
+
+
+    # ========================================================
+    # 5. CARREGA O VOLUME
+    # ========================================================
+    #
+    # Aqui os DICOMs finalmente são acessados.
+    #
+    # ATENÇÃO:
+    #
+    # não fazemos RescaleSlope / RescaleIntercept
+    # novamente.
+    #
+    # Seguimos a regra definida para a Sprint.
+    volume = scan.to_volume(
+        verbose=False
+    ).astype(
+        np.float32
+    )
+
+
+    print(
+        "Volume:",
+        volume.shape
+    )
+
+
+    # ========================================================
+    # 6. ESPAÇAMENTO FÍSICO
+    # ========================================================
+    #
+    # O pylidc usa um único pixel_spacing porque
+    # no LIDC os dois eixos do plano transversal
+    # possuem a mesma resolução.
+    #
+    # No eixo Z usamos slice_spacing.
+    espacamento = np.array(
+        [
+            scan.pixel_spacing,
+            scan.pixel_spacing,
+            scan.slice_spacing
+        ],
+        dtype=np.float32
+    )
+
+
+    print(
+        "Espaçamento:",
+        espacamento
+    )
+
+
+    # ========================================================
+    # 7. CONSENSO + CENTROIDE
+    # ========================================================
+
+    centro = calcular_centroide_consenso(
+        anns
+    )
+
+
+    print(
+        "Centroide:",
+        centro
+    )
+
+
+    # ========================================================
+    # 8. EXECUTA O PIPELINE QUE JÁ TESTAMOS
+    # ========================================================
+    #
+    # Aqui reaproveitamos exatamente a função
+    # validada com o dado sintético.
+    patch = extrair_patch_2_5d(
+        volume,
+        centro,
+        espacamento
+    )
+
+
+    return patch
+
+def teste_nodulo_real():
+    """
+    Testa a extração usando somente o primeiro
+    nódulo do dataset.
+
+    Isso evita processar os 751 de uma vez enquanto
+    ainda estamos validando o pipeline.
+    """
+
+
+    print()
+    print(
+        "Iniciando teste com nódulo real..."
+    )
+
+
+    # Abre o CSV que contém os nódulos
+    # e os respectivos splits.
+    df = pd.read_csv(
+        "selecao/nodulos_com_split.csv"
+    )
+
+
+    # ========================================================
+    # CONFERE AS COLUNAS NECESSÁRIAS
+    # ========================================================
+
+    colunas_necessarias = {
+        "nodule_id",
+        "cluster_idx",
+        "patient_id",
+        "scan_id",
+        "n_radiologistas",
+        "escores_individuais",
+        "rotulo_binario",
+        "split"
+    }
+
+
+    faltantes = (
+        colunas_necessarias
+        - set(df.columns)
+    )
+
+
+    if faltantes:
+        raise ValueError(
+            "O CSV está sem as seguintes colunas: "
+            f"{sorted(faltantes)}"
+        )
+
+
+    # ============================================================
+    # ESCOLHE UM NÓDULO REAL ESPECÍFICO PARA O TESTE
+    # ============================================================
+    #
+    # Estamos usando o LIDC-IDRI-0082 porque é um dos pacientes
+    # disponíveis no conjunto de DICOM que temos acesso.
+
+    nodule_id_teste = "LIDC-IDRI-0082_scan90_cluster000"
+
+
+    # Procura exatamente esse nódulo no CSV.
+    df_teste = df[
+        df["nodule_id"] == nodule_id_teste
+    ]
+
+
+    # Se não encontrar, interrompe o programa.
+    if df_teste.empty:
+        raise ValueError(
+            f"Nódulo {nodule_id_teste} não encontrado no CSV."
+        )
+
+
+    # Como nodule_id deve ser único, pegamos a única linha encontrada.
+    linha = next(
+        df_teste.itertuples(
+            index=False
+        )
+    )
+
+
+    print(
+        "Nódulo:",
+        linha.nodule_id
+    )
+
+    print(
+        "Paciente:",
+        linha.patient_id
+    )
+
+    print(
+        "Rótulo:",
+        linha.rotulo_binario
+    )
+
+    print(
+        "Split:",
+        linha.split
+    )
+
+
+    # Executa a extração.
+    patch = extrair_nodulo_real(
+        linha
+    )
+
+
+    # ========================================================
+    # VERIFICAÇÕES
+    # ========================================================
+
+    assert patch.shape == (
+        3,
+        64,
+        64
+    )
+
+    assert (
+        patch.dtype
+        == np.float16
+    )
+
+    assert (
+        patch.min()
+        >= 0
+    )
+
+    assert (
+        patch.max()
+        <= 1
+    )
+
+
+    print()
+    print(
+        "Teste real OK!"
+    )
+
+    print(
+        "Shape:",
+        patch.shape
+    )
+
+    print(
+        "Tipo:",
+        patch.dtype
+    )
+
+    print(
+        "Mínimo:",
+        patch.min()
+    )
+
+    print(
+        "Máximo:",
+        patch.max()
+    )
+
 def teste_sintetico():
     """
     Cria um volume 3D artificial para testar
@@ -744,8 +1337,12 @@ def teste_sintetico():
     )
     
 if __name__ == "__main__":
-    # Por enquanto executamos somente o teste artificial.
-    #
-    # Assim conseguimos desenvolver toda a lógica
-    # sem precisar baixar o LIDC-IDRI.
+
+    # Sempre podemos executar o teste sintético.
     teste_sintetico()
+
+
+    # Quando os arquivos DICOM estiverem disponíveis
+    # e configurados no pylidc, descomente:
+    #
+    teste_nodulo_real()
