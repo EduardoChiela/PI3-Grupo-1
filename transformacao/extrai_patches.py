@@ -993,6 +993,107 @@ def extrair_nodulo_real(
 
     return patch
 
+def salvar_teste_patch_real(patch, linha):
+    """
+    Salva temporariamente um único patch real.
+
+    Serve apenas para validar o formato do .npz e do manifesto
+    antes de processarmos o dataset completo.
+    """
+
+    # --------------------------------------------------------
+    # CRIA A PASTA DE PATCHES
+    # --------------------------------------------------------
+
+    pasta_patches = Path("patches")
+
+    pasta_patches.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+
+    # --------------------------------------------------------
+    # ADICIONA A DIMENSÃO DE AMOSTRAS
+    # --------------------------------------------------------
+    #
+    # Atualmente:
+    #
+    # patch.shape = (3, 64, 64)
+    #
+    # Para salvar vários nódulos, queremos:
+    #
+    # (N, 3, 64, 64)
+    #
+    # Como temos apenas um:
+    #
+    # (1, 3, 64, 64)
+    patches = np.expand_dims(
+        patch,
+        axis=0
+    ).astype(
+        np.float16
+    )
+
+
+    # --------------------------------------------------------
+    # SALVA O NPZ
+    # --------------------------------------------------------
+
+    caminho_npz = (
+        pasta_patches
+        / "teste_patch_2_5d.npz"
+    )
+
+    np.savez_compressed(
+        caminho_npz,
+        patches=patches,
+        nodule_id=np.array(
+            [linha.nodule_id]
+        )
+    )
+
+
+    # --------------------------------------------------------
+    # CRIA O MANIFESTO
+    # --------------------------------------------------------
+
+    manifesto = pd.DataFrame(
+        [
+            {
+                "nodule_id": linha.nodule_id,
+                "patient_id": linha.patient_id,
+                "split": linha.split,
+                "label": linha.rotulo_binario
+            }
+        ]
+    )
+
+
+    caminho_manifesto = Path(
+        "transformacao/"
+        "teste_manifest_patches.csv"
+    )
+
+
+    manifesto.to_csv(
+        caminho_manifesto,
+        index=False
+    )
+
+
+    print()
+    print("Arquivos de teste salvos!")
+    print("NPZ:", caminho_npz)
+    print(
+        "Shape salvo:",
+        patches.shape
+    )
+    print(
+        "Manifesto:",
+        caminho_manifesto
+    )
+
 def teste_nodulo_real():
     """
     Testa a extração usando somente o primeiro
@@ -1153,6 +1254,12 @@ def teste_nodulo_real():
         "Máximo:",
         patch.max()
     )
+    # Testa também o salvamento do patch
+    # e a criação do manifesto.
+    salvar_teste_patch_real(
+        patch,
+        linha
+)   
 
 def teste_sintetico():
     """
