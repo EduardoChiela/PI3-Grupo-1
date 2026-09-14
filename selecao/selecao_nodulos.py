@@ -153,7 +153,7 @@ def main():
         # ------------------------------------------------------------
         # 4) Manter apenas clusters com 3+ anotacoes (radiologistas).
         # ------------------------------------------------------------
-        for cluster in clusters:
+        for cluster_idx, cluster in enumerate(clusters):
             try:
                 n_radiologistas = len(cluster)
                 if n_radiologistas < MIN_RADIOLOGISTAS:
@@ -186,6 +186,8 @@ def main():
 
                 linhas_csv.append(
                     {
+                        "nodule_id": f"{scan.patient_id}_scan{scan.id}_cluster{cluster_idx:03d}",
+                        "cluster_idx": cluster_idx,
                         "patient_id": scan.patient_id,
                         "scan_id": scan.id,
                         "n_radiologistas": n_radiologistas,
@@ -206,6 +208,8 @@ def main():
     # 6) Salvar o CSV final.
     # ----------------------------------------------------------------
     colunas = [
+        "nodule_id",
+        "cluster_idx",
         "patient_id",
         "scan_id",
         "n_radiologistas",
