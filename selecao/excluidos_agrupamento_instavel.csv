@@ -1,0 +1,4 @@
+nodule_id,patient_id,scan_id,cluster_idx,n_radiologistas,escores_individuais,malignidade_mediana,rotulo_original,split_original,motivo,referencia
+LIDC-IDRI-0055_scan66_cluster000,LIDC-IDRI-0055,66,0,6,"2,3,4,4,4,2",3.5,maligno,treino,"rotulo instavel: assume excluido/benigno/maligno conforme o limiar de agrupamento (2 a 10 mm)",docs/criterios_selecao.md#91
+LIDC-IDRI-0137_scan140_cluster002,LIDC-IDRI-0137,140,2,5,"3,2,4,4,5",4,maligno,treino,"rotulo instavel: excluido sob limiar <= 4 mm, maligno a partir de 5 mm",docs/criterios_selecao.md#91
+LIDC-IDRI-0815_scan840_cluster000,LIDC-IDRI-0815,840,0,5,"4,4,4,3,2",4,maligno,teste,"rotulo instavel: excluido sob limiar <= 5 mm, maligno a partir de 6 mm",docs/criterios_selecao.md#91

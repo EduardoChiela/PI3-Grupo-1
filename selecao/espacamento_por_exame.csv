@@ -1,0 +1,898 @@
+scan_id,patient_id,slice_thickness,n_cortes,passo_mediano,desvio_max_mm,passos_fora,situacao,observacao
+2,LIDC-IDRI-0069,2.0,136,2.0,0.0,0,regular,
+12,LIDC-IDRI-0001,2.5,133,2.5,0.0,0,regular,
+13,LIDC-IDRI-0002,1.25,261,1.25,0.0,0,regular,
+14,LIDC-IDRI-0003,2.5,140,2.5,0.0,0,regular,
+15,LIDC-IDRI-0004,1.25,241,1.25,0.0,0,regular,
+16,LIDC-IDRI-0005,2.5,133,2.5,0.0,0,regular,
+17,LIDC-IDRI-0006,2.5,133,2.5,0.0,0,regular,
+18,LIDC-IDRI-0007,2.5,145,2.5,0.0,0,regular,
+19,LIDC-IDRI-0008,2.5,133,2.5,0.0,0,regular,
+20,LIDC-IDRI-0009,1.25,256,1.25,0.0,0,regular,
+21,LIDC-IDRI-0010,1.25,277,1.25,0.0,0,regular,
+22,LIDC-IDRI-0011,2.5,128,2.5,0.0,0,regular,
+23,LIDC-IDRI-0012,2.5,128,2.5,0.0,0,regular,
+24,LIDC-IDRI-0013,2.5,125,2.5,0.0,0,regular,
+25,LIDC-IDRI-0014,2.5,114,2.5,0.0,0,regular,
+26,LIDC-IDRI-0015,1.25,209,1.25,0.0,0,regular,
+27,LIDC-IDRI-0016,2.5,141,2.5,0.0,0,regular,
+28,LIDC-IDRI-0017,1.25,238,1.25,0.0,0,regular,
+29,LIDC-IDRI-0018,2.5,127,2.5,0.0,0,regular,
+30,LIDC-IDRI-0019,1.25,305,1.25,0.0,0,regular,
+31,LIDC-IDRI-0020,1.25,225,1.25,0.0,0,regular,
+32,LIDC-IDRI-0021,2.5,149,2.5,0.0,0,regular,
+33,LIDC-IDRI-0022,2.5,133,2.5,0.0,0,regular,
+34,LIDC-IDRI-0023,2.5,137,2.5,0.0,0,regular,
+35,LIDC-IDRI-0024,2.5,133,2.5,0.0,0,regular,
+36,LIDC-IDRI-0025,1.25,265,1.25,0.0,0,regular,
+37,LIDC-IDRI-0026,1.25,257,1.25,0.0,0,regular,
+38,LIDC-IDRI-0027,2.5,133,2.5,0.0,0,regular,
+39,LIDC-IDRI-0028,2.5,141,2.5,0.0,0,regular,
+40,LIDC-IDRI-0029,1.25,273,1.25,0.0,0,regular,
+41,LIDC-IDRI-0030,2.5,119,2.5,0.0,0,regular,
+42,LIDC-IDRI-0031,2.5,133,2.5,0.0,0,regular,
+43,LIDC-IDRI-0032,1.25,249,1.25,0.0,0,regular,
+44,LIDC-IDRI-0033,2.5,137,2.5,0.0,0,regular,
+45,LIDC-IDRI-0034,1.25,265,1.25,0.0,0,regular,
+46,LIDC-IDRI-0035,2.5,133,2.5,0.0,0,regular,
+47,LIDC-IDRI-0036,1.25,273,1.25,0.0,0,regular,
+48,LIDC-IDRI-0037,2.5,141,2.5,0.0,0,regular,
+49,LIDC-IDRI-0038,2.5,133,2.5,0.0,0,regular,
+50,LIDC-IDRI-0039,1.25,281,1.25,0.0,0,regular,
+51,LIDC-IDRI-0040,2.5,121,2.5,0.0,0,regular,
+52,LIDC-IDRI-0041,2.5,149,2.5,0.0,0,regular,
+53,LIDC-IDRI-0042,2.5,123,2.5,0.0,0,regular,
+54,LIDC-IDRI-0043,2.5,113,2.5,0.0,0,regular,
+55,LIDC-IDRI-0044,2.5,147,2.5,0.0,0,regular,
+56,LIDC-IDRI-0045,2.5,133,2.5,0.0,0,regular,
+57,LIDC-IDRI-0046,2.5,128,2.5,0.0,0,regular,
+58,LIDC-IDRI-0047,2.5,133,2.5,0.0,0,regular,
+59,LIDC-IDRI-0048,1.25,297,1.25,0.0,0,regular,
+60,LIDC-IDRI-0049,2.5,133,2.5,0.0,0,regular,
+61,LIDC-IDRI-0050,2.5,139,2.5,0.0,0,regular,
+62,LIDC-IDRI-0051,2.5,133,2.5,0.0,0,regular,
+63,LIDC-IDRI-0052,1.25,272,1.25,0.0,0,regular,
+64,LIDC-IDRI-0053,2.5,111,2.5,0.0,0,regular,
+65,LIDC-IDRI-0054,2.5,133,2.5,0.0,0,regular,
+66,LIDC-IDRI-0055,2.5,139,2.5,0.0,0,regular,
+67,LIDC-IDRI-0056,1.25,245,1.25,0.0,0,regular,
+68,LIDC-IDRI-0057,1.25,245,1.25,0.0,0,regular,
+69,LIDC-IDRI-0058,2.5,133,2.5,0.0,0,regular,
+70,LIDC-IDRI-0059,2.5,133,2.5,0.0,0,regular,
+71,LIDC-IDRI-0060,2.5,115,2.5,0.0,0,regular,
+72,LIDC-IDRI-0061,2.5,123,2.5,0.0,0,regular,
+73,LIDC-IDRI-0062,2.5,117,2.5,0.0,0,regular,
+74,LIDC-IDRI-0063,2.5,133,2.5,0.0,0,regular,
+75,LIDC-IDRI-0064,2.5,133,2.5,0.0,0,regular,
+76,LIDC-IDRI-0065,1.25,237,1.25,0.0,0,regular,
+77,LIDC-IDRI-0066,0.6,733,0.5,0.0,0,regular,
+78,LIDC-IDRI-0067,1.25,244,1.25,0.0,0,regular,
+79,LIDC-IDRI-0068,1.25,261,1.25,0.0,0,regular,
+80,LIDC-IDRI-0070,2.5,133,2.5,0.0,0,regular,
+81,LIDC-IDRI-0071,1.25,261,1.25,0.0,0,regular,
+82,LIDC-IDRI-0072,1.25,305,1.25,0.0,0,regular,
+83,LIDC-IDRI-0073,2.5,131,2.5,0.0,0,regular,
+84,LIDC-IDRI-0074,2.5,109,2.5,0.0,0,regular,
+85,LIDC-IDRI-0075,1.25,257,1.25,0.0,0,regular,
+86,LIDC-IDRI-0076,1.25,297,1.25,0.0,0,regular,
+87,LIDC-IDRI-0077,2.5,130,2.5,0.0,0,regular,
+88,LIDC-IDRI-0080,1.25,257,1.25,0.0,0,regular,
+89,LIDC-IDRI-0081,2.5,126,2.5,0.0,0,regular,
+90,LIDC-IDRI-0082,1.25,242,1.25,0.0,0,regular,
+91,LIDC-IDRI-0083,1.25,218,1.25,0.0,0,regular,
+92,LIDC-IDRI-0084,2.0,166,2.0,0.0,0,regular,
+93,LIDC-IDRI-0085,1.25,267,1.25,0.0,0,regular,
+95,LIDC-IDRI-0087,2.5,130,2.5,0.0,0,regular,
+96,LIDC-IDRI-0088,1.25,241,1.25,0.0,0,regular,
+97,LIDC-IDRI-0089,2.5,147,2.5,0.0,0,regular,
+98,LIDC-IDRI-0090,2.5,133,2.5,0.0,0,regular,
+99,LIDC-IDRI-0091,1.25,197,1.25,0.0,0,regular,
+100,LIDC-IDRI-0092,1.25,241,1.25,0.0,0,regular,
+101,LIDC-IDRI-0093,2.5,125,2.5,0.0,0,regular,
+102,LIDC-IDRI-0094,2.0,385,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+103,LIDC-IDRI-0095,2.0,343,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+104,LIDC-IDRI-0096,2.5,127,2.5,0.0,0,regular,
+105,LIDC-IDRI-0097,1.25,245,1.25,0.0,0,regular,
+107,LIDC-IDRI-0099,1.25,194,1.25,0.0,0,regular,
+108,LIDC-IDRI-0100,1.25,269,1.25,0.0,0,regular,
+109,LIDC-IDRI-0102,2.5,143,2.5,0.0,0,regular,
+112,LIDC-IDRI-0105,2.5,154,2.5,0.0,0,regular,
+113,LIDC-IDRI-0106,2.0,158,2.0,0.0,0,regular,
+114,LIDC-IDRI-0107,2.0,136,2.0,0.0,0,regular,
+115,LIDC-IDRI-0108,2.5,143,2.5,0.0,0,regular,
+116,LIDC-IDRI-0109,1.25,223,1.25,0.0,0,regular,
+117,LIDC-IDRI-0111,2.5,133,2.5,0.0,0,regular,
+118,LIDC-IDRI-0112,2.5,123,2.5,0.0,0,regular,
+119,LIDC-IDRI-0113,2.5,145,2.5,0.0,0,regular,
+120,LIDC-IDRI-0114,1.25,214,1.25,0.0,0,regular,
+121,LIDC-IDRI-0116,2.5,133,2.5,0.0,0,regular,
+123,LIDC-IDRI-0118,1.25,265,1.25,0.0,0,regular,
+124,LIDC-IDRI-0119,2.0,345,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+125,LIDC-IDRI-0120,2.0,183,2.0,0.0,0,regular,
+126,LIDC-IDRI-0121,1.25,277,1.25,0.0,0,regular,
+127,LIDC-IDRI-0122,2.5,119,2.5,0.0,0,regular,
+128,LIDC-IDRI-0123,1.25,236,1.25,0.75,3,irregular,3 de 235 passos fora do mediano; maior desvio 0.750 mm
+129,LIDC-IDRI-0124,2.5,117,2.5,0.0,0,regular,
+130,LIDC-IDRI-0125,1.25,238,1.25,0.0,0,regular,
+131,LIDC-IDRI-0126,2.5,137,2.5,0.0,0,regular,
+132,LIDC-IDRI-0128,1.25,257,1.25,0.0,0,regular,
+133,LIDC-IDRI-0129,1.25,253,1.25,0.0,0,regular,
+134,LIDC-IDRI-0130,2.0,324,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+135,LIDC-IDRI-0131,1.25,197,1.25,0.0,0,regular,
+137,LIDC-IDRI-0133,1.25,238,1.25,0.0,0,regular,
+139,LIDC-IDRI-0135,2.5,127,2.5,0.0,0,regular,
+140,LIDC-IDRI-0137,2.5,145,2.5,0.0,0,regular,
+141,LIDC-IDRI-0138,1.25,273,1.25,0.0,0,regular,
+142,LIDC-IDRI-0139,2.5,114,2.5,0.0,0,regular,
+143,LIDC-IDRI-0140,0.6,588,0.5,0.0,0,regular,
+144,LIDC-IDRI-0141,2.0,368,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+145,LIDC-IDRI-0142,2.0,333,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+146,LIDC-IDRI-0143,2.5,133,2.5,0.0,0,regular,
+147,LIDC-IDRI-0144,2.5,133,2.5,0.0,0,regular,
+148,LIDC-IDRI-0145,2.5,139,2.5,0.0,0,regular,
+149,LIDC-IDRI-0146,1.25,309,1.25,0.0,0,regular,
+150,LIDC-IDRI-0147,2.0,136,2.0,0.0,0,regular,
+151,LIDC-IDRI-0148,2.5,131,2.5,0.0,0,regular,
+152,LIDC-IDRI-0149,2.5,143,2.5,0.0,0,regular,
+154,LIDC-IDRI-0152,2.5,135,2.5,0.0,0,regular,
+155,LIDC-IDRI-0153,2.5,139,2.5,0.0,0,regular,
+156,LIDC-IDRI-0155,1.25,238,1.25,0.0,0,regular,
+158,LIDC-IDRI-0157,2.5,133,2.5,0.0,0,regular,
+159,LIDC-IDRI-0158,1.25,251,1.25,0.0,0,regular,
+160,LIDC-IDRI-0159,2.5,137,2.5,0.0,0,regular,
+161,LIDC-IDRI-0160,2.5,140,2.5,0.0,0,regular,
+162,LIDC-IDRI-0161,1.25,251,1.25,0.0,0,regular,
+163,LIDC-IDRI-0162,2.5,133,2.5,0.0,0,regular,
+164,LIDC-IDRI-0163,2.5,133,2.5,0.0,0,regular,
+165,LIDC-IDRI-0164,1.25,258,1.25,0.0,0,regular,
+166,LIDC-IDRI-0165,2.5,133,2.5,0.0,0,regular,
+167,LIDC-IDRI-0166,2.5,133,2.5,0.0,0,regular,
+168,LIDC-IDRI-0167,2.5,133,2.5,0.0,0,regular,
+169,LIDC-IDRI-0168,1.25,232,1.25,0.0,0,regular,
+170,LIDC-IDRI-0169,1.25,238,1.25,0.0,0,regular,
+171,LIDC-IDRI-0170,1.25,206,1.25,0.0,0,regular,
+172,LIDC-IDRI-0171,2.5,95,2.5,0.0,0,regular,
+173,LIDC-IDRI-0172,2.5,127,2.5,0.0,0,regular,
+174,LIDC-IDRI-0173,2.5,145,2.5,0.0,0,regular,
+175,LIDC-IDRI-0174,2.5,133,2.5,0.0,0,regular,
+176,LIDC-IDRI-0175,2.5,131,2.5,0.0,0,regular,
+177,LIDC-IDRI-0176,1.25,214,1.25,0.0,0,regular,
+178,LIDC-IDRI-0177,2.5,133,2.5,0.0,0,regular,
+179,LIDC-IDRI-0178,2.5,125,2.5,0.0,0,regular,
+180,LIDC-IDRI-0179,2.5,123,2.5,0.0,0,regular,
+181,LIDC-IDRI-0180,1.25,238,1.25,0.0,0,regular,
+182,LIDC-IDRI-0181,2.5,150,2.5,0.0,0,regular,
+183,LIDC-IDRI-0182,2.5,133,2.5,0.0,0,regular,
+184,LIDC-IDRI-0183,2.5,139,2.5,0.0,0,regular,
+185,LIDC-IDRI-0184,2.5,140,2.5,0.0,0,regular,
+186,LIDC-IDRI-0185,2.5,133,2.5,0.0,0,regular,
+187,LIDC-IDRI-0186,2.5,137,2.5,0.0,0,regular,
+188,LIDC-IDRI-0187,2.5,143,2.5,0.0,0,regular,
+189,LIDC-IDRI-0188,2.5,113,2.5,0.0,0,regular,
+190,LIDC-IDRI-0189,2.5,117,2.5,0.0,0,regular,
+191,LIDC-IDRI-0190,2.5,127,2.5,0.0,0,regular,
+192,LIDC-IDRI-0191,2.5,133,2.5,0.0,0,regular,
+193,LIDC-IDRI-0192,1.25,246,1.25,0.0,0,regular,
+194,LIDC-IDRI-0193,2.5,127,2.5,0.0,0,regular,
+195,LIDC-IDRI-0194,2.5,149,2.5,0.0,0,regular,
+196,LIDC-IDRI-0195,2.5,133,2.5,0.0,0,regular,
+197,LIDC-IDRI-0196,2.5,133,2.5,0.0,0,regular,
+198,LIDC-IDRI-0197,2.5,127,2.5,0.0,0,regular,
+199,LIDC-IDRI-0198,2.5,133,2.5,0.0,0,regular,
+200,LIDC-IDRI-0199,1.25,233,1.25,0.0,0,regular,
+201,LIDC-IDRI-0200,2.5,117,2.5,0.0,0,regular,
+202,LIDC-IDRI-0201,2.5,133,2.5,0.0,0,regular,
+203,LIDC-IDRI-0202,2.5,111,2.5,0.0,0,regular,
+204,LIDC-IDRI-0203,2.5,147,2.5,0.0,0,regular,
+205,LIDC-IDRI-0204,2.5,133,2.5,0.0,0,regular,
+206,LIDC-IDRI-0205,2.5,135,2.5,0.0,0,regular,
+207,LIDC-IDRI-0206,1.25,301,1.25,0.0,0,regular,
+208,LIDC-IDRI-0207,1.25,238,1.25,0.0,0,regular,
+209,LIDC-IDRI-0208,2.5,109,2.5,0.0,0,regular,
+210,LIDC-IDRI-0209,2.5,141,2.5,0.0,0,regular,
+211,LIDC-IDRI-0210,2.5,128,2.5,0.0,0,regular,
+212,LIDC-IDRI-0211,1.25,230,1.25,0.0,0,regular,
+213,LIDC-IDRI-0212,2.5,133,2.5,0.0,0,regular,
+214,LIDC-IDRI-0213,2.5,127,2.5,0.0,0,regular,
+215,LIDC-IDRI-0214,2.5,151,2.5,0.0,0,regular,
+216,LIDC-IDRI-0215,1.25,249,1.25,0.0,0,regular,
+217,LIDC-IDRI-0216,2.5,133,2.5,0.0,0,regular,
+218,LIDC-IDRI-0217,2.5,135,2.5,0.0,0,regular,
+219,LIDC-IDRI-0218,1.25,217,1.25,0.0,0,regular,
+220,LIDC-IDRI-0219,2.5,133,2.5,0.0,0,regular,
+221,LIDC-IDRI-0220,1.25,232,1.25,0.0,0,regular,
+222,LIDC-IDRI-0221,2.5,138,2.5,0.0,0,regular,
+223,LIDC-IDRI-0222,2.5,129,2.5,0.0,0,regular,
+224,LIDC-IDRI-0223,1.25,238,1.25,0.0,0,regular,
+225,LIDC-IDRI-0224,2.5,133,2.5,0.0,0,regular,
+226,LIDC-IDRI-0225,2.5,133,2.5,0.0,0,regular,
+227,LIDC-IDRI-0226,2.5,123,2.5,0.0,0,regular,
+228,LIDC-IDRI-0227,2.5,137,2.5,0.0,0,regular,
+229,LIDC-IDRI-0228,2.5,127,2.5,0.0,0,regular,
+230,LIDC-IDRI-0229,2.5,141,2.5,0.0,0,regular,
+231,LIDC-IDRI-0230,2.5,113,2.5,0.0,0,regular,
+232,LIDC-IDRI-0231,2.5,147,2.5,0.0,0,regular,
+233,LIDC-IDRI-0232,2.5,133,2.5,0.0,0,regular,
+234,LIDC-IDRI-0233,2.5,147,2.5,0.0,0,regular,
+235,LIDC-IDRI-0234,2.5,133,2.5,0.0,0,regular,
+236,LIDC-IDRI-0235,2.5,139,2.5,0.0,0,regular,
+237,LIDC-IDRI-0236,2.5,133,2.5,0.0,0,regular,
+238,LIDC-IDRI-0237,2.5,142,2.5,0.0,0,regular,
+239,LIDC-IDRI-0239,2.5,153,2.5,0.0,0,regular,
+240,LIDC-IDRI-0240,2.5,125,2.5,0.0,0,regular,
+241,LIDC-IDRI-0241,1.25,301,1.25,0.0,0,regular,
+242,LIDC-IDRI-0242,2.5,152,2.5,0.0,0,regular,
+243,LIDC-IDRI-0243,2.5,143,2.5,0.0,0,regular,
+244,LIDC-IDRI-0244,2.5,144,2.5,0.0,0,regular,
+245,LIDC-IDRI-0245,2.5,116,2.5,0.0,0,regular,
+246,LIDC-IDRI-0246,2.5,143,2.5,0.0,0,regular,
+247,LIDC-IDRI-0247,2.5,127,2.5,0.0,0,regular,
+248,LIDC-IDRI-0248,2.5,117,2.5,0.0,0,regular,
+249,LIDC-IDRI-0249,1.25,214,1.25,0.0,0,regular,
+250,LIDC-IDRI-0250,2.5,133,2.5,0.0,0,regular,
+251,LIDC-IDRI-0251,2.5,133,2.5,0.0,0,regular,
+252,LIDC-IDRI-0252,2.5,148,2.5,0.0,0,regular,
+253,LIDC-IDRI-0253,2.5,133,2.5,0.0,0,regular,
+254,LIDC-IDRI-0254,2.5,109,2.5,0.0,0,regular,
+255,LIDC-IDRI-0255,2.5,133,2.5,0.0,0,regular,
+256,LIDC-IDRI-0256,2.5,131,2.5,0.0,0,regular,
+257,LIDC-IDRI-0257,2.5,133,2.5,0.0,0,regular,
+258,LIDC-IDRI-0258,2.5,133,2.5,0.0,0,regular,
+259,LIDC-IDRI-0259,2.5,149,2.5,0.0,0,regular,
+260,LIDC-IDRI-0260,2.5,144,2.5,0.0,0,regular,
+261,LIDC-IDRI-0261,2.5,139,2.5,0.0,0,regular,
+262,LIDC-IDRI-0262,1.25,197,1.25,0.0,0,regular,
+263,LIDC-IDRI-0263,2.5,137,2.5,0.0,0,regular,
+264,LIDC-IDRI-0264,1.25,238,1.25,0.0,0,regular,
+265,LIDC-IDRI-0265,2.5,133,2.5,0.0,0,regular,
+266,LIDC-IDRI-0266,1.25,238,1.25,0.0,0,regular,
+267,LIDC-IDRI-0267,2.5,150,2.5,2.0,2,irregular,2 de 149 passos fora do mediano; maior desvio 2.000 mm
+268,LIDC-IDRI-0268,2.5,117,2.5,0.0,0,regular,
+269,LIDC-IDRI-0269,1.25,293,1.25,0.0,0,regular,
+270,LIDC-IDRI-0270,2.5,143,2.5,0.0,0,regular,
+271,LIDC-IDRI-0271,2.5,117,2.5,0.0,0,regular,
+272,LIDC-IDRI-0272,2.5,119,2.5,0.0,0,regular,
+273,LIDC-IDRI-0273,2.5,133,2.5,0.0,0,regular,
+274,LIDC-IDRI-0274,2.5,133,2.5,0.0,0,regular,
+275,LIDC-IDRI-0275,2.5,144,2.5,0.0,0,regular,
+276,LIDC-IDRI-0276,2.5,133,2.5,0.0,0,regular,
+277,LIDC-IDRI-0277,2.5,117,2.5,0.0,0,regular,
+278,LIDC-IDRI-0278,1.25,214,1.25,0.0,0,regular,
+279,LIDC-IDRI-0279,2.5,129,2.5,0.0,0,regular,
+280,LIDC-IDRI-0280,1.25,238,1.25,0.0,0,regular,
+281,LIDC-IDRI-0281,2.5,119,2.5,0.0,0,regular,
+282,LIDC-IDRI-0282,2.5,119,2.5,0.0,0,regular,
+283,LIDC-IDRI-0283,2.5,115,2.5,0.0,0,regular,
+284,LIDC-IDRI-0284,2.5,133,2.5,0.0,0,regular,
+285,LIDC-IDRI-0285,2.5,151,2.5,0.0,0,regular,
+286,LIDC-IDRI-0286,2.5,140,2.5,0.0,0,regular,
+287,LIDC-IDRI-0287,2.5,109,2.5,0.0,0,regular,
+288,LIDC-IDRI-0288,1.25,238,1.25,0.0,0,regular,
+289,LIDC-IDRI-0289,2.5,117,2.5,0.0,0,regular,
+290,LIDC-IDRI-0290,2.5,133,2.5,0.0,0,regular,
+291,LIDC-IDRI-0291,1.25,270,1.25,0.0,0,regular,
+292,LIDC-IDRI-0292,1.25,500,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+293,LIDC-IDRI-0293,1.25,484,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+294,LIDC-IDRI-0294,2.0,175,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+295,LIDC-IDRI-0295,1.25,284,1.25,0.0,0,regular,
+297,LIDC-IDRI-0297,0.75,539,0.7,0.0,0,regular,
+298,LIDC-IDRI-0298,1.0,326,1.0,0.0,0,regular,
+299,LIDC-IDRI-0299,1.25,541,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+300,LIDC-IDRI-0300,1.0,383,1.0,0.0,0,regular,
+301,LIDC-IDRI-0301,1.25,513,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+302,LIDC-IDRI-0302,1.25,471,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+304,LIDC-IDRI-0304,2.0,206,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+305,LIDC-IDRI-0305,1.25,253,1.25,0.0,0,regular,
+306,LIDC-IDRI-0306,2.5,123,2.5,0.0,0,regular,
+307,LIDC-IDRI-0307,1.25,264,1.25,0.0,0,regular,
+308,LIDC-IDRI-0308,1.25,564,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+309,LIDC-IDRI-0309,2.0,225,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+311,LIDC-IDRI-0311,1.25,225,1.25,0.0,0,regular,
+312,LIDC-IDRI-0312,1.25,250,1.25,0.0,0,regular,
+313,LIDC-IDRI-0313,1.25,244,1.25,0.0,0,regular,
+314,LIDC-IDRI-0314,1.0,275,1.0,0.0,0,regular,
+317,LIDC-IDRI-0316,2.0,201,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+318,LIDC-IDRI-0317,2.5,124,2.5,0.0,0,regular,
+319,LIDC-IDRI-0318,0.75,441,0.7,0.0,0,regular,
+320,LIDC-IDRI-0319,2.0,195,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+321,LIDC-IDRI-0320,2.0,190,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+322,LIDC-IDRI-0321,1.25,265,1.25,0.0,0,regular,
+323,LIDC-IDRI-0322,2.5,128,2.5,0.0,0,regular,
+325,LIDC-IDRI-0324,2.0,229,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+326,LIDC-IDRI-0325,1.0,278,1.0,0.0,0,regular,
+327,LIDC-IDRI-0326,1.25,261,1.25,0.0,0,regular,
+328,LIDC-IDRI-0327,1.25,509,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+329,LIDC-IDRI-0329,2.5,122,2.5,0.0,0,regular,
+330,LIDC-IDRI-0328,1.25,484,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+331,LIDC-IDRI-0330,2.5,107,2.5,0.0,0,regular,
+332,LIDC-IDRI-0331,1.25,241,1.25,0.0,0,regular,
+333,LIDC-IDRI-0332,2.5,181,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+334,LIDC-IDRI-0332,2.5,292,1.25,0.0,0,sobreposto,passo 1.250 < espessura 2.500: reconstrucao sobreposta
+335,LIDC-IDRI-0333,1.25,263,1.25,0.0,0,regular,
+337,LIDC-IDRI-0335,2.0,300,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+338,LIDC-IDRI-0336,2.5,129,2.5,0.0,0,regular,
+340,LIDC-IDRI-0338,2.0,285,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+341,LIDC-IDRI-0339,1.25,274,1.25,0.0,0,regular,
+342,LIDC-IDRI-0340,1.25,421,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+343,LIDC-IDRI-0341,1.25,246,1.25,0.0,0,regular,
+344,LIDC-IDRI-0342,2.5,126,2.5,0.0,0,regular,
+345,LIDC-IDRI-0343,2.5,130,2.5,0.0,0,regular,
+346,LIDC-IDRI-0344,0.75,503,0.7,0.0,0,regular,
+347,LIDC-IDRI-0345,1.0,298,1.0,0.0,0,regular,
+350,LIDC-IDRI-0348,2.5,158,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+351,LIDC-IDRI-0349,2.0,179,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+352,LIDC-IDRI-0350,1.25,270,1.25,0.0,0,regular,
+354,LIDC-IDRI-0352,1.0,280,1.0,0.0,0,regular,
+355,LIDC-IDRI-0353,1.25,260,1.25,0.0,0,regular,
+359,LIDC-IDRI-0356,2.0,193,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+360,LIDC-IDRI-0357,2.5,130,2.5,0.0,0,regular,
+361,LIDC-IDRI-0358,2.0,351,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+364,LIDC-IDRI-0361,1.25,240,1.25,0.0,0,regular,
+365,LIDC-IDRI-0362,2.0,187,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+366,LIDC-IDRI-0363,1.25,270,1.25,0.0,0,regular,
+367,LIDC-IDRI-0364,2.5,121,2.5,0.0,0,regular,
+371,LIDC-IDRI-0367,1.25,474,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+373,LIDC-IDRI-0369,1.25,246,1.25,0.0,0,regular,
+374,LIDC-IDRI-0370,1.25,449,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+375,LIDC-IDRI-0371,1.25,474,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+376,LIDC-IDRI-0372,1.25,270,1.25,0.0,0,regular,
+377,LIDC-IDRI-0373,1.25,529,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+378,LIDC-IDRI-0374,1.25,255,1.25,0.0,0,regular,
+379,LIDC-IDRI-0375,1.25,404,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+380,LIDC-IDRI-0376,1.25,561,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+381,LIDC-IDRI-0377,2.5,258,1.25,0.0,0,sobreposto,passo 1.250 < espessura 2.500: reconstrucao sobreposta
+384,LIDC-IDRI-0380,2.0,182,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+387,LIDC-IDRI-0383,2.5,118,2.5,0.0,0,regular,
+388,LIDC-IDRI-0384,1.25,490,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+389,LIDC-IDRI-0385,1.25,445,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+390,LIDC-IDRI-0386,1.25,503,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+392,LIDC-IDRI-0388,1.0,359,1.0,0.0,0,regular,
+395,LIDC-IDRI-0391,2.5,139,2.5,0.0,0,regular,
+396,LIDC-IDRI-0392,1.25,245,1.25,0.0,0,regular,
+397,LIDC-IDRI-0393,1.25,256,1.25,0.0,0,regular,
+398,LIDC-IDRI-0394,1.25,244,1.25,0.0,0,regular,
+401,LIDC-IDRI-0397,1.25,465,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+402,LIDC-IDRI-0398,2.0,245,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+403,LIDC-IDRI-0399,1.25,238,1.25,0.0,0,regular,
+404,LIDC-IDRI-0400,2.0,215,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+405,LIDC-IDRI-0401,2.5,133,2.5,0.0,0,regular,
+406,LIDC-IDRI-0402,1.25,268,1.25,0.0,0,regular,
+407,LIDC-IDRI-0403,1.25,331,0.5,0.0,0,sobreposto,passo 0.500 < espessura 1.250: reconstrucao sobreposta
+408,LIDC-IDRI-0404,2.0,235,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+409,LIDC-IDRI-0405,2.0,260,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+410,LIDC-IDRI-0406,1.25,513,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+411,LIDC-IDRI-0407,2.0,183,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+412,LIDC-IDRI-0408,1.25,268,1.25,0.0,0,regular,
+413,LIDC-IDRI-0409,2.0,290,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+414,LIDC-IDRI-0410,2.5,126,2.5,0.0,0,regular,
+415,LIDC-IDRI-0411,1.25,481,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+416,LIDC-IDRI-0412,1.0,276,1.0,0.0,0,regular,
+417,LIDC-IDRI-0413,2.0,177,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+419,LIDC-IDRI-0415,1.25,205,1.25,0.0,0,regular,
+420,LIDC-IDRI-0416,2.0,192,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+421,LIDC-IDRI-0417,2.5,120,2.5,0.0,0,regular,
+422,LIDC-IDRI-0418,1.25,226,1.25,0.0,0,regular,
+423,LIDC-IDRI-0419,2.0,201,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+424,LIDC-IDRI-0420,2.0,185,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+426,LIDC-IDRI-0422,1.25,258,1.25,0.0,0,regular,
+427,LIDC-IDRI-0423,1.25,283,1.25,0.0,0,regular,
+428,LIDC-IDRI-0424,1.0,308,1.0,0.0,0,regular,
+429,LIDC-IDRI-0425,2.0,190,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+431,LIDC-IDRI-0427,1.25,426,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+432,LIDC-IDRI-0428,1.0,326,1.0,0.0,0,regular,
+433,LIDC-IDRI-0429,1.25,436,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+434,LIDC-IDRI-0430,1.25,429,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+435,LIDC-IDRI-0431,2.5,152,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+436,LIDC-IDRI-0432,1.25,477,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+437,LIDC-IDRI-0433,2.0,305,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+438,LIDC-IDRI-0434,1.25,506,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+441,LIDC-IDRI-0437,1.25,557,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+442,LIDC-IDRI-0438,0.6,672,0.5,0.0,0,regular,
+444,LIDC-IDRI-0440,1.25,497,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+445,LIDC-IDRI-0441,0.6,682,0.5,0.0,0,regular,
+448,LIDC-IDRI-0443,1.25,513,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+449,LIDC-IDRI-0444,1.0,260,1.0,0.0,0,regular,
+450,LIDC-IDRI-0445,1.0,327,1.0,0.0,0,regular,
+451,LIDC-IDRI-0446,1.25,276,1.25,0.0,0,regular,
+452,LIDC-IDRI-0447,1.25,161,1.25,0.0,0,regular,
+453,LIDC-IDRI-0448,1.25,538,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+455,LIDC-IDRI-0450,1.25,235,1.25,0.0,0,regular,
+456,LIDC-IDRI-0451,2.0,180,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+457,LIDC-IDRI-0452,1.0,338,1.0,0.0,0,regular,
+458,LIDC-IDRI-0453,2.0,159,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+459,LIDC-IDRI-0454,1.0,275,1.0,0.0,0,regular,
+460,LIDC-IDRI-0455,1.25,224,1.25,0.0,0,regular,
+461,LIDC-IDRI-0456,1.5,445,0.75,0.0,0,sobreposto,passo 0.750 < espessura 1.500: reconstrucao sobreposta
+462,LIDC-IDRI-0457,2.0,179,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+463,LIDC-IDRI-0458,1.25,220,1.25,0.0,0,regular,
+464,LIDC-IDRI-0459,1.25,241,1.25,0.0,0,regular,
+465,LIDC-IDRI-0460,1.25,477,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+466,LIDC-IDRI-0461,1.25,240,1.25,0.0,0,regular,
+467,LIDC-IDRI-0462,1.25,557,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+468,LIDC-IDRI-0463,0.75,491,0.7,0.0,0,regular,
+469,LIDC-IDRI-0464,1.25,241,1.25,0.0,0,regular,
+470,LIDC-IDRI-0465,2.5,140,2.5,0.0,0,regular,
+471,LIDC-IDRI-0466,1.25,209,1.25,0.0,0,regular,
+472,LIDC-IDRI-0467,1.0,300,1.0,0.0,0,regular,
+473,LIDC-IDRI-0468,2.0,320,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+474,LIDC-IDRI-0469,1.25,465,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+475,LIDC-IDRI-0470,1.25,248,1.25,0.0,0,regular,
+476,LIDC-IDRI-0471,2.5,132,2.5,0.0,0,regular,
+477,LIDC-IDRI-0472,2.5,116,2.5,0.0,0,regular,
+478,LIDC-IDRI-0473,1.25,291,1.25,0.0,0,regular,
+479,LIDC-IDRI-0474,2.0,177,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+481,LIDC-IDRI-0476,1.25,246,1.25,0.0,0,regular,
+482,LIDC-IDRI-0477,1.25,241,1.25,0.0,0,regular,
+483,LIDC-IDRI-0478,0.75,559,0.7,0.0,0,regular,
+484,LIDC-IDRI-0479,1.25,381,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+485,LIDC-IDRI-0480,2.5,140,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+486,LIDC-IDRI-0481,1.0,259,1.0,0.0,0,regular,
+487,LIDC-IDRI-0482,2.5,125,2.5,0.0,0,regular,
+488,LIDC-IDRI-0483,1.25,278,1.25,0.0,0,regular,
+491,LIDC-IDRI-0485,1.25,232,1.25,0.0,0,regular,
+492,LIDC-IDRI-0486,2.0,300,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+493,LIDC-IDRI-0487,0.75,376,0.7,0.0,0,regular,
+494,LIDC-IDRI-0488,1.25,461,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+495,LIDC-IDRI-0489,2.5,141,2.5,0.0,0,regular,
+496,LIDC-IDRI-0490,0.9,590,0.45,0.0001,0,sobreposto,passo 0.450 < espessura 0.900: reconstrucao sobreposta
+497,LIDC-IDRI-0491,1.25,535,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+498,LIDC-IDRI-0492,1.0,310,1.0,0.0,0,regular,
+499,LIDC-IDRI-0493,2.5,285,1.25,0.0,0,sobreposto,passo 1.250 < espessura 2.500: reconstrucao sobreposta
+500,LIDC-IDRI-0494,2.5,123,2.5,0.0,0,regular,
+501,LIDC-IDRI-0495,1.0,348,1.0,0.0,0,regular,
+502,LIDC-IDRI-0496,1.25,262,1.25,0.0,0,regular,
+503,LIDC-IDRI-0497,1.25,236,1.25,0.0,0,regular,
+504,LIDC-IDRI-0498,1.25,452,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+506,LIDC-IDRI-0500,2.5,161,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+507,LIDC-IDRI-0501,1.25,247,1.25,0.0,0,regular,
+508,LIDC-IDRI-0502,2.5,130,2.5,0.0,0,regular,
+509,LIDC-IDRI-0503,2.0,181,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+511,LIDC-IDRI-0505,2.0,181,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+512,LIDC-IDRI-0506,2.5,153,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+513,LIDC-IDRI-0507,1.0,318,1.0,0.0,0,regular,
+514,LIDC-IDRI-0508,2.0,250,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+516,LIDC-IDRI-0510,2.0,260,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+517,LIDC-IDRI-0511,2.5,120,2.5,0.0,0,regular,
+518,LIDC-IDRI-0512,2.5,132,2.5,0.0,0,regular,
+519,LIDC-IDRI-0513,0.75,468,0.7,0.0,0,regular,
+520,LIDC-IDRI-0514,2.5,142,2.0,36.0,1,irregular,1 de 141 passos fora do mediano; maior desvio 36.000 mm
+521,LIDC-IDRI-0515,1.25,289,1.25,0.0,0,regular,
+522,LIDC-IDRI-0516,2.5,122,2.5,0.0,0,regular,
+523,LIDC-IDRI-0517,2.5,122,2.5,0.0,0,regular,
+525,LIDC-IDRI-0519,1.25,244,1.25,0.0,0,regular,
+526,LIDC-IDRI-0520,1.25,484,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+527,LIDC-IDRI-0521,1.0,308,1.0,0.0,0,regular,
+528,LIDC-IDRI-0522,2.0,260,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+529,LIDC-IDRI-0523,1.25,162,1.25,0.0,0,regular,
+530,LIDC-IDRI-0524,0.75,408,0.7,0.0,0,regular,
+531,LIDC-IDRI-0525,0.75,429,0.7,0.0,0,regular,
+534,LIDC-IDRI-0528,2.5,126,2.5,0.0,0,regular,
+535,LIDC-IDRI-0529,1.25,605,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+536,LIDC-IDRI-0530,2.5,163,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+537,LIDC-IDRI-0531,2.5,123,2.5,0.0,0,regular,
+538,LIDC-IDRI-0532,1.0,330,1.0,0.0,0,regular,
+541,LIDC-IDRI-0535,1.0,265,1.0,0.0,0,regular,
+542,LIDC-IDRI-0536,1.25,477,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+543,LIDC-IDRI-0537,1.25,567,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+544,LIDC-IDRI-0538,0.75,489,0.7,0.0,0,regular,
+545,LIDC-IDRI-0539,1.25,253,1.25,0.0,0,regular,
+546,LIDC-IDRI-0540,1.0,326,1.0,0.0,0,regular,
+548,LIDC-IDRI-0542,1.25,433,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+549,LIDC-IDRI-0543,1.5,525,0.75,0.0,0,sobreposto,passo 0.750 < espessura 1.500: reconstrucao sobreposta
+550,LIDC-IDRI-0544,2.5,120,2.5,0.0,0,regular,
+551,LIDC-IDRI-0545,1.25,461,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+552,LIDC-IDRI-0546,2.0,348,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+553,LIDC-IDRI-0547,1.25,216,1.25,0.0,0,regular,
+554,LIDC-IDRI-0548,2.5,138,2.5,0.0,0,regular,
+555,LIDC-IDRI-0549,1.25,244,1.25,0.0,0,regular,
+557,LIDC-IDRI-0551,1.25,522,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+558,LIDC-IDRI-0552,2.5,135,2.5,0.0,0,regular,
+559,LIDC-IDRI-0553,1.25,481,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+560,LIDC-IDRI-0554,1.0,300,1.0,0.0,0,regular,
+561,LIDC-IDRI-0555,1.25,260,1.25,0.0,0,regular,
+562,LIDC-IDRI-0556,2.0,280,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+563,LIDC-IDRI-0557,0.75,483,0.7,0.0,0,regular,
+564,LIDC-IDRI-0558,2.0,350,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+565,LIDC-IDRI-0559,2.5,139,2.5,0.0,0,regular,
+566,LIDC-IDRI-0560,2.5,124,2.5,0.0,0,regular,
+567,LIDC-IDRI-0561,2.5,157,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+568,LIDC-IDRI-0562,2.0,280,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+569,LIDC-IDRI-0563,2.0,179,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+570,LIDC-IDRI-0564,1.25,477,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+571,LIDC-IDRI-0565,2.0,191,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+572,LIDC-IDRI-0566,2.0,181,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+573,LIDC-IDRI-0567,1.0,275,1.0,0.0,0,regular,
+574,LIDC-IDRI-0568,2.5,295,1.25,0.0,0,sobreposto,passo 1.250 < espessura 2.500: reconstrucao sobreposta
+575,LIDC-IDRI-0569,2.0,197,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+576,LIDC-IDRI-0570,2.5,123,2.5,0.0,0,regular,
+577,LIDC-IDRI-0571,2.5,121,2.5,0.0,0,regular,
+578,LIDC-IDRI-0572,1.25,447,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+579,LIDC-IDRI-0573,2.5,127,2.5,0.0,0,regular,
+580,LIDC-IDRI-0574,1.25,195,1.25,0.0,0,regular,
+581,LIDC-IDRI-0575,1.25,362,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+582,LIDC-IDRI-0576,1.0,280,1.0,0.0,0,regular,
+584,LIDC-IDRI-0578,2.5,129,2.5,0.0,0,regular,
+585,LIDC-IDRI-0579,2.0,176,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+586,LIDC-IDRI-0580,1.25,250,1.25,0.0,0,regular,
+587,LIDC-IDRI-0581,2.5,139,2.5,0.0,0,regular,
+588,LIDC-IDRI-0582,0.75,536,0.7,0.0,0,regular,
+589,LIDC-IDRI-0583,2.0,290,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+590,LIDC-IDRI-0584,2.5,166,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+591,LIDC-IDRI-0586,2.5,120,2.5,0.0,0,regular,
+592,LIDC-IDRI-0587,2.0,276,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+593,LIDC-IDRI-0588,2.5,133,2.5,0.0,0,regular,
+594,LIDC-IDRI-0589,2.5,124,2.5,0.0,0,regular,
+595,LIDC-IDRI-0590,1.25,500,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+596,LIDC-IDRI-0591,1.25,225,1.25,0.0,0,regular,
+597,LIDC-IDRI-0592,1.25,258,1.25,0.0,0,regular,
+598,LIDC-IDRI-0593,2.5,112,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+599,LIDC-IDRI-0594,1.25,244,1.25,0.0,0,regular,
+601,LIDC-IDRI-0596,1.25,267,1.25,0.0,0,regular,
+603,LIDC-IDRI-0598,2.0,172,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+604,LIDC-IDRI-0599,0.75,456,0.7,0.0,0,regular,
+605,LIDC-IDRI-0600,1.25,224,1.25,0.0,0,regular,
+606,LIDC-IDRI-0601,1.0,286,1.0,0.0,0,regular,
+607,LIDC-IDRI-0602,1.0,300,1.0,0.0,0,regular,
+608,LIDC-IDRI-0603,2.5,127,2.5,0.0,0,regular,
+609,LIDC-IDRI-0604,1.25,429,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+610,LIDC-IDRI-0605,2.5,164,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+611,LIDC-IDRI-0606,0.6,633,0.5,0.0,0,regular,
+612,LIDC-IDRI-0607,2.5,149,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+613,LIDC-IDRI-0608,2.0,280,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+614,LIDC-IDRI-0609,1.25,487,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+615,LIDC-IDRI-0610,2.5,163,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+617,LIDC-IDRI-0612,2.5,142,2.5,0.0,0,regular,
+618,LIDC-IDRI-0613,2.0,325,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+619,LIDC-IDRI-0614,1.25,583,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+620,LIDC-IDRI-0615,1.25,247,1.25,0.0,0,regular,
+621,LIDC-IDRI-0616,2.5,128,2.5,0.0,0,regular,
+622,LIDC-IDRI-0617,2.0,320,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+623,LIDC-IDRI-0618,1.25,261,1.25,0.0,0,regular,
+624,LIDC-IDRI-0619,1.25,208,1.25,0.0,0,regular,
+625,LIDC-IDRI-0620,1.25,240,1.25,0.0,0,regular,
+626,LIDC-IDRI-0621,0.6,730,0.5,0.0,0,regular,
+627,LIDC-IDRI-0622,2.0,171,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+628,LIDC-IDRI-0623,1.25,468,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+629,LIDC-IDRI-0624,2.0,290,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+630,LIDC-IDRI-0625,0.75,525,0.7,0.0,0,regular,
+631,LIDC-IDRI-0626,2.5,130,2.5,0.0,0,regular,
+632,LIDC-IDRI-0627,2.5,132,2.5,0.0,0,regular,
+633,LIDC-IDRI-0628,1.25,285,1.25,0.0,0,regular,
+634,LIDC-IDRI-0629,2.0,248,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+635,LIDC-IDRI-0630,2.5,122,2.5,0.0,0,regular,
+636,LIDC-IDRI-0631,0.75,455,0.7,0.0,0,regular,
+637,LIDC-IDRI-0632,2.5,130,2.5,0.0,0,regular,
+638,LIDC-IDRI-0633,1.25,471,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+639,LIDC-IDRI-0634,2.0,193,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+641,LIDC-IDRI-0636,1.0,330,1.0,0.0,0,regular,
+642,LIDC-IDRI-0637,0.75,506,0.7,0.0,0,regular,
+643,LIDC-IDRI-1012,2.5,166,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+644,LIDC-IDRI-1011,2.5,133,2.5,0.0,0,regular,
+645,LIDC-IDRI-1010,1.25,252,1.25,0.0,0,regular,
+646,LIDC-IDRI-1009,2.5,125,2.5,0.0,0,regular,
+648,LIDC-IDRI-1007,2.0,186,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+649,LIDC-IDRI-1006,1.0,325,1.0,0.0,0,regular,
+650,LIDC-IDRI-1005,1.0,312,1.0,0.0,0,regular,
+651,LIDC-IDRI-1004,1.25,529,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+652,LIDC-IDRI-1003,2.0,186,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+653,LIDC-IDRI-1002,2.0,321,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+654,LIDC-IDRI-1001,2.0,194,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+656,LIDC-IDRI-0999,1.25,250,1.25,0.0,0,regular,
+658,LIDC-IDRI-0997,0.75,538,0.7,0.0,0,regular,
+659,LIDC-IDRI-0996,1.0,231,1.0,0.0,0,regular,
+660,LIDC-IDRI-0995,2.5,124,2.5,0.0,0,regular,
+661,LIDC-IDRI-0994,1.25,545,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+663,LIDC-IDRI-0992,2.5,133,2.5,0.0,0,regular,
+664,LIDC-IDRI-0991,1.25,261,1.25,0.0,0,regular,
+665,LIDC-IDRI-0990,2.0,300,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+666,LIDC-IDRI-0989,2.0,290,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+667,LIDC-IDRI-0988,1.25,221,1.25,0.0,0,regular,
+668,LIDC-IDRI-0987,1.25,477,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+669,LIDC-IDRI-0986,2.5,127,2.5,0.0,0,regular,
+670,LIDC-IDRI-0985,0.75,419,0.7,0.0,0,regular,
+671,LIDC-IDRI-0984,1.25,257,1.25,0.0,0,regular,
+673,LIDC-IDRI-0982,1.25,541,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+674,LIDC-IDRI-0981,1.25,449,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+676,LIDC-IDRI-0979,1.25,249,1.25,0.0,0,regular,
+677,LIDC-IDRI-0978,1.5,350,0.75,0.0,0,sobreposto,passo 0.750 < espessura 1.500: reconstrucao sobreposta
+678,LIDC-IDRI-0977,2.5,115,2.5,0.0,0,regular,
+679,LIDC-IDRI-0976,2.5,255,1.25,0.0,0,sobreposto,passo 1.250 < espessura 2.500: reconstrucao sobreposta
+680,LIDC-IDRI-0975,1.25,273,1.25,0.0,0,regular,
+682,LIDC-IDRI-0973,2.0,193,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+684,LIDC-IDRI-0971,1.25,255,1.25,0.0,0,regular,
+685,LIDC-IDRI-0970,2.5,144,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+686,LIDC-IDRI-0969,1.25,255,1.25,0.0,0,regular,
+687,LIDC-IDRI-0968,1.0,337,1.0,0.0,0,regular,
+688,LIDC-IDRI-0967,2.5,125,2.5,0.0,0,regular,
+689,LIDC-IDRI-0966,2.5,154,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+690,LIDC-IDRI-0965,2.0,328,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+691,LIDC-IDRI-0964,2.5,125,2.5,0.0,0,regular,
+692,LIDC-IDRI-0963,1.25,481,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+695,LIDC-IDRI-0960,1.25,490,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+696,LIDC-IDRI-0959,1.25,223,1.25,0.0,0,regular,
+699,LIDC-IDRI-0956,1.25,229,1.25,0.0,0,regular,
+700,LIDC-IDRI-0955,1.25,463,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+701,LIDC-IDRI-0954,1.25,242,1.25,0.0,0,regular,
+702,LIDC-IDRI-0953,1.25,372,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+703,LIDC-IDRI-0952,2.5,133,2.5,0.0,0,regular,
+704,LIDC-IDRI-0951,1.0,300,1.0,0.0,0,regular,
+705,LIDC-IDRI-0950,1.25,273,1.25,0.0,0,regular,
+707,LIDC-IDRI-0948,2.0,162,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+708,LIDC-IDRI-0947,1.25,503,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+712,LIDC-IDRI-0943,1.25,477,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+713,LIDC-IDRI-0942,1.0,246,1.0,0.0,0,regular,
+714,LIDC-IDRI-0941,1.25,545,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+715,LIDC-IDRI-0940,1.25,474,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+716,LIDC-IDRI-0939,1.25,465,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+717,LIDC-IDRI-0938,1.25,244,1.25,0.0,0,regular,
+719,LIDC-IDRI-0936,1.25,227,1.25,0.0,0,regular,
+721,LIDC-IDRI-0934,2.5,128,2.5,0.0,0,regular,
+722,LIDC-IDRI-0933,2.0,179,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+723,LIDC-IDRI-0932,2.0,199,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+724,LIDC-IDRI-0931,2.0,201,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+725,LIDC-IDRI-0930,1.25,240,1.25,0.0,0,regular,
+726,LIDC-IDRI-0929,1.25,259,1.25,0.0,0,regular,
+727,LIDC-IDRI-0928,1.25,230,1.25,0.0,0,regular,
+728,LIDC-IDRI-0927,2.5,110,2.5,0.0,0,regular,
+730,LIDC-IDRI-0925,1.0,308,1.0,0.0,0,regular,
+731,LIDC-IDRI-0924,2.0,335,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+732,LIDC-IDRI-0923,0.75,483,0.7,0.0,0,regular,
+733,LIDC-IDRI-0922,1.25,413,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+734,LIDC-IDRI-0921,2.0,350,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+735,LIDC-IDRI-0920,1.25,487,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+736,LIDC-IDRI-0919,1.25,246,1.25,0.0,0,regular,
+737,LIDC-IDRI-0918,2.5,141,2.5,0.0,0,regular,
+738,LIDC-IDRI-0917,2.0,187,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+739,LIDC-IDRI-0916,2.5,127,2.5,0.0,0,regular,
+740,LIDC-IDRI-0915,1.25,267,1.25,0.0,0,regular,
+741,LIDC-IDRI-0914,1.25,261,1.25,0.0,0,regular,
+742,LIDC-IDRI-0913,1.5,400,0.75,0.0,0,sobreposto,passo 0.750 < espessura 1.500: reconstrucao sobreposta
+743,LIDC-IDRI-0912,2.0,315,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+744,LIDC-IDRI-0911,2.0,161,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+746,LIDC-IDRI-0909,1.25,506,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+747,LIDC-IDRI-0908,1.25,535,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+748,LIDC-IDRI-0907,1.25,239,1.25,0.0,0,regular,
+749,LIDC-IDRI-0906,2.5,154,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+750,LIDC-IDRI-0905,2.5,245,1.25,0.0,0,sobreposto,passo 1.250 < espessura 2.500: reconstrucao sobreposta
+752,LIDC-IDRI-0903,2.5,126,2.5,0.0,0,regular,
+753,LIDC-IDRI-0902,1.25,477,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+755,LIDC-IDRI-0900,1.25,442,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+756,LIDC-IDRI-0899,2.5,103,2.5,0.0,0,regular,
+757,LIDC-IDRI-0898,1.0,272,1.0,0.0,0,regular,
+758,LIDC-IDRI-0897,1.25,468,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+759,LIDC-IDRI-0896,2.0,166,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+760,LIDC-IDRI-0895,1.25,513,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+761,LIDC-IDRI-0894,1.25,252,1.25,0.0,0,regular,
+762,LIDC-IDRI-0893,1.0,290,1.0,0.0,0,regular,
+764,LIDC-IDRI-0891,2.5,139,2.5,0.0,0,regular,
+765,LIDC-IDRI-0890,1.25,230,1.25,0.0,0,regular,
+766,LIDC-IDRI-0889,2.5,121,2.5,0.0,0,regular,
+767,LIDC-IDRI-0888,2.0,270,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+768,LIDC-IDRI-0887,2.5,123,2.5,0.0,0,regular,
+770,LIDC-IDRI-0885,2.0,194,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+771,LIDC-IDRI-0884,1.25,245,1.25,0.0,0,regular,
+772,LIDC-IDRI-0883,2.0,368,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+773,LIDC-IDRI-0882,1.25,267,1.25,0.0,0,regular,
+774,LIDC-IDRI-0881,2.5,124,2.5,0.0,0,regular,
+775,LIDC-IDRI-0880,1.25,257,1.25,0.0,0,regular,
+776,LIDC-IDRI-0879,1.25,261,1.25,0.0,0,regular,
+777,LIDC-IDRI-0878,2.0,210,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+778,LIDC-IDRI-0877,1.25,248,1.25,0.0,0,regular,
+779,LIDC-IDRI-0876,1.25,567,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+780,LIDC-IDRI-0875,1.0,266,1.0,0.0,0,regular,
+781,LIDC-IDRI-0874,1.25,548,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+782,LIDC-IDRI-0873,2.5,124,2.5,0.0,0,regular,
+784,LIDC-IDRI-0871,1.25,232,1.25,0.0,0,regular,
+785,LIDC-IDRI-0870,2.0,189,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+786,LIDC-IDRI-0869,1.0,280,1.0,0.0,0,regular,
+787,LIDC-IDRI-0868,2.5,123,2.5,0.0,0,regular,
+788,LIDC-IDRI-0867,1.25,477,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+789,LIDC-IDRI-0866,1.25,241,1.25,0.0,0,regular,
+790,LIDC-IDRI-0865,2.5,141,2.5,0.0,0,regular,
+791,LIDC-IDRI-0864,2.0,219,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+792,LIDC-IDRI-0863,0.75,429,0.7,0.0,0,regular,
+793,LIDC-IDRI-0862,2.5,132,2.5,0.0,0,regular,
+795,LIDC-IDRI-0860,2.0,187,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+796,LIDC-IDRI-0859,1.0,278,1.0,0.0,0,regular,
+797,LIDC-IDRI-0858,1.25,417,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+798,LIDC-IDRI-0857,1.25,381,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+799,LIDC-IDRI-0856,1.25,484,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+801,LIDC-IDRI-0854,1.25,436,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+802,LIDC-IDRI-0853,2.5,127,2.5,0.0,0,regular,
+803,LIDC-IDRI-0852,2.0,171,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+804,LIDC-IDRI-0851,2.0,290,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+805,LIDC-IDRI-0850,1.25,240,1.25,0.0,0,regular,
+806,LIDC-IDRI-0849,1.25,458,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+807,LIDC-IDRI-0848,1.25,213,1.25,0.0,0,regular,
+808,LIDC-IDRI-0847,2.5,122,2.5,0.0,0,regular,
+809,LIDC-IDRI-0846,2.5,139,2.5,0.0,0,regular,
+810,LIDC-IDRI-0845,0.75,478,0.7,0.0,0,regular,
+811,LIDC-IDRI-0844,1.25,481,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+812,LIDC-IDRI-0843,0.75,493,0.7,0.0,0,regular,
+813,LIDC-IDRI-0842,2.5,138,2.5,0.0,0,regular,
+814,LIDC-IDRI-0841,2.5,129,2.5,0.0,0,regular,
+815,LIDC-IDRI-0840,2.5,155,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+816,LIDC-IDRI-0839,1.25,423,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+817,LIDC-IDRI-0838,1.25,484,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+818,LIDC-IDRI-0837,1.25,490,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+819,LIDC-IDRI-0836,2.0,171,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+820,LIDC-IDRI-0835,2.0,268,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+821,LIDC-IDRI-0834,1.0,280,1.0,0.0,0,regular,
+822,LIDC-IDRI-0833,1.25,246,1.25,0.0,0,regular,
+823,LIDC-IDRI-0832,2.5,127,2.5,0.0,0,regular,
+824,LIDC-IDRI-0831,1.25,509,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+825,LIDC-IDRI-0830,2.0,280,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+826,LIDC-IDRI-0829,1.25,244,1.25,0.0,0,regular,
+827,LIDC-IDRI-0828,1.25,255,1.25,0.0,0,regular,
+828,LIDC-IDRI-0827,1.25,461,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+829,LIDC-IDRI-0826,1.25,493,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+830,LIDC-IDRI-0825,1.0,301,1.0,0.0,0,regular,
+831,LIDC-IDRI-0824,2.5,132,2.5,0.0,0,regular,
+832,LIDC-IDRI-0823,2.5,131,2.5,0.0,0,regular,
+833,LIDC-IDRI-0822,2.0,300,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+834,LIDC-IDRI-0821,0.75,446,0.7,0.0,0,regular,
+835,LIDC-IDRI-0820,1.25,236,1.25,0.0,0,regular,
+836,LIDC-IDRI-0819,1.25,375,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+837,LIDC-IDRI-0818,1.25,178,1.25,0.0,0,regular,
+838,LIDC-IDRI-0817,2.0,203,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+839,LIDC-IDRI-0816,1.25,278,1.25,0.0,0,regular,
+840,LIDC-IDRI-0815,2.0,263,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+841,LIDC-IDRI-0814,1.0,200,1.0,0.0,0,regular,
+842,LIDC-IDRI-0813,2.0,157,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+844,LIDC-IDRI-0811,2.0,371,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+845,LIDC-IDRI-0810,1.25,458,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+846,LIDC-IDRI-0809,2.0,198,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+847,LIDC-IDRI-0808,1.0,348,1.0,0.0,0,regular,
+848,LIDC-IDRI-0807,0.75,535,0.7,0.0,0,regular,
+849,LIDC-IDRI-0806,1.25,481,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+850,LIDC-IDRI-0805,1.25,250,1.25,0.0,0,regular,
+851,LIDC-IDRI-0804,2.5,132,2.5,0.0,0,regular,
+852,LIDC-IDRI-0803,1.25,254,1.25,0.0,0,regular,
+853,LIDC-IDRI-0802,1.25,256,1.25,0.0,0,regular,
+854,LIDC-IDRI-0801,0.75,423,0.7,0.0,0,regular,
+855,LIDC-IDRI-0800,2.5,129,2.5,0.0,0,regular,
+856,LIDC-IDRI-0799,1.25,246,1.25,0.0,0,regular,
+858,LIDC-IDRI-0797,1.25,275,1.25,0.0,0,regular,
+859,LIDC-IDRI-0796,1.25,262,1.25,0.0,0,regular,
+860,LIDC-IDRI-0795,2.5,157,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+861,LIDC-IDRI-0794,1.5,392,0.75,0.0,0,sobreposto,passo 0.750 < espessura 1.500: reconstrucao sobreposta
+862,LIDC-IDRI-0793,2.0,416,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+863,LIDC-IDRI-0792,2.0,411,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+864,LIDC-IDRI-0791,2.0,360,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+865,LIDC-IDRI-0790,1.25,239,1.25,0.0,0,regular,
+866,LIDC-IDRI-0789,1.25,477,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+867,LIDC-IDRI-0788,2.0,202,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+868,LIDC-IDRI-0787,2.5,163,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+869,LIDC-IDRI-0786,2.5,144,2.5,0.0,0,regular,
+870,LIDC-IDRI-0785,1.25,220,1.25,0.0,0,regular,
+871,LIDC-IDRI-0784,1.25,458,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+872,LIDC-IDRI-0783,1.25,271,1.25,0.0,0,regular,
+873,LIDC-IDRI-0782,1.25,225,1.25,0.0,0,regular,
+874,LIDC-IDRI-0781,1.25,372,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+875,LIDC-IDRI-0780,1.25,369,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+876,LIDC-IDRI-0779,2.0,172,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+877,LIDC-IDRI-0778,1.25,481,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+878,LIDC-IDRI-0777,2.0,187,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+879,LIDC-IDRI-0776,1.0,327,1.0,0.0,0,regular,
+880,LIDC-IDRI-0775,1.0,334,1.0,0.0,0,regular,
+881,LIDC-IDRI-0774,1.25,264,1.25,0.0,0,regular,
+883,LIDC-IDRI-0772,2.5,149,2.5,0.0,0,regular,
+884,LIDC-IDRI-0771,2.0,280,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+885,LIDC-IDRI-0770,1.0,347,1.0,0.0,0,regular,
+886,LIDC-IDRI-0769,1.25,208,1.25,0.0,0,regular,
+887,LIDC-IDRI-0768,2.0,195,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+888,LIDC-IDRI-0767,2.0,204,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+889,LIDC-IDRI-0766,1.0,280,1.0,0.0,0,regular,
+890,LIDC-IDRI-0765,2.5,127,2.5,0.0,0,regular,
+891,LIDC-IDRI-0764,2.5,146,2.5,0.0,0,regular,
+892,LIDC-IDRI-0763,1.0,290,1.0,0.0,0,regular,
+893,LIDC-IDRI-0762,1.25,241,1.25,0.0,0,regular,
+894,LIDC-IDRI-0761,1.0,265,1.0,0.0,0,regular,
+895,LIDC-IDRI-0760,1.25,196,1.25,0.0,0,regular,
+896,LIDC-IDRI-0759,2.5,136,2.5,0.0,0,regular,
+897,LIDC-IDRI-0758,1.25,481,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+898,LIDC-IDRI-0757,1.25,477,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+899,LIDC-IDRI-0756,1.25,516,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+900,LIDC-IDRI-0755,2.5,127,2.5,0.0,0,regular,
+901,LIDC-IDRI-0754,1.25,240,1.25,0.0,0,regular,
+902,LIDC-IDRI-0753,2.0,183,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+903,LIDC-IDRI-0752,1.25,247,1.25,0.0,0,regular,
+907,LIDC-IDRI-0748,2.5,148,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+908,LIDC-IDRI-0747,2.5,133,2.5,0.0,0,regular,
+909,LIDC-IDRI-0746,2.5,151,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+910,LIDC-IDRI-0745,2.0,171,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+911,LIDC-IDRI-0744,0.6,636,0.5,0.0,0,regular,
+912,LIDC-IDRI-0743,2.0,209,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+913,LIDC-IDRI-0742,1.0,300,1.0,0.0,0,regular,
+915,LIDC-IDRI-0740,2.0,199,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+916,LIDC-IDRI-0739,1.25,548,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+917,LIDC-IDRI-0738,2.5,140,2.5,0.0,0,regular,
+919,LIDC-IDRI-0736,1.0,250,1.0,0.0,0,regular,
+920,LIDC-IDRI-0735,1.0,280,1.0,0.0,0,regular,
+921,LIDC-IDRI-0734,1.25,481,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+922,LIDC-IDRI-0733,0.75,529,0.7,0.0,0,regular,
+923,LIDC-IDRI-0732,2.0,167,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+924,LIDC-IDRI-0731,1.25,420,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+925,LIDC-IDRI-0730,1.25,237,1.25,0.0,0,regular,
+926,LIDC-IDRI-0729,1.0,341,1.0,0.0,0,regular,
+927,LIDC-IDRI-0728,1.25,490,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+928,LIDC-IDRI-0727,1.25,519,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+929,LIDC-IDRI-0726,0.75,421,0.7,0.0,0,regular,
+930,LIDC-IDRI-0725,1.25,240,1.25,0.0,0,regular,
+932,LIDC-IDRI-0723,1.25,261,1.25,0.0,0,regular,
+933,LIDC-IDRI-0722,1.25,509,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+934,LIDC-IDRI-0721,2.5,121,2.5,0.0,0,regular,
+935,LIDC-IDRI-0720,2.0,281,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+937,LIDC-IDRI-0718,1.25,259,1.25,0.0,0,regular,
+938,LIDC-IDRI-0717,0.75,425,0.7,0.0,0,regular,
+939,LIDC-IDRI-0716,2.5,124,2.5,0.0,0,regular,
+940,LIDC-IDRI-0715,1.25,501,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+941,LIDC-IDRI-0714,1.25,235,1.25,0.0,0,regular,
+943,LIDC-IDRI-0712,2.0,198,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+944,LIDC-IDRI-0711,2.5,139,2.5,0.0,0,regular,
+945,LIDC-IDRI-0710,1.25,471,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+947,LIDC-IDRI-0708,2.5,133,2.5,0.0,0,regular,
+950,LIDC-IDRI-0705,1.25,481,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+951,LIDC-IDRI-0704,1.25,487,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+952,LIDC-IDRI-0703,2.0,295,1.0,0.0,0,sobreposto,passo 1.000 < espessura 2.000: reconstrucao sobreposta
+953,LIDC-IDRI-0702,1.25,445,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+954,LIDC-IDRI-0701,1.25,268,1.25,0.0,0,regular,
+955,LIDC-IDRI-0700,1.25,519,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+956,LIDC-IDRI-0699,1.25,231,1.25,0.0,0,regular,
+957,LIDC-IDRI-0698,1.25,481,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+958,LIDC-IDRI-0697,1.25,210,1.25,0.0,0,regular,
+959,LIDC-IDRI-0696,1.25,401,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+960,LIDC-IDRI-0695,2.5,144,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+961,LIDC-IDRI-0694,2.5,137,2.5,0.0,0,regular,
+962,LIDC-IDRI-0693,2.5,131,2.5,0.0,0,regular,
+963,LIDC-IDRI-0692,2.0,176,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+965,LIDC-IDRI-0690,2.5,129,2.5,0.0,0,regular,
+966,LIDC-IDRI-0689,1.25,272,1.25,0.0,0,regular,
+967,LIDC-IDRI-0688,1.25,426,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+968,LIDC-IDRI-0687,2.5,132,2.5,0.0,0,regular,
+969,LIDC-IDRI-0686,1.25,238,1.25,0.0,0,regular,
+971,LIDC-IDRI-0684,1.25,538,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+972,LIDC-IDRI-0683,2.5,138,2.5,0.0,0,regular,
+973,LIDC-IDRI-0682,1.25,298,1.25,0.0,0,regular,
+974,LIDC-IDRI-0681,1.25,497,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+975,LIDC-IDRI-0680,2.5,116,2.5,0.0,0,regular,
+976,LIDC-IDRI-0679,2.5,130,2.5,0.0,0,regular,
+977,LIDC-IDRI-0678,2.5,164,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+978,LIDC-IDRI-0677,2.5,132,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+979,LIDC-IDRI-0676,1.25,449,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+980,LIDC-IDRI-0675,2.5,170,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+981,LIDC-IDRI-0674,1.0,375,1.0,0.0,0,regular,
+982,LIDC-IDRI-0673,1.25,519,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+983,LIDC-IDRI-0672,1.25,462,0.625,0.625,3,irregular,3 de 461 passos fora do mediano; maior desvio 0.625 mm
+984,LIDC-IDRI-0671,1.25,251,1.25,0.0,0,regular,
+985,LIDC-IDRI-0670,2.0,172,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+986,LIDC-IDRI-0669,1.25,452,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+987,LIDC-IDRI-0668,2.5,120,2.5,0.0,0,regular,
+988,LIDC-IDRI-0667,1.25,472,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+989,LIDC-IDRI-0666,2.5,145,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+990,LIDC-IDRI-0665,1.25,602,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+991,LIDC-IDRI-0664,1.25,519,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+992,LIDC-IDRI-0663,1.25,474,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+993,LIDC-IDRI-0662,1.25,240,1.25,0.0,0,regular,
+994,LIDC-IDRI-0661,1.25,240,1.25,0.0,0,regular,
+995,LIDC-IDRI-0660,1.25,241,1.25,0.0,0,regular,
+996,LIDC-IDRI-0659,2.0,192,1.8,0.0,0,sobreposto,passo 1.800 < espessura 2.000: reconstrucao sobreposta
+997,LIDC-IDRI-0658,1.25,269,1.25,0.0,0,regular,
+998,LIDC-IDRI-0657,1.25,413,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+999,LIDC-IDRI-0656,1.25,280,1.25,0.0,0,regular,
+1000,LIDC-IDRI-0655,0.75,558,0.7,0.0,0,regular,
+1001,LIDC-IDRI-0654,1.25,237,1.25,0.0,0,regular,
+1002,LIDC-IDRI-0653,2.5,133,2.5,0.0,0,regular,
+1003,LIDC-IDRI-0652,2.5,179,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+1004,LIDC-IDRI-0651,0.9,580,0.45,0.0001,0,sobreposto,passo 0.450 < espessura 0.900: reconstrucao sobreposta
+1005,LIDC-IDRI-0650,1.25,241,1.25,0.0,0,regular,
+1006,LIDC-IDRI-0649,1.25,264,1.25,0.0,0,regular,
+1007,LIDC-IDRI-0648,1.0,764,0.5,0.0,0,sobreposto,passo 0.500 < espessura 1.000: reconstrucao sobreposta
+1008,LIDC-IDRI-0647,1.25,519,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+1009,LIDC-IDRI-0646,0.75,461,0.7,0.0,0,regular,
+1010,LIDC-IDRI-0645,1.25,240,1.25,0.0,0,regular,
+1011,LIDC-IDRI-0644,1.0,220,1.0,0.0,0,regular,
+1012,LIDC-IDRI-0643,2.5,128,2.5,0.0,0,regular,
+1014,LIDC-IDRI-0641,2.5,156,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta
+1016,LIDC-IDRI-0639,1.25,413,0.625,0.0,0,sobreposto,passo 0.625 < espessura 1.250: reconstrucao sobreposta
+1017,LIDC-IDRI-0638,2.5,140,2.0,0.0,0,sobreposto,passo 2.000 < espessura 2.500: reconstrucao sobreposta

@@ -1,0 +1,2 @@
+nodule_id,patient_id,scan_id,cluster_idx,rotulo_original,split_original,passo_mediano_mm,maior_desvio_mm,distancia_ate_falha_cortes,distancia_ate_falha_mm,motivo,referencia
+LIDC-IDRI-0672_scan983_cluster000,LIDC-IDRI-0672,983,0,benigno,treino,0.625,0.625,8.2,5.1,"falha de espacamento a 5 mm do centroide, dentro da janela de 64 mm do patch",docs/criterios_selecao.md#32
