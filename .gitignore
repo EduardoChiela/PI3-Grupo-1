@@ -6,3 +6,6 @@
 *__pycache__/
 *.ipynb_checkpoints/
 .venv/
+
+# patches/ entra no repositorio de proposito: ~18 MB, e o que permite
+# ao grupo trabalhar sem os 133 GB de DICOM. Nao adicionar patches/ aqui.
