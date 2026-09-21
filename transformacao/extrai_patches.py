@@ -430,83 +430,65 @@ def janelar_hu(
         np.float32
     )
 
-def criar_patch_2_5d(
-    cubo
-):
+def criar_patch_2_5d(cubo):
     """
-    Cria um patch 2.5D usando três planos:
+    Cria um patch 2.5D usando três planos ortogonais.
 
+    Convenção do volume retornado pelo pylidc:
+        eixo 0 = linha (i)
+        eixo 1 = coluna (j)
+        eixo 2 = corte (k)
+
+    Canais gerados:
         canal 0 = axial
         canal 1 = coronal
         canal 2 = sagital
 
-    O resultado terá formato:
-
+    Resultado:
         (3, 64, 64)
     """
 
-    # Como o cubo possui 64 posições:
-    #
-    # 0 até 63
-    #
-    # escolhemos aproximadamente o centro.
+    # Posição central do cubo 64x64x64.
     centro = PATCH_MM // 2
 
-
     # --------------------------------------------------------
-    # PLANO AXIAL
+    # AXIAL
     # --------------------------------------------------------
-    #
-    # Mantemos X e Y.
-    # Fixamos Z.
-    #
-    # Resultado:
-    #
-    # 64 x 64
+    # Mantém linha e coluna.
+    # Fixa o eixo dos cortes (k).
     axial = cubo[
         :,
         :,
         centro
     ]
 
-
     # --------------------------------------------------------
-    # PLANO CORONAL
+    # CORONAL
     # --------------------------------------------------------
-    #
-    # Mantemos X e Z.
-    # Fixamos Y.
+    # Fixa o eixo das linhas (i).
+    # Mantém coluna e corte.
     coronal = cubo[
-        :,
         centro,
+        :,
         :
     ]
 
-
     # --------------------------------------------------------
-    # PLANO SAGITAL
+    # SAGITAL
     # --------------------------------------------------------
-    #
-    # Mantemos Y e Z.
-    # Fixamos X.
+    # Mantém linha e corte.
+    # Fixa o eixo das colunas (j).
     sagital = cubo[
-        centro,
         :,
+        centro,
         :
     ]
 
-
-    # Empilha as três imagens.
+    # Empilha os três planos na ordem definida pelo projeto:
     #
-    # Antes:
-    #
-    # axial    -> (64, 64)
-    # coronal  -> (64, 64)
-    # sagital  -> (64, 64)
-    #
-    # Depois:
-    #
-    # patch -> (3, 64, 64)
+    # canal 0 = axial
+    # canal 1 = coronal
+    # canal 2 = sagital
     patch = np.stack(
         [
             axial,
@@ -516,11 +498,7 @@ def criar_patch_2_5d(
         axis=0
     )
 
-
-    # A Sprint pede float16.
-    return patch.astype(
-        np.float16
-    )
+    return patch.astype(np.float16)
     
 def extrair_patch_2_5d(
     volume,
@@ -1261,6 +1239,347 @@ def teste_nodulo_real():
         linha
 )   
 
+def carregar_nodulos_elegiveis():
+    """
+    Carrega os nódulos selecionados e remove os 4 nódulos
+    metodologicamente excluídos.
+
+    Esperado:
+        751 nódulos brutos
+        - 4 excluídos
+        = 747 nódulos elegíveis
+    """
+
+    df = pd.read_csv(
+        "selecao/nodulos_com_split.csv"
+    )
+
+    ids_excluidos = {
+        "LIDC-IDRI-0055_scan66_cluster000",
+        "LIDC-IDRI-0137_scan140_cluster002",
+        "LIDC-IDRI-0672_scan983_cluster000",
+        "LIDC-IDRI-0815_scan840_cluster000",
+    }
+
+    print(
+        "Nódulos antes do filtro:",
+        len(df)
+    )
+
+    print(
+        "Nódulos excluídos:",
+        len(ids_excluidos)
+    )
+
+    for nodule_id in sorted(ids_excluidos):
+        print(
+            "  -",
+            nodule_id
+        )
+
+    df_elegiveis = df[
+        ~df["nodule_id"].isin(ids_excluidos)
+    ].copy()
+
+    print(
+        "Nódulos elegíveis:",
+        len(df_elegiveis)
+    )
+
+    if len(df) == 751:
+
+        assert len(df_elegiveis) == 747, (
+            f"Esperados 747 nódulos elegíveis, "
+            f"mas foram encontrados {len(df_elegiveis)}."
+        )
+
+    return df_elegiveis
+
+def gerar_patches_paciente(
+    patient_id="LIDC-IDRI-0082"
+):
+    """
+    Gera os patches 2.5D de todos os nódulos
+    de um paciente específico.
+
+    Usado para validar o pipeline antes de
+    processar todo o dataset.
+    """
+
+    print()
+    print("=" * 60)
+    print("GERAÇÃO DE PATCHES DO PACIENTE")
+    print("=" * 60)
+    print("Paciente:", patient_id)
+
+    # --------------------------------------------------------
+    # 1. CARREGA O CSV COM OS NÓDULOS
+    # --------------------------------------------------------
+
+    df = carregar_nodulos_elegiveis()
+
+    # --------------------------------------------------------
+    # 2. FILTRA SOMENTE O PACIENTE 0082
+    # --------------------------------------------------------
+
+    df_paciente = df[
+        df["patient_id"] == patient_id
+    ].copy()
+
+    if df_paciente.empty:
+        raise ValueError(
+            f"Nenhum nódulo encontrado para {patient_id}."
+        )
+
+    print(
+        "Nódulos encontrados:",
+        len(df_paciente)
+    )
+
+    # --------------------------------------------------------
+    # 3. LISTAS PARA GUARDAR OS RESULTADOS
+    # --------------------------------------------------------
+
+    patches = []
+    manifesto = []
+    falhas = []
+
+    # --------------------------------------------------------
+    # 4. PROCESSA CADA NÓDULO
+    # --------------------------------------------------------
+
+    for numero, linha in enumerate(
+        df_paciente.itertuples(index=False),
+        start=1
+    ):
+
+        print()
+        print("-" * 60)
+        print(
+            f"Nódulo {numero}/{len(df_paciente)}"
+        )
+        print("-" * 60)
+
+        try:
+
+            patch = extrair_nodulo_real(
+                linha
+            )
+
+            # Verificações de segurança.
+            if patch.shape != (3, 64, 64):
+                raise ValueError(
+                    f"Shape inesperado: {patch.shape}"
+                )
+
+            if patch.dtype != np.float16:
+                raise ValueError(
+                    f"Tipo inesperado: {patch.dtype}"
+                )
+
+            if patch.min() < 0 or patch.max() > 1:
+                raise ValueError(
+                    "Patch possui valores fora de [0, 1]."
+                )
+
+            patches.append(
+                patch
+            )
+
+            manifesto.append(
+                {
+                    "nodule_id": linha.nodule_id,
+                    "patient_id": linha.patient_id,
+                    "split": linha.split,
+                    "label": linha.rotulo_binario
+                }
+            )
+
+            print(
+                "OK:",
+                linha.nodule_id
+            )
+
+        except Exception as erro:
+
+            print(
+                "ERRO:",
+                linha.nodule_id
+            )
+
+            print(
+                erro
+            )
+
+            falhas.append(
+                {
+                    "nodule_id": linha.nodule_id,
+                    "patient_id": linha.patient_id,
+                    "erro": str(erro)
+                }
+            )
+
+    # --------------------------------------------------------
+    # 5. CONFERE SE ALGUM PATCH FOI GERADO
+    # --------------------------------------------------------
+
+    if not patches:
+        raise RuntimeError(
+            "Nenhum patch foi gerado."
+        )
+
+    # --------------------------------------------------------
+    # 6. JUNTA TODOS OS PATCHES
+    # --------------------------------------------------------
+
+    patches = np.stack(
+        patches,
+        axis=0
+    ).astype(
+        np.float16
+    )
+
+    # Resultado:
+    #
+    # (N, 3, 64, 64)
+
+    # --------------------------------------------------------
+    # 7. CRIA A PASTA
+    # --------------------------------------------------------
+
+    pasta_patches = Path(
+        "patches"
+    )
+
+    pasta_patches.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    # --------------------------------------------------------
+    # 8. SALVA O NPZ
+    # --------------------------------------------------------
+    #
+    # Por enquanto usamos um arquivo específico do 0082
+    # para não substituir o NPZ completo do projeto.
+
+    caminho_npz = (
+        pasta_patches
+        / "patches_2_5d_0082.npz"
+    )
+
+    np.savez_compressed(
+        caminho_npz,
+        patches=patches,
+        nodule_id=np.array(
+            [
+                item["nodule_id"]
+                for item in manifesto
+            ]
+        )
+    )
+
+    # --------------------------------------------------------
+    # 9. SALVA O MANIFESTO
+    # --------------------------------------------------------
+
+    df_manifesto = pd.DataFrame(
+        manifesto
+    )
+
+    caminho_manifesto = Path(
+        "transformacao/"
+        "manifest_patches_0082.csv"
+    )
+
+    df_manifesto.to_csv(
+        caminho_manifesto,
+        index=False
+    )
+
+    # --------------------------------------------------------
+    # 10. SALVA AS FALHAS, SE EXISTIREM
+    # --------------------------------------------------------
+
+    if falhas:
+
+        caminho_falhas = Path(
+            "transformacao/"
+            "falhas_patches_0082.csv"
+        )
+
+        pd.DataFrame(
+            falhas
+        ).to_csv(
+            caminho_falhas,
+            index=False
+        )
+
+        print()
+        print(
+            "Falhas salvas em:",
+            caminho_falhas
+        )
+
+    # --------------------------------------------------------
+    # RESULTADO FINAL
+    # --------------------------------------------------------
+
+    print()
+    print("=" * 60)
+    print("PROCESSAMENTO FINALIZADO")
+    print("=" * 60)
+
+    print(
+        "Paciente:",
+        patient_id
+    )
+
+    print(
+        "Nódulos encontrados:",
+        len(df_paciente)
+    )
+
+    print(
+        "Patches gerados:",
+        len(patches)
+    )
+
+    print(
+        "Falhas:",
+        len(falhas)
+    )
+
+    print(
+        "Shape final:",
+        patches.shape
+    )
+
+    print(
+        "Tipo:",
+        patches.dtype
+    )
+
+    print(
+        "Mínimo:",
+        patches.min()
+    )
+
+    print(
+        "Máximo:",
+        patches.max()
+    )
+
+    print(
+        "NPZ:",
+        caminho_npz
+    )
+
+    print(
+        "Manifesto:",
+        caminho_manifesto
+    )
+
 def teste_sintetico():
     """
     Cria um volume 3D artificial para testar
@@ -1445,11 +1764,11 @@ def teste_sintetico():
     
 if __name__ == "__main__":
 
-    # Sempre podemos executar o teste sintético.
+    # Confirma que o pipeline básico continua funcionando.
     teste_sintetico()
 
-
-    # Quando os arquivos DICOM estiverem disponíveis
-    # e configurados no pylidc, descomente:
-    #
-    teste_nodulo_real()
+    # Processa todos os nódulos disponíveis
+    # do paciente LIDC-IDRI-0082.
+    gerar_patches_paciente(
+        "LIDC-IDRI-0082"
+    )

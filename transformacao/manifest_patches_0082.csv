@@ -1,0 +1,2 @@
+nodule_id,patient_id,split,label
+LIDC-IDRI-0082_scan90_cluster000,LIDC-IDRI-0082,treino,maligno
