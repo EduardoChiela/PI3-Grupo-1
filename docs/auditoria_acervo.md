@@ -1,11 +1,48 @@
 # Auditoria do acervo local LIDC-IDRI
 
+## Atualização (Sprint 4): nenhum nódulo foi perdido
+
+> [!IMPORTANT]
+> O "N real de 704 de 751" registrado na auditoria original (abaixo) **foi superado** e não deve mais ser usado. O N vigente é **747 nódulos**.
+
+A extração dos patches 2.5D (`transformacao/extrai_patches.py`) **não** rodou sobre o acervo local `D:\lidc_idri` auditado abaixo. Ela rodou sobre a **cópia do Google Drive** (`G:\Meu Drive\PI3-Grupo 01\Dataset\db\lidc_idri`), que tem os **1.010 pacientes** completos — a mesma cópia usada para gerar `selecao/acervo_disponivel.csv`.
+
+| Checagem | Resultado |
+|---|---:|
+| Nódulos no split original (`selecao/nodulos_com_split.csv`) | 751 |
+| Excluídos por critério metodológico (não por falta de imagem) | 4 |
+| Nódulos elegíveis para extração | 747 |
+| Patches extraídos (`transformacao/manifest_patches.csv`) | **747 de 747** |
+| Nódulos sem patch (`transformacao/patches_nao_extraidos.csv`) | **0** (arquivo só com cabeçalho) |
+
+- **Os 47 nódulos que estavam sem imagem no acervo local não foram perdidos.** A falta de imagem era uma limitação daquela cópia local (71 pastas vazias), não do dataset. Na cópia do Drive todos eles têm imagem e foram extraídos.
+- **Os 4 nódulos que saíram** foram excluídos por critério metodológico, documentado em `docs/criterios_selecao.md`:
+  - rótulo instável conforme o limiar de agrupamento: `LIDC-IDRI-0055_scan66_cluster000`, `LIDC-IDRI-0137_scan140_cluster002`, `LIDC-IDRI-0815_scan840_cluster000` (`selecao/excluidos_agrupamento_instavel.csv`);
+  - falha de espaçamento dentro da janela do patch: `LIDC-IDRI-0672_scan983_cluster000` (`selecao/excluidos_espacamento_irregular.csv`).
+- **O split não foi refeito.** Cada um dos 747 nódulos mantém o mesmo `split` e o mesmo rótulo de `nodulos_com_split.csv`; os números atualizados estão em `selecao/split_por_paciente_resumo.json`:
+
+| Split | Nódulos | Pacientes | Benigno | Maligno | Taxa maligno |
+|---|---:|---:|---:|---:|---:|
+| treino | 522 | 322 | 270 | 252 | 0,4828 |
+| validação | 114 | 70 | 59 | 55 | 0,4825 |
+| teste | 111 | 69 | 58 | 53 | 0,4775 |
+| **total** | **747** | **461** | **387** | **360** | 0,4819 |
+
+Pesos de classe do treino (`w = N / (2 × n_da_classe)`, N = 522): **benigno 0,966667 · maligno 1,035714**.
+
+---
+
+## Registro histórico: auditoria original (12/09/2026)
+
+> [!NOTE]
+> O texto a seguir é mantido como registro da auditoria feita na Sprint 3 sobre a cópia local `D:\lidc_idri`. As observações sobre a integridade e a cobertura dessa cópia continuam válidas, mas a conclusão de que "704 de 751 é o N real da Sprint 3" **foi superada** pela seção acima: a extração usou a cópia do Drive e nenhum nódulo ficou sem imagem.
+
 - **Responsável pela auditoria:** Wessel2007
 - **Data da auditoria:** 12/09/2026
 - **Acervo auditado:** `D:\lidc_idri` (baixado via NBIA Data Retriever, ~50 Mbps)
 - **Configuração pylidc:** `%USERPROFILE%\pylidc.conf` com `path = D:\lidc_idri`
 
-## Resumo
+### Resumo
 
 | Checagem | Resultado observado | Situação |
 |---|---:|---|
@@ -17,7 +54,7 @@
 | Leitura via `scan.to_volume()` (5 exames) | Sucesso em 5/5, ~2,43 s em média | Conforme |
 | Faixa de HU observada | Ar/pulmão negativo, sem sinal de rescale duplicado | Conforme |
 
-## 1. Contagem do acervo local
+### 1. Contagem do acervo local
 
 Percorrendo recursivamente `D:\lidc_idri` (script `selecao/gerar_acervo.py`), foram encontradas **1.010 pastas** no padrão `LIDC-IDRI-XXXX`, o que bate com o total de pacientes da coleção completa do TCIA.
 
@@ -27,7 +64,7 @@ Percorrendo recursivamente `D:\lidc_idri` (script `selecao/gerar_acervo.py`), fo
 
 **Divergência encontrada:** o commit anterior (`selecao/acervo_disponivel.csv`, gerado por outro integrante a partir de uma cópia no Google Drive, `G:\Meu Drive\PI3-Grupo 01\Dataset\db\lidc_idri`) registrava **244.496 arquivos** para os mesmos 1.010 pacientes. A cópia local via NBIA Data Retriever auditada aqui tem **201.820 arquivos**, uma diferença de **42.676 arquivos (~17,5% a menos)**. Isso é consistente com as 71 pastas vazias encontradas e sugere que a cópia local está incompleta em relação à cópia usada para gerar o manifesto anterior — não há indício, porém, de arquivos corrompidos ou duplicados na cópia local.
 
-## 2. Cruzamento com `nodulos_selecionados.csv`
+### 2. Cruzamento com `nodulos_selecionados.csv`
 
 Cruzando os 751 nódulos de `selecao/nodulos_selecionados.csv` (coluna `patient_id`) com os pacientes que têm `n_dcm > 0` em `acervo_disponivel.csv`:
 
@@ -44,7 +81,7 @@ Distribuição benigno/maligno **apenas entre os 704 nódulos disponíveis**:
 
 O resultado foi salvo em `selecao/nodulos_com_disponibilidade.csv`, com a coluna adicional `tem_imagem`.
 
-## 3. Validação de leitura com pylidc
+### 3. Validação de leitura com pylidc
 
 Foram escolhidos 5 `patient_id` distintos com `n_dcm > 0` (`LIDC-IDRI-0161`, `LIDC-IDRI-0867`, `LIDC-IDRI-0532`, `LIDC-IDRI-0683`, `LIDC-IDRI-0879`), com o pylidc configurado para `D:\lidc_idri`. Para cada um, `scan.to_volume()` foi executado e cronometrado:
 
@@ -60,7 +97,7 @@ Foram escolhidos 5 `patient_id` distintos com `n_dcm > 0` (`LIDC-IDRI-0161`, `LI
 
 **Faixa de HU:** os valores mínimos (-1024 a -3024) correspondem ao padrão de padding fora do campo de reconstrução do tomógrafo (comum em CT, valor abaixo do ar real de -1000 HU) e não a um erro de leitura. As medianas do slice central (-406 a -909 HU) são compatíveis com tecido pulmonar predominando no corte, com valores mais altos em cortes que atravessam mediastino/coração. Os máximos (até 3071 HU) são compatíveis com osso/calcificação e ficam dentro do intervalo típico de um CT com rescale aplicado uma única vez. **Não há sinal de rescale duplicado** (que produziria valores de ar fora da faixa de milhares, ou pulmão fora da faixa de centenas negativas).
 
-## Conclusão
+### Conclusão
 
 O acervo local tem a estrutura de pastas esperada (1.010 pacientes, padrão `LIDC-IDRI-XXXX`) e nenhuma pasta de série duplicada, mas **71 pastas de paciente estão vazias**, e o total de arquivos `.dcm` (201.820) é cerca de 17,5% menor que o registrado no manifesto anterior gerado a partir de outra cópia do acervo (244.496 arquivos). Isso indica que o download via NBIA Data Retriever pode estar incompleto para uma parte dos pacientes e deveria ser investigado/complementado antes de tratar o acervo local como definitivo.
 
