@@ -13,40 +13,42 @@
     "teste": 0.15
   },
   "seed": 42,
+  "fonte": "transformacao/manifest_patches.csv, N = 747",
+  "observacao": "split original de 751 nodulos (split_por_paciente.py, seed 42) mantido sem nova execucao; removidos apenas os 4 nodulos excluidos (selecao/excluidos_agrupamento_instavel.csv e selecao/excluidos_espacamento_irregular.csv): 3 do treino e 1 do teste. Pesos recalculados sobre as 522 amostras de treino com w = N / (2 x n_da_classe), como em preprocessamento/pesos_classe.py",
   "pesos_treino": {
-    "benigno": 0.968635,
-    "maligno": 1.033465
+    "benigno": 0.966667,
+    "maligno": 1.035714
   },
   "distribuicao": [
     {
       "split": "treino",
-      "linhas": 525,
-      "proporcao_linhas": 0.6991,
-      "pacientes": 323,
-      "proporcao_pacientes": 0.6976,
-      "benigno": 271,
-      "maligno": 254,
-      "taxa_maligno": 0.4838
+      "linhas": 522,
+      "proporcao_linhas": 0.6988,
+      "pacientes": 322,
+      "proporcao_pacientes": 0.6985,
+      "benigno": 270,
+      "maligno": 252,
+      "taxa_maligno": 0.4828
     },
     {
       "split": "validacao",
       "linhas": 114,
-      "proporcao_linhas": 0.1518,
+      "proporcao_linhas": 0.1526,
       "pacientes": 70,
-      "proporcao_pacientes": 0.1512,
+      "proporcao_pacientes": 0.1518,
       "benigno": 59,
       "maligno": 55,
       "taxa_maligno": 0.4825
     },
     {
       "split": "teste",
-      "linhas": 112,
-      "proporcao_linhas": 0.1491,
-      "pacientes": 70,
-      "proporcao_pacientes": 0.1512,
+      "linhas": 111,
+      "proporcao_linhas": 0.1486,
+      "pacientes": 69,
+      "proporcao_pacientes": 0.1497,
       "benigno": 58,
-      "maligno": 54,
-      "taxa_maligno": 0.4821
+      "maligno": 53,
+      "taxa_maligno": 0.4775
     }
   ]
 }
