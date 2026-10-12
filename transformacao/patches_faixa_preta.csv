@@ -1,0 +1,16 @@
+idx,nodule_id,patient_id,split,label,largura_px,area_padding_px,pct_padding,eixo,causa,diametro_mm,raio_mm,margem_mm,folga_mm,lesao_truncada
+696,LIDC-IDRI-0715_scan940_cluster000,LIDC-IDRI-0715,treino,maligno,6,768,6.25,Z,limite do exame (apice/base da cobertura),35.0,17.5,26.5,9.0,False
+553,LIDC-IDRI-0951_scan704_cluster000,LIDC-IDRI-0951,treino,benigno,13,1796,14.62,X,borda do campo reconstruido (nodulo periferico),18.8,9.4,18.5,9.1,False
+397,LIDC-IDRI-0463_scan468_cluster000,LIDC-IDRI-0463,teste,benigno,17,2176,17.71,X,borda do campo reconstruido (nodulo periferico),9.0,4.5,15.5,11.0,False
+314,LIDC-IDRI-0312_scan312_cluster000,LIDC-IDRI-0312,treino,maligno,8,512,4.17,X,borda do campo reconstruido (nodulo periferico),9.8,4.9,24.5,19.6,False
+542,LIDC-IDRI-0985_scan670_cluster000,LIDC-IDRI-0985,treino,benigno,9,1152,9.38,X,borda do campo reconstruido (nodulo periferico),7.8,3.9,23.5,19.6,False
+337,LIDC-IDRI-0369_scan373_cluster000,LIDC-IDRI-0369,treino,benigno,7,896,7.29,Z,limite do exame (apice/base da cobertura),9.0,4.5,25.5,21.0,False
+627,LIDC-IDRI-0838_scan817_cluster001,LIDC-IDRI-0838,treino,benigno,7,970,7.89,X,borda do campo reconstruido (nodulo periferico),6.4,3.2,24.4,21.2,False
+19,LIDC-IDRI-0016_scan27_cluster005,LIDC-IDRI-0016,teste,maligno,1,128,1.04,Z,limite do exame (apice/base da cobertura),18.6,9.3,31.5,22.2,False
+319,LIDC-IDRI-0318_scan319_cluster000,LIDC-IDRI-0318,teste,benigno,4,512,4.17,X,borda do campo reconstruido (nodulo periferico),11.4,5.7,28.5,22.8,False
+338,LIDC-IDRI-0371_scan375_cluster000,LIDC-IDRI-0371,treino,benigno,4,668,5.44,X,borda do campo reconstruido (nodulo periferico),7.6,3.8,26.9,23.1,False
+311,LIDC-IDRI-0305_scan305_cluster007,LIDC-IDRI-0305,teste,maligno,2,256,2.08,Z,limite do exame (apice/base da cobertura),14.0,7.0,30.5,23.5,False
+604,LIDC-IDRI-0866_scan789_cluster001,LIDC-IDRI-0866,treino,benigno,4,258,2.1,X,borda do campo reconstruido (nodulo periferico),9.0,4.5,28.5,24.0,False
+725,LIDC-IDRI-0655_scan1000_cluster001,LIDC-IDRI-0655,treino,benigno,4,512,4.17,X,borda do campo reconstruido (nodulo periferico),7.0,3.5,28.5,25.0,False
+516,LIDC-IDRI-0637_scan642_cluster001,LIDC-IDRI-0637,treino,benigno,2,259,2.11,X,borda do campo reconstruido (nodulo periferico),8.4,4.2,30.5,26.3,False
+316,LIDC-IDRI-0312_scan312_cluster002,LIDC-IDRI-0312,treino,maligno,1,64,0.52,X,borda do campo reconstruido (nodulo periferico),6.8,3.4,31.5,28.1,False
