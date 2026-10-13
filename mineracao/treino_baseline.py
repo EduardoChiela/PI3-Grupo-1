@@ -16,6 +16,9 @@ Regras que o script impõe:
 Uso, na raiz do repositório:
   python -m mineracao.treino_baseline                      # sintético
   python -m mineracao.treino_baseline --liberado-11 --npz patches/patches_2_5d.npz
+
+  Seed fixa: 42.
+Versões usadas: Python 3.14.5, numpy 2.4.5, pandas 3.0.5, torch 2.14.1 (CPU).
 """
 from __future__ import annotations
 
@@ -113,6 +116,8 @@ def main() -> None:
     ap.add_argument("--batch", type=int, default=32)
     ap.add_argument("--seed", type=int, default=SEED)
     ap.add_argument("--sem-aug", action="store_true", help="desliga a augmentation")
+    ap.add_argument("--sem-pesos", action="store_true",
+                    help="perda sem pesos de classe (pesos 1 e 1), para comparar com/sem")
     ap.add_argument("--liberado-11", action="store_true",
                     help="confirma que a #11 fechou; obrigatório para .npz real")
     ap.add_argument("--avaliar-teste", action="store_true",
@@ -132,14 +137,16 @@ def main() -> None:
     aug = None if args.sem_aug else AugmentacaoFlip3D(args.seed)
     particoes, sha = carregar_particoes(args.npz, args.manifesto, transform_treino=aug)
     treino, val, teste = (particoes[k] for k in ("treino", "validacao", "teste"))
-    pesos = pesos_de_classe(treino.y)
+    pesos_calculados = pesos_de_classe(treino.y)  # confere com a issue mesmo sem usar
+    pesos = {0: 1.0, 1: 1.0} if args.sem_pesos else pesos_calculados
 
     log.info("python=%s numpy=%s pandas=%s torch=%s so=%s dispositivo=%s",
              platform.python_version(), np.__version__, pd.__version__,
              torch.__version__, platform.platform(), dispositivo)
-    log.info("seed=%d epocas=%d lr=%g batch=%d augmentation=%s",
+    log.info("seed=%d epocas=%d lr=%g batch=%d augmentation=%s pesos_de_classe=%s",
              args.seed, args.epocas, args.lr, args.batch,
-             "flip3d_so_treino" if aug else "nenhuma")
+             "flip3d_so_treino" if aug else "nenhuma",
+             "NAO (1 e 1)" if args.sem_pesos else "sim")
     log.info("npz=%s", args.npz)
     log.info("npz_sha256=%s", sha)
     log.info("manifesto=%s", args.manifesto)
