@@ -1,0 +1,41 @@
+2026-10-14 15:49:49,253 python=3.13.2 numpy=2.4.4 pandas=3.0.3 torch=2.11.0+cpu so=Windows-10-10.0.19045-SP0 dispositivo=cpu
+2026-10-14 15:49:49,254 seed=42 epocas=30 lr=0.001 batch=32 augmentation=flip3d_so_treino pesos_de_classe=sim
+2026-10-14 15:49:49,254 npz=patches\patches_2_5d.npz
+2026-10-14 15:49:49,254 npz_sha256=31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd
+2026-10-14 15:49:49,254 manifesto=transformacao\manifest_patches.csv
+2026-10-14 15:49:49,254 n treino=522 val=114 teste=111 | pesos benigno=0.966667 maligno=1.035714
+2026-10-14 15:49:51,757 epoca 01  perda_treino=0.6958  perda_val=0.6876  auc_val=0.7381
+2026-10-14 15:49:53,487 epoca 02  perda_treino=0.6770  perda_val=0.6458  auc_val=0.7778
+2026-10-14 15:49:55,230 epoca 03  perda_treino=0.5909  perda_val=0.5762  auc_val=0.7695
+2026-10-14 15:49:57,024 epoca 04  perda_treino=0.5277  perda_val=0.6065  auc_val=0.7461
+2026-10-14 15:49:58,784 epoca 05  perda_treino=0.4910  perda_val=0.5426  auc_val=0.8055
+2026-10-14 15:50:00,796 epoca 06  perda_treino=0.4440  perda_val=0.5634  auc_val=0.7997
+2026-10-14 15:50:02,867 epoca 07  perda_treino=0.4489  perda_val=0.5692  auc_val=0.8043
+2026-10-14 15:50:04,599 epoca 08  perda_treino=0.4319  perda_val=0.5347  auc_val=0.8293
+2026-10-14 15:50:06,387 epoca 09  perda_treino=0.4381  perda_val=0.5236  auc_val=0.8287
+2026-10-14 15:50:08,060 epoca 10  perda_treino=0.4035  perda_val=0.5405  auc_val=0.8314
+2026-10-14 15:50:09,877 epoca 11  perda_treino=0.3760  perda_val=0.4922  auc_val=0.8626
+2026-10-14 15:50:11,737 epoca 12  perda_treino=0.3593  perda_val=0.4909  auc_val=0.8675
+2026-10-14 15:50:13,432 epoca 13  perda_treino=0.3618  perda_val=0.5149  auc_val=0.8499
+2026-10-14 15:50:15,148 epoca 14  perda_treino=0.3391  perda_val=0.4725  auc_val=0.8693
+2026-10-14 15:50:16,944 epoca 15  perda_treino=0.3225  perda_val=0.4883  auc_val=0.8715
+2026-10-14 15:50:18,738 epoca 16  perda_treino=0.3267  perda_val=0.4390  auc_val=0.8798
+2026-10-14 15:50:20,436 epoca 17  perda_treino=0.3150  perda_val=0.5256  auc_val=0.8653
+2026-10-14 15:50:22,156 epoca 18  perda_treino=0.3284  perda_val=0.4972  auc_val=0.8764
+2026-10-14 15:50:23,871 epoca 19  perda_treino=0.3370  perda_val=0.4477  auc_val=0.8829
+2026-10-14 15:50:25,597 epoca 20  perda_treino=0.3070  perda_val=0.4449  auc_val=0.8838
+2026-10-14 15:50:27,388 epoca 21  perda_treino=0.3180  perda_val=0.4896  auc_val=0.8820
+2026-10-14 15:50:29,140 epoca 22  perda_treino=0.3032  perda_val=0.4494  auc_val=0.8891
+2026-10-14 15:50:30,914 epoca 23  perda_treino=0.2909  perda_val=0.4280  auc_val=0.9014
+2026-10-14 15:50:32,875 epoca 24  perda_treino=0.2730  perda_val=0.4447  auc_val=0.8934
+2026-10-14 15:50:34,689 epoca 25  perda_treino=0.2892  perda_val=0.4184  auc_val=0.9020
+2026-10-14 15:50:36,570 epoca 26  perda_treino=0.2971  perda_val=0.4407  auc_val=0.8943
+2026-10-14 15:50:38,670 epoca 27  perda_treino=0.2855  perda_val=0.4141  auc_val=0.8977
+2026-10-14 15:50:41,174 epoca 28  perda_treino=0.2876  perda_val=0.4562  auc_val=0.8900
+2026-10-14 15:50:43,456 epoca 29  perda_treino=0.2746  perda_val=0.4290  auc_val=0.9008
+2026-10-14 15:50:48,842 epoca 30  perda_treino=0.2672  perda_val=0.4405  auc_val=0.8965
+2026-10-14 15:50:48,847 melhor época (menor perda de validação): 27
+2026-10-14 15:50:49,407 threshold (Youden, validação): {'threshold': 0.4304952919483185, 'sensibilidade': 0.9090909090909091, 'especificidade': 0.8305084745762712, 'j': 0.7395993836671804}
+2026-10-14 15:50:52,138 métricas validação: {'threshold': 0.4304952919483185, 'recall': 0.9090909090909091, 'especificidade': 0.8305084745762712, 'f1': 0.8695652173913043, 'auc': 0.89768875192604, 'tp': 50, 'tn': 49, 'fp': 10, 'fn': 5}
+2026-10-14 15:50:53,231 TESTE: {'threshold': 0.4304952919483185, 'recall': 0.9433962264150944, 'especificidade': 0.8620689655172413, 'f1': 0.9009009009009009, 'auc': 0.9609629147690305, 'tp': 50, 'tn': 50, 'fp': 8, 'fn': 3}
+2026-10-14 15:50:54,671 IC95 bootstrap por paciente: {'recall': {'estimativa': 0.9433962264150944, 'ic95': (0.8775510204081632, 1.0), 'replicas_validas': 2000, 'replicas_totais': 2000}, 'especificidade': {'estimativa': 0.8620689655172413, 'ic95': (0.7646560319042871, 0.9464285714285714), 'replicas_validas': 2000, 'replicas_totais': 2000}, 'f1': {'estimativa': 0.9009009009009009, 'ic95': (0.8351595006934813, 0.9514563106796117), 'replicas_validas': 2000, 'replicas_totais': 2000}, 'auc': {'estimativa': 0.9609629147690305, 'ic95': (0.9269535549196566, 0.9862329497016197), 'replicas_validas': 2000, 'replicas_totais': 2000}}
