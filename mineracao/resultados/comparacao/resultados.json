@@ -1,0 +1,188 @@
+{
+  "conferencia": {
+    "npz_sha256_baseline": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+    "npz_sha256_resnet": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+    "npz_sha256_arquivo_atual": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+    "manifesto_nos_logs": {
+      "baseline": "transformacao\\manifest_patches.csv",
+      "resnet": "transformacao\\manifest_patches.csv"
+    },
+    "manifesto_sha256_atual": "207f44c75a297f0c9bfd96bacc378248aae2165c493e9f795537cf6bbc16e4e0",
+    "n_nodulos_teste": 111,
+    "n_pacientes_teste": 69,
+    "malignos": 53,
+    "benignos": 58
+  },
+  "thresholds": {
+    "baseline": 0.4304952919483185,
+    "resnet": 0.5811540484428406
+  },
+  "metricas_ic95_por_paciente": {
+    "baseline": {
+      "recall": {
+        "estimativa": 0.9433962264150944,
+        "ic95": [
+          0.8775510204081632,
+          1.0
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "especificidade": {
+        "estimativa": 0.8620689655172413,
+        "ic95": [
+          0.7646560319042871,
+          0.9464285714285714
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "f1": {
+        "estimativa": 0.9009009009009009,
+        "ic95": [
+          0.8351595006934813,
+          0.9514563106796117
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "auc": {
+        "estimativa": 0.9609629147690305,
+        "ic95": [
+          0.9269535549196566,
+          0.9862329497016197
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    },
+    "resnet": {
+      "recall": {
+        "estimativa": 0.6792452830188679,
+        "ic95": [
+          0.5555555555555556,
+          0.8032786885245902
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "especificidade": {
+        "estimativa": 0.7931034482758621,
+        "ic95": [
+          0.6842105263157895,
+          0.8846311475409835
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "f1": {
+        "estimativa": 0.7128712871287128,
+        "ic95": [
+          0.6041568396226414,
+          0.8099173553719008
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "auc": {
+        "estimativa": 0.8269355888093689,
+        "ic95": [
+          0.7433278129941902,
+          0.9004387870441821
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    }
+  },
+  "diferenca_resnet_menos_baseline": {
+    "recall": {
+      "diferenca": -0.26415094339622647,
+      "ic95": [
+        -0.375,
+        -0.14754098360655732
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "especificidade": {
+      "diferenca": -0.06896551724137923,
+      "ic95": [
+        -0.17742831541218634,
+        0.035103383458646525
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "f1": {
+      "diferenca": -0.18802961377218808,
+      "ic95": [
+        -0.2851269062178348,
+        -0.10262713556496994
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "auc": {
+      "diferenca": -0.1340273259596616,
+      "ic95": [
+        -0.21518996628371634,
+        -0.05990950961281187
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    }
+  },
+  "testes_pareados": {
+    "mcnemar_cluster_paciente": {
+      "b_so_baseline_acerta": 22,
+      "c_so_resnet_acerta": 4,
+      "pacientes_discordantes": 22,
+      "estatistica_x2": 11.571428571428571,
+      "p_valor": 0.0006697294490218289,
+      "teste": "McNemar em cluster por paciente (Durkalski et al., 2003)"
+    },
+    "mcnemar_nodulo_referencia": {
+      "b_so_baseline_acerta": 22,
+      "c_so_resnet_acerta": 4,
+      "p_valor": 0.0005335211753845215,
+      "teste": "McNemar exato por nódulo"
+    },
+    "delong_cluster_paciente": {
+      "auc": [
+        0.9609629147690306,
+        0.8269355888093689
+      ],
+      "diferenca": -0.13402732595966171,
+      "erro_padrao": 0.03940495509787384,
+      "ic95": [
+        -0.2112596193731109,
+        -0.056795032546212515
+      ],
+      "z": -3.401281022317251,
+      "p_valor": 0.0006707083968544482,
+      "correlacao_auc": 0.20760872795542065,
+      "teste": "DeLong em cluster por paciente (Obuchowski, 1997)"
+    },
+    "delong_nodulo_referencia": {
+      "auc": [
+        0.9609629147690306,
+        0.8269355888093689
+      ],
+      "diferenca": -0.13402732595966171,
+      "erro_padrao": 0.037322469483081336,
+      "ic95": [
+        -0.20717802253759976,
+        -0.06087662938172368
+      ],
+      "z": -3.591062644459196,
+      "p_valor": 0.00032933245904403217,
+      "correlacao_auc": 0.332018924747519,
+      "teste": "DeLong por nódulo (DeLong et al., 1988)"
+    }
+  },
+  "bootstrap": {
+    "repeticoes": 2000,
+    "seed": 42
+  }
+}

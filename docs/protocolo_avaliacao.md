@@ -124,8 +124,8 @@ Consultar também `criterios_selecao.md` e `criterios_transformacao.md`.
 
 ## Benchmarks da literatura
 
-**Pendente até existirem resultados definitivos do baseline.** Nenhum valor de
-benchmark é apresentado neste momento.
+Comparação com a literatura feita na Issue #18: ver
+`docs/resultados_comparacao.md`, seção 6.
 
 A futura comparação deve informar, para cada estudo, o conjunto utilizado,
 o critério de rotulagem, a métrica, o valor publicado e as diferenças
