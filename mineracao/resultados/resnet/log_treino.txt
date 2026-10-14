@@ -1,0 +1,50 @@
+2026-10-14 13:47:26,989 python=3.12.10 torch=2.14.1+cpu torchvision=0.29.1+cpu dispositivo=cpu
+2026-10-14 13:47:26,990 seed=42 epocas=30 lr=0.001 batch=32
+2026-10-14 13:47:26,990 arquitetura=ResNet18 pesos=ImageNet1K_V1
+2026-10-14 13:47:26,990 entrada=3x64x64 sem resize para 224
+2026-10-14 13:47:26,990 canais=axial,coronal,sagital (nao RGB)
+2026-10-14 13:47:26,990 normalizacao=ImageNet mean=(0.485, 0.456, 0.406) std=(0.229, 0.224, 0.225)
+2026-10-14 13:47:26,990 backbone=congelado cabeca_fc=treinavel
+2026-10-14 13:47:26,991 parametros_total=11177025 parametros_treinaveis=513
+2026-10-14 13:47:26,991 augmentation=flip3d_so_treino
+2026-10-14 13:47:26,991 pesos_de_classe={0: 0.966667, 1: 1.035714}
+2026-10-14 13:47:26,991 npz=patches\patches_2_5d.npz
+2026-10-14 13:47:26,991 npz_sha256=31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd
+2026-10-14 13:47:26,991 manifesto=transformacao\manifest_patches.csv
+2026-10-14 13:47:26,991 n treino=522 validacao=114 teste=111
+2026-10-14 13:47:27,666 epoca=01 perda_treino=0.8451 perda_val=0.7698 auc_val=0.5313
+2026-10-14 13:47:28,407 epoca=02 perda_treino=0.7444 perda_val=0.7041 auc_val=0.5821
+2026-10-14 13:47:29,046 epoca=03 perda_treino=0.6960 perda_val=0.6938 auc_val=0.6136
+2026-10-14 13:47:29,699 epoca=04 perda_treino=0.6649 perda_val=0.7076 auc_val=0.6240
+2026-10-14 13:47:30,386 epoca=05 perda_treino=0.6514 perda_val=0.6838 auc_val=0.6308
+2026-10-14 13:47:31,023 epoca=06 perda_treino=0.6505 perda_val=0.6759 auc_val=0.6521
+2026-10-14 13:47:31,670 epoca=07 perda_treino=0.6175 perda_val=0.6615 auc_val=0.6629
+2026-10-14 13:47:32,404 epoca=08 perda_treino=0.6386 perda_val=0.7073 auc_val=0.6712
+2026-10-14 13:47:33,048 epoca=09 perda_treino=0.6434 perda_val=0.6548 auc_val=0.6804
+2026-10-14 13:47:33,682 epoca=10 perda_treino=0.6046 perda_val=0.6503 auc_val=0.6780
+2026-10-14 13:47:34,324 epoca=11 perda_treino=0.6080 perda_val=0.6470 auc_val=0.6909
+2026-10-14 13:47:34,955 epoca=12 perda_treino=0.6092 perda_val=0.6763 auc_val=0.6937
+2026-10-14 13:47:35,577 epoca=13 perda_treino=0.6008 perda_val=0.6445 auc_val=0.6931
+2026-10-14 13:47:36,219 epoca=14 perda_treino=0.5898 perda_val=0.6446 auc_val=0.6897
+2026-10-14 13:47:36,834 epoca=15 perda_treino=0.5856 perda_val=0.6487 auc_val=0.6884
+2026-10-14 13:47:37,449 epoca=16 perda_treino=0.5876 perda_val=0.6537 auc_val=0.6860
+2026-10-14 13:47:38,090 epoca=17 perda_treino=0.5733 perda_val=0.6577 auc_val=0.6894
+2026-10-14 13:47:38,779 epoca=18 perda_treino=0.5979 perda_val=0.6344 auc_val=0.7045
+2026-10-14 13:47:39,450 epoca=19 perda_treino=0.5656 perda_val=0.6392 auc_val=0.7156
+2026-10-14 13:47:40,112 epoca=20 perda_treino=0.5684 perda_val=0.6178 auc_val=0.7242
+2026-10-14 13:47:40,750 epoca=21 perda_treino=0.5706 perda_val=0.6142 auc_val=0.7217
+2026-10-14 13:47:41,395 epoca=22 perda_treino=0.5508 perda_val=0.6195 auc_val=0.7177
+2026-10-14 13:47:42,043 epoca=23 perda_treino=0.5581 perda_val=0.6265 auc_val=0.7063
+2026-10-14 13:47:42,678 epoca=24 perda_treino=0.5540 perda_val=0.6309 auc_val=0.7103
+2026-10-14 13:47:43,332 epoca=25 perda_treino=0.5516 perda_val=0.6151 auc_val=0.7236
+2026-10-14 13:47:43,986 epoca=26 perda_treino=0.5767 perda_val=0.6161 auc_val=0.7190
+2026-10-14 13:47:44,604 epoca=27 perda_treino=0.5513 perda_val=0.6198 auc_val=0.7220
+2026-10-14 13:47:45,250 epoca=28 perda_treino=0.5639 perda_val=0.6244 auc_val=0.7190
+2026-10-14 13:47:45,867 epoca=29 perda_treino=0.5598 perda_val=0.6284 auc_val=0.7223
+2026-10-14 13:47:46,500 epoca=30 perda_treino=0.5595 perda_val=0.6341 auc_val=0.7310
+2026-10-14 13:47:46,505 melhor_epoca_validacao=21
+2026-10-14 13:47:46,645 threshold_validacao={'threshold': 0.5811540484428406, 'sensibilidade': 0.6181818181818182, 'especificidade': 0.7457627118644068, 'j': 0.36394453004622496}
+2026-10-14 13:47:46,649 metricas_validacao={'threshold': 0.5811540484428406, 'recall': 0.6181818181818182, 'especificidade': 0.7457627118644068, 'f1': 0.6538461538461539, 'auc': 0.7217257318952234, 'tp': 34, 'tn': 44, 'fp': 15, 'fn': 21}
+2026-10-14 13:47:47,109 AVALIACAO FINAL DO TESTE INICIADA
+2026-10-14 13:47:47,335 TESTE={'threshold': 0.5811540484428406, 'recall': 0.6792452830188679, 'especificidade': 0.7931034482758621, 'f1': 0.7128712871287128, 'auc': 0.8269355888093689, 'tp': 36, 'tn': 46, 'fp': 12, 'fn': 17}
+2026-10-14 13:47:47,550 IC95_bootstrap_por_paciente={'recall': {'estimativa': 0.6792452830188679, 'ic95': (0.5555555555555556, 0.8032786885245902), 'replicas_validas': 2000, 'replicas_totais': 2000}, 'especificidade': {'estimativa': 0.7931034482758621, 'ic95': (0.6842105263157895, 0.8846311475409835), 'replicas_validas': 2000, 'replicas_totais': 2000}, 'f1': {'estimativa': 0.7128712871287128, 'ic95': (0.6041568396226414, 0.8099173553719008), 'replicas_validas': 2000, 'replicas_totais': 2000}, 'auc': {'estimativa': 0.8269355888093689, 'ic95': (0.7433278129941902, 0.9004387870441821), 'replicas_validas': 2000, 'replicas_totais': 2000}}
