@@ -95,15 +95,30 @@ igual a 0.5, considerando como pertencente ao consenso a região presente em pel
 A partir da máscara de consenso é calculada a média das coordenadas dos voxels pertencentes ao nódulo, obtendo o centroide utilizado no recorte da ROI.
 Essa escolha mantém a localização do patch associada ao consenso das anotações utilizado na etapa de Seleção.
 
-5. Limitações
+## 5. Limitações
 
 A principal limitação da transformação está relacionada à resolução original dos exames.
-Na etapa de Seleção foram considerados exames com espessura de corte de até 2,5 mm. O espaçamento no plano transversal é menor que a espessura dos cortes,
-fazendo com que, após a reamostragem para 1 mm isotrópico, os planos coronal e sagital sejam majoritariamente obtidos por interpolação.
-A reamostragem padroniza a grade espacial, mas não recupera informações que não foram originalmente adquiridas. Dessa forma, a resolução efetiva dos planos
-coronal e sagital permanece inferior à do plano axial. De acordo com os critérios definidos para a Sprint, essa diferença pode representar uma resolução
-real aproximadamente 3 a 5 vezes pior nesses planos.
-Essa limitação deve ser considerada na interpretação dos resultados obtidos pelo modelo.
+Na etapa de Seleção foram considerados exames com espessura de corte de até 2,5 mm. O espaçamento no plano transversal é menor que a espessura dos cortes, fazendo com que, após a reamostragem para 1 mm isotrópico, os planos coronal e sagital sejam majoritariamente obtidos por interpolação. A reamostragem padroniza a grade espacial, mas não recupera informações que não foram originalmente adquiridas. Dessa forma, a resolução efetiva dos planos coronal e sagital permanece inferior à do plano axial.
+
+A análise de espaçamento executada pelo script `selecao/verifica_espacamento.py` sobre os 461 exames que contribuem nódulos demonstrou que a razão de anisotropia real entre a espessura de corte (eixo Z) e o plano axial (X-Y) é moderada na maioria dos casos:
+
+| Métrica de Resolução (Espaçamento Z / X-Y) | Valor Medido |
+| :--- | :--- |
+| **Mínimo** | 0,72 |
+| **1º Quartil** | 1,39 |
+| **Mediana** | 1,83 |
+| **3º Quartil** | 3,20 |
+| **Máximo** | 4,49 |
+
+Ao contrário da estimativa anterior ("3 a 5 vezes pior", que superestimava o problema para ~70% do acervo e citava um extremo inexistente):
+* Apenas **29,5%** dos exames apresentam razão acima de 3×;
+* Somente **1,7%** superam 4×;
+* **Nenhum** exame atinge 5×;
+* **10,6%** dos exames possuem razão abaixo de 1,0 devido a reconstruções com fatias sobrepostas.
+
+Essa limitação deve ser considerada na interpretação dos resultados obtidos pelo modelo sobre o conjunto total de **N = 747 nódulos**, cujos artefatos oficiais gerados são:
+* `patches/patches_2_5d.npz`: tensores 2.5D de dimensão (3, 64, 64).
+* `transformacao/manifest_patches.csv`: tabela de controle com o mapeamento e as divisões de treino, validação e teste.
 
 ## 5.1 Patches com faixa preta na borda
 
