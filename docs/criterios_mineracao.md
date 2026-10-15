@@ -2,7 +2,7 @@
 
 ## 1. Arquitetura do Modelo Baseline
 * **Arquitetura adotada**: Rede Neural Convolucional (CNN) rasa composta por 3 camadas convolucionais seguidas de pooling e camadas densas.
-* **Justificativa**: Conforme estipulado na Issue #14, buscou-se um modelo de referência simples, determinístico e de baixo custo computacional, capaz de estabelecer um piso de desempenho para dados 2.5D antes da introdução de transfer learning com redes mais profundas (como a ResNet).
+* **Justificativa**: Conforme estipulado na Issue #14, estabeleceu-se um modelo de referência simples, determinístico e de baixo custo computacional para dados 2.5D, avaliando seu desempenho antes e em paralelo à introdução de transfer learning com a ResNet18 (cujo backbone congelado alcançou AUC de 0,8269).
 * **Entrada**: Tensores de dimensão (3, 64, 64) em float16, representando fatias centradas nos planos ortogonais axial, coronal e sagital.
 
 ## 2. Protocolo de Treinamento e Reprodutibilidade
@@ -17,13 +17,11 @@
   * Registro do hash SHA-256 do arquivo `.npz` utilizado no log de treinamento, garantindo rastreabilidade do conjunto de dados oficial corrigido.
 
 ## 3. Data Augmentation
-* **Decisão adotada**: Data augmentation geométrica 2D (rotações e espelhamentos aleatórios) foi **descartada** para os patches 2.5D.
+* **Decisão adotada**: A rotação 2D e o jitter de 3 mm foram descartados; o espelhamento foi mantido, aplicado exclusivamente ao conjunto de treino, de forma estritamente coerente com o volume 3D (`AugmentacaoFlip3D`).
 * **Justificativa técnica**:
-  * Os três canais da imagem correspondem a planos anatômicos ortogonais distintos (axial, coronal e sagital).
-  * Aplicar rotações 2D comuns sobre os 3 canais de forma uniforme geraria uma distorção anatômica impossível no espaço 3D (uma rotação em torno do eixo Z no plano axial implica transformações completamente diferentes nos planos coronal e sagital).
-  * Isso recai na mesma objeção conceitual adotada pelo grupo ao rejeitar técnicas como o SMOTE ("interpolar pixels de tomografia gera volumes pulmonares inexistentes na anatomia humana").
-  * A proposta inicial de *jitter* de 3 mm no centro é inexequível após a extração dos patches de 64 × 64, pois translações posteriores demandariam preenchimento artificial de bordas (*padding*) em vez de tecido pulmonar real.
-  * Transformações e normalizações são restritas estritamente ao treino; validação e teste não recebem qualquer transformação.
+  * Aplicar uma rotação 2D uniforme aos três canais gera uma distorção anatômica impossível, pois uma rotação em torno do eixo Z no plano axial corresponde a transformações completamente distintas no coronal e no sagital (mesma objeção que fundamentou a rejeição ao SMOTE). O jitter de 3 mm após a extração demandaria preenchimento artificial de borda (*padding*).
+  * O espelhamento preserva a integridade física: espelhar o volume em um eixo equivale a espelhar, em cada canal, o eixo anatômico correspondente (axial = i, j; coronal = j, k; sagital = i, k), mantendo o canal perpendicular inalterado. Cada amostra sintética gerada é uma isometria geométrica de um nódulo real, sem interpolação de voxels. Como limitação declarada, o plano central situa-se no índice 32 de 64, incidindo a meio voxel do centro.
+  * Validação e teste não recebem qualquer transformação.
 
 ## 4. Balanceamento e Pesos de Classe
 * **Pesos calculados**: Utilizando a fórmula balanceada w = N / (2 * n), obtém-se peso **0,966667** para a classe benigna e **1,035714** para a maligna no conjunto de treino.
@@ -35,10 +33,9 @@
 * **Ponto de Operação**:
   * O limiar ótimo de decisão (tau) é determinado exclusivamente no conjunto de validação por meio do índice de Youden (J = Sensibilidade + Especificidade - 1), sendo subsequentemente aplicado ao teste sem qualquer ajuste a posteriori.
 * **Intervalo de Confiança (IC de 95%)**:
-  * Calculado via método de **bootstrap reamostrando por paciente (`patient_id`)** e não por nódulo.
-  * O conjunto de teste possui 111 nódulos provenientes de 69 pacientes; nódulos de um mesmo paciente compartilham fatores clínicos, protocolo de escaneamento e ruído do tomógrafo, violando a premissa de independência estatística.
+  * Calculado via método de **bootstrap reamostrando por paciente (`patient_id`)** com **2.000 iterações**, evitando viés de dependência intra-sujeito entre os 111 nódulos de 69 pacientes no teste.
 * **Análise de Patches com Faixa Preta**:
-  * Avalia-se o desempenho isolado nos 15 patches com bordas cortadas em relação ao restante do teste, atestando se a ausência de preenchimento anatômico degrada a predição.
+  * Os 15 patches afetados distribuem-se em 11 no treino, 0 na validação e 4 no teste. O cálculo de métricas isoladas para o subgrupo é estatisticamente inviável (sem casos na validação para ajustar o limiar e com apenas 4 casos no teste). Adotou-se a comparação da mediana da probabilidade predita desses 4 casos contra os demais 107 casos de teste, utilizando a reamostragem por paciente como referência de distribuição nula, conforme definido na seção 5.1 de `docs/criterios_transformacao.md`.
 
 ## 6. Seção de Métodos (Pronta para o Artigo Científico)
-A tarefa de classificação da malignidade de nódulos pulmonares foi formulada como um problema supervisionado binário sobre cortes 2.5D ortogonais (axial, coronal e sagital) de dimensão 64 × 64 pixels. A partição do acervo (N = 747 nódulos) seguiu divisão pré-estratificada por paciente em treino (n = 522), validação (n = 114) e teste independente (n = 111 nódulos de 69 pacientes). O modelo baseline foi estabelecido por meio de uma CNN de 3 camadas convolucionais. Procedimentos de data augmentation geométrica 2D foram excluídos por gerarem inconsistências topológicas tridimensionais entre os planos anatômicos ortogonais. A avaliação priorizou o Recall da classe maligna em conjunto com a Especificidade, utilizando ponto de operação ótimo selecionado pelo índice de Youden na validação. Intervalos de confiança de 95% foram computados através de bootstrap em nível de paciente (1.000 iterações), mitigando correlações intra-sujeito.
+A tarefa de classificação da malignidade de nódulos pulmonares foi formulada como um problema supervisionado binário sobre cortes 2.5D ortogonais (axial, coronal e sagital) de dimensão 64 × 64 pixels. A partição do acervo (N = 747 nódulos) seguiu divisão pré-estratificada por paciente em treino (n = 522), validação (n = 114) e teste independente (n = 111 nódulos de 69 pacientes). O modelo baseline foi estabelecido por meio de uma CNN de 3 camadas convolucionais. A etapa de data augmentation restringiu-se a espelhamentos coerentes com o volume tridimensional aplicados exclusivamente ao treino, sendo rotações 2D excluídas por induzirem inconsistências topológicas entre os planos ortogonais. A avaliação priorizou o Recall da classe maligna acompanhado da Especificidade, com limiar ótimo determinado pelo índice de Youden na validação. Intervalos de confiança de 95% foram computados através de bootstrap em nível de paciente com 2.000 replicações.
