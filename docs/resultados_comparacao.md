@@ -105,8 +105,11 @@ quadrado: ResNet).
 
 | Estudo | Conjunto e rótulo | Divisão | Resultado publicado |
 |---|---|---|---|
-| Causey et al. (2018), *Sci. Rep.* 8:9286 — NoduleX | LIDC; média dos escores arredondada; nota 3 excluída; um nódulo sorteado por paciente | 80/20 por paciente, partição única | CNN: AUC 0,974 (1 × 4–5) e 0,938 (1–2 × 4–5); com atributos radiômicos: 0,993 e 0,971 |
+| Causey et al. (2018), *Sci. Rep.* 8:9286 — NoduleX | LIDC; média dos escores arredondada; nota 3 excluída; um nódulo sorteado por paciente + 206 nódulos adicionais nota 1 para balanceamento| 80/20 por paciente, partição única | CNN47: AUC 0,974 (S1×S45) e 0,938 (S12×S45); com radiômica (RF): CNN21+RF AUC 0,971 e CNN47+RF AUC 0,943 em S12×S45 |
 | Al-Shabi, Lee e Tan (2019), *IEEE Access* — Gated-Dilated | LIDC-IDRI, > 1000 exames | ver artigo | AUC > 0,95 (resumo) |
+| NARAYANAN [s. d.]. *arXiv:2609.38271* Multi-Task 3D CNN.| LIDC-IDRI (3.918 anotações, 742 pacientes). Rótulo: 1–2 (baixo) e 4–5 (alto); escore 3 excluído. | Por paciente (70/15/15: 519/111/112 pacientes). Sem validação cruzada. | Multi-Task 3D CNN: ROC-AUC 0,558 (Tabela IV). (Single-Task: 0,552).
+| SHEWAYE; MEKONNEN (2016).*arXiv:1605.08350.* AdaBoost (Atributos Heterogêneos). | LIDC-IDRI (95 pacientes, 565 fatias 2D: 458 malignas / 107 benignas). Rótulo clínico/histológico (1 vs. 2-3); rótulo 0 (desconhecido) excluído.| Por fatia 2D (65/35: 367/198 fatias). 5-fold CV apenas no treino. | AdaBoost (D=5): AUC 0,94 e Acurácia 0,84 (Tabela III, p. 5; Seção V-D, p. 5).
+| Dey et al. (2018), **IEEE ISBI** — 3D MoDenseNet| LIDC-IDRI (686 nódulos 3D). Mediana dos radiologistas: < 3 (benigno) e > 3 (maligno); nota 3 excluída. | Por nódulo 3D (5-fold CV). | 3D MoDenseNet: Acurácia 90,40% e ROC-AUC 0,9548 (Tabela 1, p. 4; Seção 3.3, p. 5).
 
 O baseline (AUC 0,961) está na mesma faixa desses trabalhos, mas as diferenças
 de seleção impedem dizer que ele "empata" com eles. O desenho 1 × 4–5 de Causey
@@ -148,7 +151,55 @@ a métrica — apenas os valores conferidos na fonte foram incluídos aqui.
 > os valores não são diretamente comparáveis aos de trabalhos que usam outros
 > critérios.
 
-## 8. Para a Discussão
+## 8. Piso do diâmetro
+
+Quando usamos só o tamanho do nódulo (`diametro_mm`), sem olhar a imagem,
+a AUC no teste já é 0,9463. Esse é o **piso do diâmetro**: é o
+mínimo que um modelo com imagem precisa superar para mostrar que a imagem
+ajudou. Aqui o diâmetro é usado direto como nota (quanto maior, mais
+provável de ser maligno). Não tem treino.
+
+| Modelo | Usa imagem? | AUC-ROC (teste) |
+|---|---|---|
+| Diâmetro sozinho (`diametro_mm`) | Não | 0,9463 |
+| ResNet18 congelada | Sim | 0,8269 |
+| CNN 2.5D (baseline) | Sim | 0,9610 |
+
+Usamos quatro casas decimais porque a diferença entre o CNN e o diâmetro é
+de só 0,015 e ela some com três casas. A ResNet ficou abaixo do diâmetro e o
+CNN ficou um pouco acima. Nenhuma dessas duas comparações com o diâmetro foi
+testada estatisticamente.
+
+**Por que o diâmetro vai tão bem (causa provável).** O rótulo vem da mediana
+da suspeita dos radiologistas, e o tamanho é um dos critérios que eles usam
+para suspeitar de um nódulo. Nos dados dá para ver: a mediana é 7,5 mm nos
+benignos e 17,1 mm nos malignos (747 nódulos). Então parte do que o modelo
+"aprende" pode ser só tamanho. Isso é uma explicação provável, e não foi
+provada.
+
+**Conclusão.** O CNN ganhou só 0,015 do diâmetro. Além disso, o intervalo de
+confiança do CNN (0,9270 a 0,9862) é largo e o 0,9463 cai dentro dele. Por
+isso, não dá para saber se esse ganho é real ou só sorte da amostra. O que os
+dados permitem dizer é que o modelo **não ficou abaixo do piso do diâmetro**.
+O que os dados **não** permitem dizer é que o modelo aprendeu textura ou algo
+além do tamanho.
+
+**O que resolveria a dúvida.** Um teste que compare a AUC do CNN com a AUC do
+diâmetro nos mesmos nódulos do teste (111 nódulos de 69 pacientes), agrupando
+por paciente, porque nódulos do mesmo paciente não são independentes. O método 
+planejado é o DeLong em cluster por paciente (Obuchowski, 1997), o mesmo da
+seção 4. A regra de decisão foi definida antes de ver o resultado: se o 
+intervalo de confiança da diferença (CNN − diâmetro) não incluir o zero, há
+evidência de que o CNN usa algo além do diâmetro. Se incluir o zero, não há.
+ **Este teste não foi executado.**
+
+**Como conferir o 0,9463.** O cálculo da AUC de 0,9463 pode ser verificado de forma independente cruzando a coluna diametro_mm do arquivo de splits (selecao/nodulos_com_split.csv) com as predições em mineracao/resultados/comparacao/predicoes_teste_pareadas.csv para os 111 nódulos do conjunto de teste.
+
+As medianas de 7,5 mm e 17,1 mm vêm da coluna `diametro_mm`, separada por
+`rotulo_binario`, nos 747 nódulos do `transformacao/manifest_patches.csv`.
+Só nos 111 do teste, seriam 7,9 mm e 18,5 mm.
+
+## 9. Para a Discussão
 
 - **O que foi comparado.** A ResNet da #17 treina só a camada final
   (513 parâmetros) sobre atributos do ImageNet. O resultado mostra que esses
