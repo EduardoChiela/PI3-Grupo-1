@@ -64,6 +64,8 @@ referência, marcadas como tais, porque assumem independência entre nódulos.
 Recall e especificidade estão no ponto de operação de cada modelo
 (threshold de Youden escolhido na validação e congelado).
 
+Os dois modelos foram avaliados sobre exatamente os mesmos 111 nódulos de teste, pertencentes a 69 pacientes
+
 | Métrica | CNN rasa (baseline) | ResNet18 (transfer learning) | Diferença (ResNet − baseline) |
 |---|---|---|---|
 | Recall (maligno) | 0,943 [0,878; 1,000] | 0,679 [0,556; 0,803] | -0,264 [-0,375; -0,148] |

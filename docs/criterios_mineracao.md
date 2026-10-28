@@ -39,3 +39,20 @@
 
 ## 6. Seção de Métodos (Pronta para o Artigo Científico)
 A tarefa de classificação da malignidade de nódulos pulmonares foi formulada como um problema supervisionado binário sobre cortes 2.5D ortogonais (axial, coronal e sagital) de dimensão 64 × 64 pixels. A partição do acervo (N = 747 nódulos) seguiu divisão pré-estratificada por paciente em treino (n = 522), validação (n = 114) e teste independente (n = 111 nódulos de 69 pacientes). O modelo baseline foi estabelecido por meio de uma CNN de 3 camadas convolucionais. A etapa de data augmentation restringiu-se a espelhamentos coerentes com o volume tridimensional aplicados exclusivamente ao treino, sendo rotações 2D excluídas por induzirem inconsistências topológicas entre os planos ortogonais. A avaliação priorizou o Recall da classe maligna acompanhado da Especificidade, com limiar ótimo determinado pelo índice de Youden na validação. Intervalos de confiança de 95% foram computados através de bootstrap em nível de paciente com 2.000 replicações.
+
+
+### ResNet18 com transfer learning
+
+Foram avaliadas três configurações de transfer learning utilizando os mesmos patches, splits e seed:
+
+1. backbone completamente congelado, com apenas a camada final treinável;
+2. `layer4` e camada final treináveis;
+3. `layer3`, `layer4` e camada final treináveis.
+
+A escolha da configuração foi realizada exclusivamente no conjunto de validação, utilizando o recall da classe maligna como métrica principal.
+
+A configuração selecionada foi a terceira, com `layer3` e `layer4` liberados. Foram mantidos congelados `layer1` e `layer2`.
+
+A camada final utilizou taxa de aprendizado de `0.001`, enquanto os blocos pré-treinados liberados utilizaram `0.0001`.
+
+A avaliação no conjunto de teste foi realizada somente após a escolha definitiva da configuração.
