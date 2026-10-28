@@ -161,6 +161,125 @@ a métrica — apenas os valores conferidos na fonte foram incluídos aqui.
   camadas, redimensionar para 224) agora seria escolhida depois de ver o teste.
   Se for feita, precisa ser declarada como análise exploratória pós-hoc.
 
+## 9. Testes de estresse do Checkpoint 2
+
+O feedback do Checkpoint 2 considerou a AUC de 0,96 alta demais e pediu três
+testes de estresse. O primeiro, o modelo só de diâmetro (AUC 0,9463), está na
+PR #29. Esta seção traz os outros dois. Eles foram gerados por
+`python -m mineracao.teste_estresse --npz patches/patches_2_5d.npz`, com seed 42
+e 2000 réplicas de bootstrap. As saídas ficam em `mineracao/resultados/estresse/`:
+`log_estresse.txt` e `resultados.json`. O SHA-256 do `.npz` no log é
+`31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd`, o mesmo da
+#14 e da #18. Duas execuções seguidas deram números idênticos.
+
+### 9.1 Rótulos embaralhados (validação)
+
+**Desenho.** O split vem do manifesto, como na #14
+(`dataset.carregar_particoes`). Os rótulos dos 522 nódulos de **treino** foram
+permutados **depois** dessa divisão. A permutação mantém 252 malignos, então
+os pesos de classe não mudam. Todo o resto é o baseline da #14: CNN rasa,
+seed de treino 42, 30 épocas, lr 1e-3, batch 32, flip 3D só no treino, pesos
+de classe, época escolhida pela menor perda de validação, CPU. Foram feitos 3
+embaralhamentos (seeds 1, 2 e 3) e uma rodada de controle com os rótulos
+verdadeiros. O controle mostra que o pipeline reproduz o baseline neste
+ambiente; sem ele, uma AUC de 0,5 poderia indicar só um ambiente quebrado.
+A avaliação usa só a validação (114 nódulos, 55 malignos). O teste não foi
+usado.
+
+**Previsto antes de rodar** (registrado no log antes do primeiro treino):
+sem vazamento, a AUC de validação de cada embaralhamento cai em
+0,5 ± 1,96 × EP nulo, ou seja, em **[0,393; 0,607]** (EP nulo = 0,054 para
+55 × 59). O controle deve ficar perto da AUC de validação da #14 (0,898).
+
+**O que saiu:**
+
+| Rodada | Rótulos do treino inalterados | Época escolhida | AUC val. (época escolhida) | AUC val. (época 30) |
+|---|---|---|---|---|
+| Controle (rótulos verdadeiros) | 100% | 27 | 0,901 | 0,895 |
+| Embaralhado, seed 1 | 52% | 7 | 0,570 | 0,487 |
+| Embaralhado, seed 2 | 52% | 3 | 0,449 | 0,358 |
+| Embaralhado, seed 3 | 45% | 9 | 0,581 | 0,461 |
+
+O controle escolheu a mesma época da #14 (27) e chegou a AUC 0,901 contra
+0,898 no log original. A pequena diferença vem do ambiente (torch 2.7.1 aqui,
+2.11.0 na #14). Os três embaralhamentos ficaram dentro da faixa prevista, com
+média de 0,533. A AUC da época escolhida é ligeiramente otimista, porque a
+época é escolhida pela perda na própria validação. Na época 30 os três ficam
+em 0,49, 0,36 e 0,46. O 0,36 fica abaixo da faixa, ou seja, abaixo do acaso,
+na direção oposta à de um vazamento.
+
+**O que significa.** Com os rótulos embaralhados a rede não acerta acima do
+acaso. Não há evidência de canal escondido levando o rótulo até a entrada: nódulo
+repetido entre treino e validação, ordem dos arquivos ou artefato do patch
+correlacionado com o rótulo. Este teste **não** descarta que o problema seja
+fácil por construção, que é a hipótese da seção 9.2.
+
+### 9.2 Composição e desempenho por faixa de diâmetro (teste)
+
+**Desenho.** A leitura é descritiva sobre o teste congelado. O script só lê
+`predicoes_teste_pareadas.csv` (#18) e os diâmetros de
+`selecao/nodulos_com_split.csv`, sem treinar, prever ou escolher nada. Os
+cortes foram fixados na issue antes de olhar os resultados: pequeno
+≤ 8,4 mm, médio 8,4–14,4 mm e grande > 14,4 mm. O limiar é o oficial do
+baseline (0,4305, Youden na validação, #14).
+
+**Previsto antes de rodar:** o diâmetro sozinho já dá AUC 0,9463 (PR #29),
+então a fração de malignos deveria subir muito de uma faixa para outra. Só a
+faixa do meio teria as duas classes em número suficiente para medir
+desempenho.
+
+**O que saiu — composição (resultado principal):**
+
+| Faixa | Diâmetro (mm) | Nódulos | Pacientes | Malignos | Benignos | % malignos |
+|---|---|---|---|---|---|---|
+| Pequeno | 4,83 – 8,40 | 38 | 28 | **2** | 36 | 5% |
+| Médio | 8,43 – 14,39 | 36 | 29 | 15 | 21 | 42% |
+| Grande | 14,47 – 37,90 | 37 | 28 | 36 | **1** | 97% |
+| Total | | 111 | 69 | 53 | 58 | 48% |
+
+A soma de pacientes por faixa passa de 69 porque alguns pacientes têm nódulos
+em mais de uma faixa.
+
+> **Conferência da tabela da issue.** Os tercis exatos do teste são
+> 8,387 mm e 14,417 mm. A tabela da issue usou esses tercis exatos (37/37/37
+> nódulos). Os cortes registrados, arredondados para 8,4 mm com "≤", põem na
+> faixa pequena um nódulo **benigno com exatamente 8,40 mm**
+> (`LIDC-IDRI-0443_scan448_cluster000`). Por isso aqui saem 38/36/37. Valem
+> os cortes registrados. A diferença é um único benigno com probabilidade
+> prevista de 0,0007 e não muda a conclusão: com os tercis exatos, a faixa do
+> meio dá AUC 0,852, o número da issue.
+
+**O que saiu — desempenho na faixa do meio (CNN rasa, limiar 0,4305,
+IC 95% por bootstrap por paciente, 2000/2000 réplicas válidas):**
+
+| Métrica | Faixa do meio (36 nódulos, 29 pacientes) | Teste inteiro (seção 3) |
+|---|---|---|
+| AUC-ROC | 0,844 [0,692; 0,956] | 0,961 [0,927; 0,986] |
+| Recall (maligno) | 0,933 [0,786; 1,000] | 0,943 [0,878; 1,000] |
+| Especificidade | 0,762 [0,563; 0,929] | 0,862 [0,765; 0,946] |
+| TP / FN / TN / FP | 14 / 1 / 16 / 5 | 50 / 3 / 50 / 8 |
+
+**As faixas extremas não permitem medir desempenho.** A faixa pequena tem 2
+malignos e a grande, 1 benigno. Com isso, a AUC é a fração de acertos de 2 × 36
+ou 36 × 1 pares, e o recall ou a especificidade de cada faixa são calculados
+sobre 1 ou 2 nódulos. Um único nódulo muda o resultado em 50 ou 100 pontos
+percentuais. Esses números seriam ruído com cara de resultado, então não são
+reportados.
+
+**O que significa.** O rótulo é quase uma função do tamanho: 5% de malignos
+entre os pequenos, 97% entre os grandes. É isso que sustenta o piso de 0,9463
+do modelo só de diâmetro. Boa parte da AUC de 0,961 vem de separar pequenos
+de grandes, o que o diâmetro já faz. Onde o tamanho não decide, na faixa do
+meio, a AUC cai para 0,844, com IC largo (0,69–0,96) porque são 36 nódulos.
+O recall se mantém (14 de 15 malignos), mas a especificidade cai para 0,76.
+Somado à seção 9.1, o resultado alto não indica vazamento. Ele vem de um
+problema fácil por construção: o critério de seleção (consenso de ≥ 3
+radiologistas e exclusão da malignidade mediana 3) deixa malignos e benignos
+muito separados em tamanho. A medida honesta da dificuldade "de verdade" é
+a faixa do meio, e ela tem amostra pequena demais para uma estimativa
+precisa. Nenhuma escolha de modelo, limiar ou época foi feita com base nesta
+leitura.
+
 ## Referências
 
 - Causey JL et al. Highly accurate model for prediction of lung nodule malignancy with CT scans. *Sci Rep*. 2018;8:9286. doi:10.1038/s41598-018-27569-w

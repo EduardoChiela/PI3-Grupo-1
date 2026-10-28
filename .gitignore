@@ -11,4 +11,7 @@
 # ao grupo trabalhar sem os 133 GB de DICOM. Nao adicionar patches/ aqui.
 
 sintetico/
-mineracao/resultados/
+# resultados sao versionados de proposito (logs, csv, json, figuras);
+# so os pesos de modelo ficam de fora
+mineracao/resultados/**/*.pt
+mineracao/resultados/**/*.pth
