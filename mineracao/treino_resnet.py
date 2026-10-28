@@ -129,8 +129,10 @@ def fixar_seed(seed):
 
 class ResNet2_5D(nn.Module):
 
-    def __init__(self):
-
+    def __init__(
+        self,
+        descongelar="nenhum"
+    ):
         super().__init__()
 
         pesos = (
@@ -167,6 +169,25 @@ class ResNet2_5D(nn.Module):
             entrada_fc,
             1
         )
+
+        if descongelar == "layer4":
+
+            for parametro in self.rede.layer4.parameters():
+                parametro.requires_grad = True
+
+        elif descongelar == "layer3_layer4":
+
+            for parametro in self.rede.layer3.parameters():
+                parametro.requires_grad = True
+
+            for parametro in self.rede.layer4.parameters():
+                parametro.requires_grad = True
+
+        elif descongelar != "nenhum":
+
+            raise ValueError(
+                f"Configuração inválida: {descongelar}"
+            )
 
         # ----------------------------------------------------
         # NORMALIZAÇÃO IMAGENET
@@ -212,13 +233,7 @@ class ResNet2_5D(nn.Module):
         return self.rede(x)
 
 
-def manter_backbone_congelado(modelo):
-
-    # Quando chamamos modelo.train(),
-    # BatchNorm normalmente atualizaria suas estatísticas.
-    #
-    # Como estamos dizendo que o extrator está congelado,
-    # também mantemos os BatchNorm em modo de avaliação.
+def manter_batchnorm_em_avaliacao(modelo):
 
     for modulo in modelo.rede.modules():
 
@@ -227,7 +242,6 @@ def manter_backbone_congelado(modelo):
             nn.BatchNorm2d
         ):
             modulo.eval()
-
 
 def pesos_de_classe(y_treino):
 
@@ -475,6 +489,30 @@ def main():
         )
     )
 
+    parser.add_argument(
+        "--descongelar",
+        choices=[
+            "nenhum",
+            "layer4",
+            "layer3_layer4"
+        ],
+        default="nenhum",
+        help=(
+            "Define quais blocos da ResNet18 "
+            "serão liberados para fine-tuning."
+        )
+    )
+
+    parser.add_argument(
+        "--lr-backbone",
+        type=float,
+        default=1e-4,
+        help=(
+            "Learning rate usado nos blocos "
+            "pré-treinados descongelados."
+        )
+    )
+
     args = parser.parse_args()
 
     args.saida.mkdir(
@@ -551,7 +589,7 @@ def main():
         else pesos_calculados
     )
 
-    modelo = ResNet2_5D().to(
+    modelo = ResNet2_5D(descongelar=args.descongelar).to(
         dispositivo
     )
 
@@ -594,6 +632,17 @@ def main():
         "arquitetura=ResNet18 "
         "pesos=ImageNet1K_V1"
     )
+    
+    log.info(
+        "configuracao_finetuning=%s",
+        args.descongelar
+    )
+
+    log.info(
+        "lr_cabeca=%g lr_backbone=%g",
+        args.lr,
+        args.lr_backbone
+    )
 
     log.info(
         "entrada=3x64x64 "
@@ -613,8 +662,8 @@ def main():
     )
 
     log.info(
-        "backbone=congelado "
-        "cabeca_fc=treinavel"
+        "descongelamento=%s",
+        args.descongelar
     )
 
     log.info(
@@ -664,9 +713,37 @@ def main():
         len(teste)
     )
 
+    parametros_cabeca = list(
+        modelo.rede.fc.parameters()
+    )
+
+    parametros_backbone = [
+        parametro
+        for nome, parametro
+        in modelo.rede.named_parameters()
+        if (
+            parametro.requires_grad
+            and not nome.startswith("fc.")
+        )
+    ]
+
+    grupos = [
+        {
+            "params": parametros_cabeca,
+            "lr": args.lr
+        }
+    ]
+
+    if parametros_backbone:
+        grupos.append(
+            {
+                "params": parametros_backbone,
+                "lr": args.lr_backbone
+            }
+        )
+
     otimizador = torch.optim.Adam(
-        parametros_treinaveis,
-        lr=args.lr
+        grupos
     )
 
     gerador = torch.Generator().manual_seed(
@@ -705,7 +782,7 @@ def main():
 
         modelo.train()
 
-        manter_backbone_congelado(
+        manter_batchnorm_em_avaliacao(
             modelo
         )
 

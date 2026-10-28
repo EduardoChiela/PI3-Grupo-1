@@ -1,0 +1,34 @@
+{
+  "criterio": "maior recall da classe maligna na validacao",
+  "teste_utilizado_na_escolha": false,
+  "configuracao_escolhida": {
+    "nome": "layer3_layer4",
+    "configuracao": "layer3_layer4",
+    "arquitetura": "ResNet18",
+    "parametros_treinaveis": 10493953,
+    "epocas_executadas": 30,
+    "melhor_epoca": 13,
+    "lr_cabeca": 0.001,
+    "lr_backbone": 0.0001,
+    "threshold": 0.385343074798584,
+    "recall": 0.8909090909090909,
+    "especificidade": 0.6949152542372882,
+    "f1": 0.8032786885245902,
+    "auc": 0.8502311248073959,
+    "tp": 49,
+    "tn": 41,
+    "fp": 18,
+    "fn": 6,
+    "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+    "n_treino": 522,
+    "n_validacao": 114,
+    "n_teste": 111,
+    "log_origem": "mineracao\\resultados\\resnet_s5\\layer3_layer4\\log_treino.txt"
+  },
+  "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+  "experimentos_considerados": [
+    "congelado",
+    "layer4",
+    "layer3_layer4"
+  ]
+}
