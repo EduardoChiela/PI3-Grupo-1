@@ -29,8 +29,8 @@ for i in range(2):
     for j in range(2):
         ax.text(j, i, str(matriz[i][j]), va='center', ha='center', fontsize=14, fontweight='bold')
 
-ax.set_xticks([7])
-ax.set_yticks([7])
+ax.set_xticks([0, 1])
+ax.set_yticks([0, 1])
 ax.set_xticklabels(['Predito Benigno', 'Predito Maligno'])
 ax.set_yticklabels(['Real Benigno', 'Real Maligno'])
 
