@@ -1,0 +1,36 @@
+2026-10-27 04:23:14,845 npz_sha256=31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd
+2026-10-27 04:23:14,845 manifesto_sha256=afba057696a94ee2d44282e77f6d3e9ea9c3e2331df8d00d19a86f2c0edb97d5
+2026-10-27 04:23:14,845 configuracao={"npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd", "manifesto_sha256": "afba057696a94ee2d44282e77f6d3e9ea9c3e2331df8d00d19a86f2c0edb97d5", "codigo_sha256": {"experimentos_sprint5.py": "3cf19d3b446dcec9344b49aa7574317c574dd9fd983cf1747364ad7de362ea20", "dataset.py": "f082d61a87eecef2eaaae8bb9f8e9fab7a7f4d50ec535110bbd9eb7dc927c129", "treino_baseline.py": "d46bc5a29abb4c2e38e908d47ff50cbabd2081452e0e8a1ecee622522a6d26f9", "avaliacao.py": "736e542bb758b0da7bf965cb5c69cd4680f67edd24c8fce8990afb696e9bcce3", "comparar_pesos.py": "9c9233cd50390992306389821649d5d995100c31a00455d8cc995fb8f11f9eb7"}, "epocas": 30, "lr": 0.001, "batch": 32, "augmentation": "flip3d_so_treino", "ambiente": {"python": "3.12.14", "numpy": "2.3.5", "pandas": "2.2.3", "sklearn": "1.8.0", "torch": "2.14.1+cpu", "so": "Linux-6.18.55-x86_64-with-glibc2.39", "dispositivo": "cpu", "threads_torch": 4, "cuda": null, "cudnn": null, "hardware": "x86_64"}, "sementes": [42, 43, 44, 45, 46], "n_dobras": 5, "seed_cv": 42, "cv_regra": "ultima_epoca_fixa_sem_selecao_na_dobra_externa", "dados_reais": true, "seed": 42, "dobra": 3, "selecionar_epoca": false, "sem_pesos": false}
+2026-10-27 04:23:14,845 TREINO=509 VALIDACAO=127; teste não carregado/avaliado
+2026-10-27 04:23:14,847 pesos={0: 0.964015, 1: 1.038776} calculados_somente_no_treino={0: 0.964015, 1: 1.038776}
+2026-10-27 04:23:15,135 epoca 01 perda_treino=0.692689; dobra externa não consultada
+2026-10-27 04:23:15,449 epoca 02 perda_treino=0.665585; dobra externa não consultada
+2026-10-27 04:23:15,751 epoca 03 perda_treino=0.566254; dobra externa não consultada
+2026-10-27 04:23:16,044 epoca 04 perda_treino=0.566357; dobra externa não consultada
+2026-10-27 04:23:16,340 epoca 05 perda_treino=0.516883; dobra externa não consultada
+2026-10-27 04:23:16,634 epoca 06 perda_treino=0.497760; dobra externa não consultada
+2026-10-27 04:23:16,927 epoca 07 perda_treino=0.476210; dobra externa não consultada
+2026-10-27 04:23:17,225 epoca 08 perda_treino=0.449396; dobra externa não consultada
+2026-10-27 04:23:17,561 epoca 09 perda_treino=0.427861; dobra externa não consultada
+2026-10-27 04:23:17,861 epoca 10 perda_treino=0.405779; dobra externa não consultada
+2026-10-27 04:23:18,199 epoca 11 perda_treino=0.382912; dobra externa não consultada
+2026-10-27 04:23:18,498 epoca 12 perda_treino=0.373958; dobra externa não consultada
+2026-10-27 04:23:18,805 epoca 13 perda_treino=0.338253; dobra externa não consultada
+2026-10-27 04:23:19,117 epoca 14 perda_treino=0.350366; dobra externa não consultada
+2026-10-27 04:23:19,426 epoca 15 perda_treino=0.346117; dobra externa não consultada
+2026-10-27 04:23:19,733 epoca 16 perda_treino=0.362722; dobra externa não consultada
+2026-10-27 04:23:20,044 epoca 17 perda_treino=0.344574; dobra externa não consultada
+2026-10-27 04:23:20,351 epoca 18 perda_treino=0.331598; dobra externa não consultada
+2026-10-27 04:23:20,674 epoca 19 perda_treino=0.323640; dobra externa não consultada
+2026-10-27 04:23:20,987 epoca 20 perda_treino=0.326382; dobra externa não consultada
+2026-10-27 04:23:21,294 epoca 21 perda_treino=0.307979; dobra externa não consultada
+2026-10-27 04:23:21,605 epoca 22 perda_treino=0.297249; dobra externa não consultada
+2026-10-27 04:23:21,914 epoca 23 perda_treino=0.285544; dobra externa não consultada
+2026-10-27 04:23:22,211 epoca 24 perda_treino=0.291152; dobra externa não consultada
+2026-10-27 04:23:22,506 epoca 25 perda_treino=0.286428; dobra externa não consultada
+2026-10-27 04:23:22,799 epoca 26 perda_treino=0.287787; dobra externa não consultada
+2026-10-27 04:23:23,108 epoca 27 perda_treino=0.276829; dobra externa não consultada
+2026-10-27 04:23:23,414 epoca 28 perda_treino=0.275777; dobra externa não consultada
+2026-10-27 04:23:23,735 epoca 29 perda_treino=0.276726; dobra externa não consultada
+2026-10-27 04:23:24,047 epoca 30 perda_treino=0.273089; dobra externa não consultada
+2026-10-27 04:23:24,128 RESULTADO={"seed": 42, "dobra": 3, "auc": 0.9277915632754342, "epoca": 30, "n_treino": 509, "n_validacao": 127, "pacientes_treino": 314, "pacientes_validacao": 78, "benignos_treino": 264, "malignos_treino": 245, "benignos_validacao": 65, "malignos_validacao": 62, "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd"}
