@@ -57,7 +57,7 @@ def main():
             raise ValueError('Hashes de dados divergentes entre rodadas')
     amb = p['ambiente']
     secao = f'''{INICIO}
-## Sprint 5 — Variabilidade do baseline (Issue #31)
+## 11. Sprint 5 — Variabilidade do baseline (Issue #31)
 
 Esta seção é gerada por `python -m mineracao.relatorio_sprint5` a partir dos
 logs e predições versionados. O comando confere a integridade dos arquivos e
@@ -121,7 +121,7 @@ sustentada é estabilidade entre sementes nesta validação e sensibilidade à
 partição por paciente; a tipicidade daquele resultado de teste permanece
 indeterminada sem violar o congelamento estabelecido para esta issue.
 
-Os testes de rótulos embaralhados da issue #30, já integrados na seção 9,
+Os testes de rótulos embaralhados da issue #30, já integrados na seção 10,
 não apontaram sinal de vazamento nesse controle. Isso não prova ausência de
 toda forma de vazamento nem remove as limitações de seleção do conjunto.
 Nenhuma rodada desta issue avaliou o teste; os arquivos da comparação histórica

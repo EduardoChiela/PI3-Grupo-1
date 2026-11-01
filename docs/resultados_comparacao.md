@@ -104,18 +104,14 @@ quadrado: ResNet).
 > histopatologia. Números da literatura não são diretamente comparáveis.
 
 | Estudo | Conjunto e rótulo | Divisão | Resultado publicado |
-|---|---|---|---|
-| Causey et al. (2018), *Sci. Rep.* 8:9286 — NoduleX | LIDC; média dos escores arredondada; nota 3 excluída; um nódulo sorteado por paciente | 80/20 por paciente, partição única | CNN: AUC 0,974 (1 × 4–5) e 0,938 (1–2 × 4–5); com atributos radiômicos: 0,993 e 0,971 |
-| Al-Shabi, Lee e Tan (2019), *IEEE Access* — Gated-Dilated | LIDC-IDRI, > 1000 exames | ver artigo | AUC > 0,95 (resumo) |
+| :--- | :--- | :--- | :--- |
+| CAUSEY et al. (2018), *Sci. Rep.* 8:9286 — NoduleX | LIDC; média dos escores arredondada; nota 3 excluída; um nódulo sorteado por paciente + 206 nódulos adicionais nota 1 para balanceamento | 80/20 por paciente, partição única | CNN47: AUC 0,974 (S1×S45) e 0,938 (S12×S45); com radiômica (RF): CNN21+RF AUC 0,971 e CNN47+RF AUC 0,943 em S12×S45 |
+| AL-SHABI; LEE; TAN (2019), *IEEE Access* — Gated-Dilated | LIDC-IDRI, > 1000 exames (Seção I, p. 1-2) | Validação cruzada de 10 folds (partição por paciente/nódulo não detalhada explicitamente) (Seção III-G, p. 8) | AUC > 0,95 (Resumo, p. 1)|
+| SHANSHOOL; BOUCHAKWAB; AMOUS-BEN AMOR (2023), *Procedia Comput. Sci.*, v. 225, p. 394–403 | LIDC-IDRI (1.018 exames, contagem exata de nódulos não informada; 244.527 imagens/fatias). Rótulo binário derivado de escores de radiologistas (exclusão da nota 3 não informada); benigno (0) e maligno (1) | 60% treino, 20% validação e 20% teste divididos diretamente sobre as fatias, sem agrupamento por paciente/nódulo (Alto risco de data leakage: fatias do mesmo nódulo/paciente provável e inadvertidamente misturadas entre treino e teste; Seção 4, p. 399; Tabela 1, p. 400) | DenseNet201 + MLP (Modelo Proposto): Acurácia de 99,30%, Sensibilidade de 99,00% e Especificidade de 99,59% (Seção 4, p. 401; Tabela 2, p. 401). Nota: a linha reporta acurácia, não AUC, então não é comparável ao eixo da tabela. |
+| SHEWAYE; MEKONNEN (2016), *arXiv:1605.08350* — AdaBoost (Atributos Heterogêneos) | LIDC-IDRI (95 pacientes, 565 fatias 2D: 458 malignas / 107 benignas). Rótulo clínico/histológico (1 vs. 2-3); rótulo 0 (desconhecido) excluído | Não informado. Alerta metodológico: caso a divisão tenha sido feita por fatia, fatias do mesmo nódulo podem vazar entre o treino e o teste, inflando a métrica de AUC para 0,94 | AdaBoost (D=5): AUC 0,94 e Acurácia 0,84 (Tabela III, p. 5; Seção V-D, p. 5) |
+| DEY et al. (2018), **IEEE ISBI** — 3D MoDenseNet | LIDC-IDRI (686 nódulos 3D). Mediana dos radiologistas: < 3 (benigno) e > 3 (maligno); nota 3 excluída | 5-fold CV; partição não informada | 3D MoDenseNet: Acurácia de 90,40% e ROC-AUC 0,9548 (Tabela 1, p. 4; Seção 3.3, p. 5) |
 
-O baseline (AUC 0,961) está na mesma faixa desses trabalhos, mas as diferenças
-de seleção impedem dizer que ele "empata" com eles. O desenho 1 × 4–5 de Causey
-é ainda mais separado que o nosso (exclui também a nota 2); o desenho
-1–2 × 4–5 é o mais próximo e não exige consenso de 3 radiologistas. Muitos
-trabalhos sobre LIDC dividem por nódulo e não por paciente, o que infla o
-desempenho. A tabela deve ser ampliada por quem tiver acesso ao texto completo
-dos artigos, informando para cada estudo o critério de rotulagem, a divisão e
-a métrica — apenas os valores conferidos na fonte foram incluídos aqui.
+O baseline (AUC 0,961) está na mesma faixa desses trabalhos, mas as diferenças metodológicas impedem dizer que ele 'empata' diretamente. Enquanto o desenho de Causey et al. utiliza divisões como 1 × 4–5 ou 1–2 × 4–5, o trabalho de Dey et al. (2018) constitui a referência mais próxima e diretamente comparável ao nosso estudo, pois adota exatamente o mesmo critério de rótulo (avaliação por ≥ 3 radiologistas, utilização da mediana e exclusão da nota 3). Além disso, vale ressaltar que muitos trabalhos sobre a LIDC dividem os dados por nódulo e não por paciente, o que pode inflar artificialmente o desempenho reportado.
 
 ## 7. Texto para a seção de Resultados
 
@@ -148,7 +144,55 @@ a métrica — apenas os valores conferidos na fonte foram incluídos aqui.
 > os valores não são diretamente comparáveis aos de trabalhos que usam outros
 > critérios.
 
-## 8. Para a Discussão
+## 8. Piso do diâmetro
+
+Quando usamos só o tamanho do nódulo (`diametro_mm`), sem olhar a imagem,
+a AUC no teste já é 0,9463. Esse é o **piso do diâmetro**: é o
+mínimo que um modelo com imagem precisa superar para mostrar que a imagem
+ajudou. Aqui o diâmetro é usado direto como nota (quanto maior, mais
+provável de ser maligno). Não tem treino.
+
+| Modelo | Usa imagem? | AUC-ROC (teste) |
+|---|---|---|
+| Diâmetro sozinho (`diametro_mm`) | Não | 0,9463 |
+| ResNet18 congelada | Sim | 0,8269 |
+| CNN 2.5D (baseline) | Sim | 0,9610 |
+
+Usamos quatro casas decimais porque a diferença entre o CNN e o diâmetro é
+de só 0,015 e ela some com três casas. A ResNet ficou abaixo do diâmetro e o
+CNN ficou um pouco acima. Nenhuma dessas duas comparações com o diâmetro foi
+testada estatisticamente.
+
+**Por que o diâmetro vai tão bem (causa provável).** O rótulo vem da mediana
+da suspeita dos radiologistas, e o tamanho é um dos critérios que eles usam
+para suspeitar de um nódulo. Nos dados dá para ver: a mediana é 7,5 mm nos
+benignos e 17,1 mm nos malignos (747 nódulos). Então parte do que o modelo
+"aprende" pode ser só tamanho. Isso é uma explicação provável, e não foi
+provada.
+
+**Conclusão.** O CNN ganhou só 0,015 do diâmetro. Além disso, o intervalo de
+confiança do CNN (0,9270 a 0,9862) é largo e o 0,9463 cai dentro dele. Por
+isso, não dá para saber se esse ganho é real ou só sorte da amostra. O que os
+dados permitem dizer é que o modelo **não ficou abaixo do piso do diâmetro**.
+O que os dados **não** permitem dizer é que o modelo aprendeu textura ou algo
+além do tamanho.
+
+**O que resolveria a dúvida.** Um teste que compare a AUC do CNN com a AUC do
+diâmetro nos mesmos nódulos do teste (111 nódulos de 69 pacientes), agrupando
+por paciente, porque nódulos do mesmo paciente não são independentes. O método 
+planejado é o DeLong em cluster por paciente (Obuchowski, 1997), o mesmo da
+seção 4. A regra de decisão foi definida antes de ver o resultado: se o 
+intervalo de confiança da diferença (CNN − diâmetro) não incluir o zero, há
+evidência de que o CNN usa algo além do diâmetro. Se incluir o zero, não há.
+ **Este teste não foi executado.**
+
+**Como conferir o 0,9463.** O cálculo da AUC de 0,9463 pode ser verificado de forma independente cruzando a coluna diametro_mm do arquivo de splits (selecao/nodulos_com_split.csv) com as predições em mineracao/resultados/comparacao/predicoes_teste_pareadas.csv para os 111 nódulos do conjunto de teste.
+
+As medianas de 7,5 mm e 17,1 mm vêm da coluna `diametro_mm`, separada por
+`rotulo_binario`, nos 747 nódulos do `transformacao/manifest_patches.csv`.
+Só nos 111 do teste, seriam 7,9 mm e 18,6 mm.
+
+## 9. Para a Discussão
 
 - **O que foi comparado.** A ResNet da #17 treina só a camada final
   (513 parâmetros) sobre atributos do ImageNet. O resultado mostra que esses
@@ -161,7 +205,7 @@ a métrica — apenas os valores conferidos na fonte foram incluídos aqui.
   camadas, redimensionar para 224) agora seria escolhida depois de ver o teste.
   Se for feita, precisa ser declarada como análise exploratória pós-hoc.
 
-## 9. Testes de estresse do Checkpoint 2
+## 10. Testes de estresse do Checkpoint 2
 
 O feedback do Checkpoint 2 considerou a AUC de 0,96 alta demais e pediu três
 testes de estresse. O primeiro, o modelo só de diâmetro (AUC 0,9463), está na
@@ -172,7 +216,7 @@ e 2000 réplicas de bootstrap. As saídas ficam em `mineracao/resultados/estress
 `31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd`, o mesmo da
 #14 e da #18. Duas execuções seguidas deram números idênticos.
 
-### 9.1 Rótulos embaralhados (validação)
+### 10.1 Rótulos embaralhados (validação)
 
 **Desenho.** O split vem do manifesto, como na #14
 (`dataset.carregar_particoes`). Os rótulos dos 522 nódulos de **treino** foram
@@ -212,9 +256,9 @@ na direção oposta à de um vazamento.
 acaso. Não há evidência de canal escondido levando o rótulo até a entrada: nódulo
 repetido entre treino e validação, ordem dos arquivos ou artefato do patch
 correlacionado com o rótulo. Este teste **não** descarta que o problema seja
-fácil por construção, que é a hipótese da seção 9.2.
+fácil por construção, que é a hipótese da seção 10.2.
 
-### 9.2 Composição e desempenho por faixa de diâmetro (teste)
+### 10.2 Composição e desempenho por faixa de diâmetro (teste)
 
 **Desenho.** A leitura é descritiva sobre o teste congelado. O script só lê
 `predicoes_teste_pareadas.csv` (#18) e os diâmetros de
@@ -272,7 +316,7 @@ do modelo só de diâmetro. Boa parte da AUC de 0,961 vem de separar pequenos
 de grandes, o que o diâmetro já faz. Onde o tamanho não decide, na faixa do
 meio, a AUC cai para 0,844, com IC largo (0,69–0,96) porque são 36 nódulos.
 O recall se mantém (14 de 15 malignos), mas a especificidade cai para 0,76.
-Somado à seção 9.1, o resultado alto não indica vazamento. Ele vem de um
+Somado à seção 10.1, o resultado alto não indica vazamento. Ele vem de um
 problema fácil por construção: o critério de seleção (consenso de ≥ 3
 radiologistas e exclusão da malignidade mediana 3) deixa malignos e benignos
 muito separados em tamanho. A medida honesta da dificuldade "de verdade" é
@@ -281,7 +325,7 @@ precisa. Nenhuma escolha de modelo, limiar ou época foi feita com base nesta
 leitura.
 
 <!-- inicio: issue31 -->
-## Sprint 5 — Variabilidade do baseline (Issue #31)
+## 11. Sprint 5 — Variabilidade do baseline (Issue #31)
 
 Esta seção é gerada por `python -m mineracao.relatorio_sprint5` a partir dos
 logs e predições versionados. O comando confere a integridade dos arquivos e
@@ -367,7 +411,7 @@ sustentada é estabilidade entre sementes nesta validação e sensibilidade à
 partição por paciente; a tipicidade daquele resultado de teste permanece
 indeterminada sem violar o congelamento estabelecido para esta issue.
 
-Os testes de rótulos embaralhados da issue #30, já integrados na seção 9,
+Os testes de rótulos embaralhados da issue #30, já integrados na seção 10,
 não apontaram sinal de vazamento nesse controle. Isso não prova ausência de
 toda forma de vazamento nem remove as limitações de seleção do conjunto.
 Nenhuma rodada desta issue avaliou o teste; os arquivos da comparação histórica
@@ -376,8 +420,11 @@ permanecem inalterados.
 
 ## Referências
 
-- Causey JL et al. Highly accurate model for prediction of lung nodule malignancy with CT scans. *Sci Rep*. 2018;8:9286. doi:10.1038/s41598-018-27569-w
 - Al-Shabi M, Lee HK, Tan M. Gated-Dilated Networks for Lung Nodule Classification in CT Scans. *IEEE Access*. 2019. doi:10.1109/ACCESS.2019.2958663
+- Causey JL et al. Highly accurate model for prediction of lung nodule malignancy with CT scans. *Sci Rep*. 2018;8:9286. doi:10.1038/s41598-018-27569-w
 - DeLong ER, DeLong DM, Clarke-Pearson DL. Comparing the areas under two or more correlated ROC curves. *Biometrics*. 1988;44(3):837–845.
-- Obuchowski NA. Nonparametric analysis of clustered ROC curve data. *Biometrics*. 1997;53(2):567–578.
+- Dey R, Lu Z, Hong Y. Diagnostic classification of lung nodules using 3D neural networks. In: *2018 IEEE 15th International Symposium on Biomedical Imaging (ISBI 2018)*. 2018:774–778. doi:10.1109/ISBI.2018.8363687
 - Durkalski VL, Palesch YY, Lipsitz SR, Rust PF. Analysis of clustered matched-pair data. *Stat Med*. 2003;22(15):2417–2428.
+- Obuchowski NA. Nonparametric analysis of clustered ROC curve data. *Biometrics*. 1997;53(2):567–578.
+- Shanshool AM, Bouchakwa M, Amous-Ben Amor I. Improved accuracy of pulmonary nodule classification on LIDC-IDRI dataset using deep learning. *Procedia Comput Sci*. 2023;225:394–403. doi:10.1016/j.procs.2023.10.024
+- Shewaye TN, Mekonnen AA. Benign-malignant lung nodule classification with geometric and appearance histogram features. *arXiv*. 2016;1605.08350.
