@@ -1,0 +1,20 @@
+{
+  "seed": 42,
+  "dobra": 4,
+  "auc": 0.9572776949826131,
+  "epoca": 30,
+  "n_treino": 509,
+  "n_validacao": 127,
+  "pacientes_treino": 316,
+  "pacientes_validacao": 76,
+  "benignos_treino": 263,
+  "malignos_treino": 246,
+  "benignos_validacao": 66,
+  "malignos_validacao": 61,
+  "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+  "arquivos_sha256": {
+    "configuracao.json": "d698d8feb368c9109fe9759708aefaea44a3d9239a49e93e815969dfd9add93b",
+    "log_treino.txt": "9ba6e3f81274ee75b218cb6b883fcd9910d073161554a2a4427ef5f92f70a99e",
+    "predicoes_validacao.csv": "85861de5408637cf32efd7f44db4ce6f27cdce54ddcc62cf4f0a1f8ff06333dd"
+  }
+}

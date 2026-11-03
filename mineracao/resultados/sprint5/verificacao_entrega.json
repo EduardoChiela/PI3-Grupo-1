@@ -1,0 +1,32 @@
+{
+  "status": "aprovado",
+  "execucoes_reais": 11,
+  "sementes": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "dobras": 5,
+  "epocas_por_execucao": 30,
+  "nodulos_desenvolvimento": 636,
+  "pacientes_desenvolvimento": 392,
+  "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+  "hashes_por_execucao_conferidos": true,
+  "aucs_recalculadas_das_predicoes": true,
+  "cobertura_cv_completa_sem_duplicatas": true,
+  "pacientes_sem_sobreposicao_treino_validacao": true,
+  "secao_documento_gerada": true,
+  "pr_aberta": false,
+  "fila_aguardando_merge": [
+    "PR #36 (abertura pelo usuário)"
+  ],
+  "comando_executado": "python -m mineracao.experimentos_sprint5 --etapa tudo",
+  "commit_base": "358a842f4d8557a120d8208589604abb40239732",
+  "interpretacao_final_pendente": false,
+  "testes_sinteticos_aprovados": 6,
+  "commit_integracao": "5f27582edd7c105fbb247a19f263de7107d7eae8",
+  "teste_merge_pr36_sem_conflitos": true,
+  "documentacao_gerada_por": "python -m mineracao.relatorio_sprint5"
+}
