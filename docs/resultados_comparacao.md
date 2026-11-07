@@ -64,16 +64,16 @@ referência, marcadas como tais, porque assumem independência entre nódulos.
 Recall e especificidade estão no ponto de operação de cada modelo
 (threshold de Youden escolhido na validação e congelado).
 
-Os dois modelos foram avaliados sobre exatamente os mesmos 111 nódulos de teste, pertencentes a 69 pacientes
+Os dois modelos foram avaliados sobre exatamente os mesmos 111 nódulos de teste, pertencentes a 69 pacientes.
 
 | Métrica | CNN rasa (baseline) | ResNet18 (transfer learning) | Diferença (ResNet − baseline) |
 |---|---|---|---|
-| Recall (maligno) | 0,943 [0,878; 1,000] | 0,679 [0,556; 0,803] | -0,264 [-0,375; -0,148] |
-| Especificidade | 0,862 [0,765; 0,946] | 0,793 [0,684; 0,885] | -0,069 [-0,177; 0,035] |
-| F1 | 0,901 [0,835; 0,951] | 0,713 [0,604; 0,810] | -0,188 [-0,285; -0,103] |
-| AUC-ROC | 0,961 [0,927; 0,986] | 0,827 [0,743; 0,900] | -0,134 [-0,215; -0,060] |
-| Limiar (Youden, validação) | 0,4305 | 0,5812 | — |
-| TP / FN / TN / FP | 50 / 3 / 50 / 8 | 36 / 17 / 46 / 12 | — |
+| Recall (maligno) | 0,943 [0,878; 1,000] | 0,906 [0,827; 0,977] | -0,038 [-0,111; 0,034] |
+| Especificidade | 0,862 [0,765; 0,946] | 0,810 [0,700; 0,902] | -0,052 [-0,172; 0,076] |
+| F1 | 0,901 [0,835; 0,951] | 0,857 [0,781; 0,923] | -0,044 [-0,115; 0,027] |
+| AUC-ROC | 0,961 [0,927; 0,986] | 0,929 [0,875; 0,973] | -0,032 [-0,076; 0,007] |
+| Limiar (Youden, validação) | 0,4305 | 0,3614 | — |
+| TP / FN / TN / FP | 50 / 3 / 50 / 8 | 48 / 5 / 47 / 11 | — |
 
 Todas as réplicas (2000/2000) foram válidas para todas as métricas.
 
@@ -81,18 +81,18 @@ Todas as réplicas (2000/2000) foram válidas para todas as métricas.
 
 | Teste | Estatística | p-valor |
 |---|---|---|
-| **McNemar em cluster por paciente** (principal) | X² = 11,57; 22 nódulos só o baseline acerta, 4 só a ResNet; 22 pacientes discordantes | **0,0007** |
-| McNemar exato por nódulo (referência) | b = 22, c = 4 | 0,0005 |
-| **DeLong em cluster por paciente** (principal) | ΔAUC = −0,134, EP 0,039, IC 95% [−0,211; −0,057], z = −3,40 | **0,0007** |
-| DeLong por nódulo (referência) | ΔAUC = −0,134, EP 0,037, z = −3,59 | 0,0003 |
+| **McNemar em cluster por paciente** (principal) | X² = 1,32; 11 pacientes só o baseline acerta, 6 só a ResNet; 16 pacientes discordantes | **0,251** |
+| McNemar exato por nódulo (referência) | b = 11, c = 6 | 0,332 |
+| **DeLong em cluster por paciente** (principal) | ΔAUC = −0,032, EP 0,021, IC 95% [−0,073; 0,010], z = −1,50 | **0,133** |
+| DeLong por nódulo (referência) | ΔAUC = −0,032, EP 0,020, z = −1,54 | 0,123 |
 
 O erro-padrão em cluster é maior que o por nódulo, como esperado com nódulos
-correlacionados no mesmo paciente. O IC do DeLong em cluster coincide com o do
-bootstrap pareado por paciente ([−0,215; −0,060]).
+correlacionados no mesmo paciente. O IC do DeLong em cluster ([−0,073; 0,010])
+é próximo ao do bootstrap pareado por paciente ([−0,076; 0,007]).
 
 ## 5. Curva ROC
 
-![ROC dos dois modelos no teste](../mineracao/resultados/comparacao/roc_comparacao.png)
+![ROC dos dois modelos no teste](../mineracao/resultados/comparacao_s5/roc_comparacao.png)
 
 Os marcadores são o ponto de operação de cada modelo (círculo: baseline;
 quadrado: ResNet).
@@ -125,43 +125,62 @@ a métrica — apenas os valores conferidos na fonte foram incluídos aqui.
 > obteve AUC-ROC de 0,961 (IC 95%: 0,927–0,986) e, no limiar escolhido na
 > validação, recall de 0,943 (0,878–1,000) para a classe maligna com
 > especificidade de 0,862 (0,765–0,946) e F1 de 0,901 (0,835–0,951). A ResNet18
-> pré-treinada no ImageNet, com o extrator congelado, obteve AUC-ROC de 0,827
-> (0,743–0,900), recall de 0,679 (0,556–0,803), especificidade de 0,793
-> (0,684–0,885) e F1 de 0,713 (0,604–0,810). Todos os intervalos foram obtidos
-> por bootstrap reamostrando pacientes. Os dois modelos foram treinados sobre o
-> mesmo arquivo de patches (SHA-256 conferido nos dois registros de execução)
-> e avaliados no mesmo split, definido por paciente.
+> pré-treinada no ImageNet, com `layer3` e `layer4` liberados, obteve AUC-ROC de
+> 0,929 (0,875–0,973), recall de 0,906 (0,827–0,977), especificidade de 0,810
+> (0,700–0,902) e F1 de 0,857 (0,781–0,923). A configuração com extrator
+> congelado, avaliada anteriormente, obteve AUC de 0,827. Todos os intervalos
+> foram obtidos por bootstrap reamostrando pacientes. Os dois modelos foram
+> treinados sobre o mesmo arquivo de patches (SHA-256 conferido nos registros
+> de execução) e avaliados no mesmo split, definido por paciente.
 >
 > Como os modelos foram avaliados nos mesmos nódulos, a comparação foi pareada
 > e agregada por paciente para respeitar a dependência entre nódulos do mesmo
-> indivíduo. A diferença de AUC (ResNet − CNN rasa) foi de −0,134 (IC 95%:
-> −0,211 a −0,057; DeLong em cluster, p < 0,001). No ponto de operação, o
-> baseline acertou 22 nódulos que a ResNet errou e a ResNet acertou 4 que o
-> baseline errou (McNemar em cluster, p < 0,001). A diferença concentrou-se na
-> sensibilidade (−0,264; IC 95%: −0,375 a −0,148); a diferença de
-> especificidade (−0,069; −0,177 a 0,035) não foi distinguível de zero.
+> indivíduo. A diferença de AUC (ResNet − CNN rasa) foi de −0,032 (IC 95%:
+> −0,073 a 0,010; DeLong em cluster, p = 0,133). No ponto de operação, 11
+> pacientes tiveram acerto apenas do baseline e 6 apenas da ResNet (McNemar em
+> cluster, p = 0,251). As diferenças de recall (−0,038; IC 95%: −0,111 a
+> 0,034) e especificidade (−0,052; −0,172 a 0,076) também não foram
+> distinguíveis de zero.
 >
-> Não houve evidência de que o transfer learning, na configuração avaliada
-> (extrator congelado e apenas a camada linear final treinada), ajude neste
-> tamanho de amostra; ao contrário, a CNN rasa treinada do zero foi superior.
-> Os resultados devem ser lidos à luz da seleção adotada: ao exigir consenso de
-> pelo menos três radiologistas e excluir a malignidade mediana 3, o conjunto
+> Não foi observada diferença estatisticamente significativa entre a CNN rasa e
+> a ResNet18 com `layer3` e `layer4` liberados nos testes pareados. A CNN teve
+> métricas pontuais maiores, mas os dados não sustentam afirmar superioridade
+> estatística de um dos modelos. A configuração com extrator congelado teve
+> desempenho inferior (AUC 0,827), enquanto o ajuste fino elevou a AUC para
+> 0,929. Os resultados devem ser lidos à luz da seleção adotada: ao exigir
+> consenso de pelo menos três radiologistas e excluir a malignidade mediana 3, o conjunto
 > remove os casos ambíguos e é mais fácil que o LIDC-IDRI completo, de modo que
 > os valores não são diretamente comparáveis aos de trabalhos que usam outros
 > critérios.
 
 ## 8. Para a Discussão
 
-- **O que foi comparado.** A ResNet da #17 treina só a camada final
-  (513 parâmetros) sobre atributos do ImageNet. O resultado mostra que esses
-  atributos, sem ajuste fino, não representam bem patches 2.5D de 64 × 64 cujos
-  canais são planos anatômicos, não RGB. Ele **não** diz que uma ResNet com
-  ajuste fino perderia para a CNN rasa — essa configuração não foi testada.
-- **O resultado já era visível na validação** (AUC de validação 0,72 da ResNet
-  contra 0,90 do baseline), portanto não depende do teste.
-- **Teste contaminado para a ResNet.** Qualquer variante nova (descongelar
-  camadas, redimensionar para 224) agora seria escolhida depois de ver o teste.
-  Se for feita, precisa ser declarada como análise exploratória pós-hoc.
+| Modelo | Usa imagem? | AUC-ROC (teste) |
+|---|---|---:|
+| Diâmetro sozinho | Não | 0,9463 |
+| ResNet18 congelada | Sim | 0,8269 |
+| ResNet18 (`layer3` + `layer4` liberados) | Sim | 0,9294 |
+| CNN rasa | Sim | 0,9610 |
+
+- **O que foi comparado.** Foram avaliadas três configurações da ResNet18 na
+  validação: backbone congelado (513 parâmetros treináveis; AUC 0,7217),
+  `layer4` liberado (8.394.241 parâmetros; AUC 0,8059) e `layer3` + `layer4`
+  liberados (10.493.953 parâmetros; AUC 0,8502). A escolha foi feita pelo
+  recall maligno de validação, sem usar o teste. A configuração final alcançou
+  AUC 0,9294 no teste, ainda abaixo do modelo de diâmetro sozinho (0,9463);
+  a CNN rasa ficou em 0,9610.
+- **Repetibilidade da execução final.** Duas execuções com a mesma seed e
+  configuração, na CPU, divergiram a partir da segunda época: a AUC de
+  validação foi 0,8502 e 0,8656. A diferença observada foi 0,0154; por isso,
+  os resultados devem ser interpretados considerando essa variação numérica.
+- **Limitação do BatchNorm.** Todos os módulos `BatchNorm2d`, inclusive os de
+  `layer3` e `layer4`, permaneceram em modo de avaliação durante o ajuste fino.
+  Os pesos dessas camadas foram treinados, mas suas estatísticas de normalização
+  continuaram as do ImageNet, o que pode limitar a adaptação à tomografia.
+- **Piso do diâmetro.** Mesmo com o ajuste fino, a ResNet (AUC 0,9294) não
+  superou o preditor baseado apenas no diâmetro (0,9463). A CNN rasa o superou
+  por 0,015. Essa comparação depende dos resultados versionados em
+  `mineracao/resultados/comparacao_s5/`.
 
 ## Referências
 
