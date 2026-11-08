@@ -1,19 +1,24 @@
 # Comparação baseline × ResNet — Issue #18
 
 Números gerados por `python -m mineracao.comparacao` (seed 42, 2000 réplicas de
-bootstrap). Saídas em `mineracao/resultados/comparacao/`: `tabela_comparativa.md`,
-`resultados.json`, `roc_comparacao.png` e `predicoes_teste_pareadas.csv`.
+bootstrap). A pasta vigente é `mineracao/resultados/comparacao_s5/`, com
+`tabela_comparativa.md`, `resultados.json`, `roc_comparacao.png` e
+`predicoes_teste_pareadas.csv`. A pasta antiga `mineracao/resultados/comparacao/`
+é da comparação da Sprint 4, quando a ResNet ainda estava com o extrator
+congelado; ela continua no repositório como histórico e não é a referência
+deste documento.
 O script não treina nem prevê: lê as predições de teste e os thresholds
-congelados nos logs da #14 e da #17, confere tudo e só então calcula.
+congelados nos logs do baseline (#14) e da ResNet final (#32, pasta
+`resnet_s5/final`), confere tudo e só então calcula.
 
 ## 1. Conferência: os dois modelos foram avaliados do mesmo jeito
 
-| Item | Baseline (#14) | ResNet (#17) |
+| Item | Baseline (#14) | ResNet (#32, `layer3` + `layer4` liberados) |
 |---|---|---|
 | SHA-256 do `.npz` no log | `31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd` | `31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd` |
 | Manifesto lido no log | `transformacao/manifest_patches.csv` | `transformacao/manifest_patches.csv` |
 | Teste | 111 nódulos, 69 pacientes (53 malignos, 58 benignos) | idem, mesmos `nodule_id` |
-| Threshold (Youden na validação) | 0,4305 | 0,5812 |
+| Threshold (Youden na validação) | 0,4305 | 0,3614 |
 | Avaliações de teste no log | 1 | 1 |
 
 - **Hash do `.npz`:** idêntico nos dois logs e igual ao `patches/patches_2_5d.npz`
@@ -81,7 +86,7 @@ Todas as réplicas (2000/2000) foram válidas para todas as métricas.
 
 | Teste | Estatística | p-valor |
 |---|---|---|
-| **McNemar em cluster por paciente** (principal) | X² = 1,32; 11 pacientes só o baseline acerta, 6 só a ResNet; 16 pacientes discordantes | **0,251** |
+| **McNemar em cluster por paciente** (principal) | X² = 1,32; 11 nódulos só o baseline acerta e 6 só a ResNet, distribuídos em 16 pacientes discordantes | **0,251** |
 | McNemar exato por nódulo (referência) | b = 11, c = 6 | 0,332 |
 | **DeLong em cluster por paciente** (principal) | ΔAUC = −0,032, EP 0,021, IC 95% [−0,073; 0,010], z = −1,50 | **0,133** |
 | DeLong por nódulo (referência) | ΔAUC = −0,032, EP 0,020, z = −1,54 | 0,123 |
@@ -132,8 +137,9 @@ O baseline (AUC 0,961) está na mesma faixa desses trabalhos, mas as diferenças
 > Como os modelos foram avaliados nos mesmos nódulos, a comparação foi pareada
 > e agregada por paciente para respeitar a dependência entre nódulos do mesmo
 > indivíduo. A diferença de AUC (ResNet − CNN rasa) foi de −0,032 (IC 95%:
-> −0,073 a 0,010; DeLong em cluster, p = 0,133). No ponto de operação, 11
-> pacientes tiveram acerto apenas do baseline e 6 apenas da ResNet (McNemar em
+> −0,073 a 0,010; DeLong em cluster, p = 0,133). No ponto de operação, o
+> baseline acertou 11 nódulos que a ResNet errou e a ResNet acertou 6 que o
+> baseline errou, distribuídos em 16 pacientes discordantes (McNemar em
 > cluster, p = 0,251). As diferenças de recall (−0,038; IC 95%: −0,111 a
 > 0,034) e especificidade (−0,052; −0,172 a 0,076) também não foram
 > distinguíveis de zero.
@@ -160,13 +166,14 @@ provável de ser maligno). Não tem treino.
 | Modelo | Usa imagem? | AUC-ROC (teste) |
 |---|---|---|
 | Diâmetro sozinho (`diametro_mm`) | Não | 0,9463 |
-| ResNet18 congelada | Sim | 0,8269 |
+| ResNet18 com extrator congelado | Sim | 0,8269 |
+| ResNet18 com `layer3` e `layer4` liberados | Sim | 0,9294 |
 | CNN 2.5D (baseline) | Sim | 0,9610 |
 
 Usamos quatro casas decimais porque a diferença entre o CNN e o diâmetro é
-de só 0,015 e ela some com três casas. A ResNet ficou abaixo do diâmetro e o
-CNN ficou um pouco acima. Nenhuma dessas duas comparações com o diâmetro foi
-testada estatisticamente.
+de só 0,015 e ela some com três casas. As duas configurações da ResNet ficaram
+abaixo do diâmetro, inclusive a que recebeu ajuste fino, e o CNN ficou um pouco
+acima. Nenhuma dessas comparações com o diâmetro foi testada estatisticamente.
 
 **Por que o diâmetro vai tão bem (causa provável).** O rótulo vem da mediana
 da suspeita dos radiologistas, e o tamanho é um dos critérios que eles usam
@@ -191,7 +198,7 @@ intervalo de confiança da diferença (CNN − diâmetro) não incluir o zero, h
 evidência de que o CNN usa algo além do diâmetro. Se incluir o zero, não há.
  **Este teste não foi executado.**
 
-**Como conferir o 0,9463.** O cálculo da AUC de 0,9463 pode ser verificado de forma independente cruzando a coluna diametro_mm do arquivo de splits (selecao/nodulos_com_split.csv) com as predições em mineracao/resultados/comparacao/predicoes_teste_pareadas.csv para os 111 nódulos do conjunto de teste.
+**Como conferir o 0,9463.** O cálculo da AUC de 0,9463 pode ser verificado de forma independente cruzando a coluna diametro_mm do arquivo de splits (selecao/nodulos_com_split.csv) com as predições em mineracao/resultados/comparacao_s5/predicoes_teste_pareadas.csv para os 111 nódulos do conjunto de teste.
 
 As medianas de 7,5 mm e 17,1 mm vêm da coluna `diametro_mm`, separada por
 `rotulo_binario`, nos 747 nódulos do `transformacao/manifest_patches.csv`.
@@ -199,12 +206,7 @@ Só nos 111 do teste, seriam 7,9 mm e 18,6 mm.
 
 ## 9. Para a Discussão
 
-| Modelo | Usa imagem? | AUC-ROC (teste) |
-|---|---|---:|
-| Diâmetro sozinho | Não | 0,9463 |
-| ResNet18 congelada | Sim | 0,8269 |
-| ResNet18 (`layer3` + `layer4` liberados) | Sim | 0,9294 |
-| CNN rasa | Sim | 0,9610 |
+A tabela com os quatro modelos lado a lado está na §8.
 
 - **O que foi comparado.** Foram avaliadas três configurações da ResNet18 na
   validação: backbone congelado (513 parâmetros treináveis; AUC 0,7217),
