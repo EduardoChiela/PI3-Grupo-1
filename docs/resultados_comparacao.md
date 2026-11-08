@@ -173,7 +173,8 @@ provável de ser maligno). Não tem treino.
 Usamos quatro casas decimais porque a diferença entre o CNN e o diâmetro é
 de só 0,015 e ela some com três casas. As duas configurações da ResNet ficaram
 abaixo do diâmetro, inclusive a que recebeu ajuste fino, e o CNN ficou um pouco
-acima. Nenhuma dessas comparações com o diâmetro foi testada estatisticamente.
+acima. Só a comparação entre o CNN e o diâmetro foi testada estatisticamente
+(abaixo). As comparações da ResNet com o diâmetro não foram testadas.
 
 **Por que o diâmetro vai tão bem (causa provável).** O rótulo vem da mediana
 da suspeita dos radiologistas, e o tamanho é um dos critérios que eles usam
@@ -189,16 +190,45 @@ dados permitem dizer é que o modelo **não ficou abaixo do piso do diâmetro**.
 O que os dados **não** permitem dizer é que o modelo aprendeu textura ou algo
 além do tamanho.
 
-**O que resolveria a dúvida.** Um teste que compare a AUC do CNN com a AUC do
+**O que resolveria a dúvida (regra registrada antes do teste).** Um teste que compare a AUC do CNN com a AUC do
 diâmetro nos mesmos nódulos do teste (111 nódulos de 69 pacientes), agrupando
 por paciente, porque nódulos do mesmo paciente não são independentes. O método 
 planejado é o DeLong em cluster por paciente (Obuchowski, 1997), o mesmo da
 seção 4. A regra de decisão foi definida antes de ver o resultado: se o 
 intervalo de confiança da diferença (CNN − diâmetro) não incluir o zero, há
 evidência de que o CNN usa algo além do diâmetro. Se incluir o zero, não há.
- **Este teste não foi executado.**
 
-**Como conferir o 0,9463.** O cálculo da AUC de 0,9463 pode ser verificado de forma independente cruzando a coluna diametro_mm do arquivo de splits (selecao/nodulos_com_split.csv) com as predições em mineracao/resultados/comparacao_s5/predicoes_teste_pareadas.csv para os 111 nódulos do conjunto de teste.
+<!-- inicio: delong_diametro -->
+**Teste pré-registrado: CNN contra o diâmetro.** Gerado por
+`python -m mineracao.faixas_tamanho` (saídas em `mineracao/resultados/faixas_tamanho_s6/`).
+O DeLong em cluster por paciente (Obuchowski, 1997), a mesma função da §4,
+compara as duas AUC nos mesmos 111 nódulos de teste
+(69 pacientes). O diâmetro entra direto como
+nota, sem treino.
+
+| Teste | AUC CNN | AUC diâmetro | Diferença (CNN − diâmetro) | IC 95% | p-valor |
+|---|---|---|---|---|---|
+| **DeLong em cluster por paciente** (principal) | 0,9610 | 0,9463 | 0,0146 (EP 0,0184) | **[-0,0215; 0,0508]** | 0,427 |
+| DeLong por nódulo (referência) | 0,9610 | 0,9463 | 0,0146 (EP 0,0175) | [-0,0197; 0,0489] | 0,403 |
+
+**Conclusão pela regra pré-registrada.** O IC 95% da diferença
+([-0,0215; 0,0508]) **inclui o zero**. Pela regra
+fixada antes do teste, **não há evidência de que a CNN use algo além do
+diâmetro**. O ganho de 0,015 na AUC não se distingue do
+acaso nesta amostra. Isso não prova que a CNN só olha o tamanho: com
+111 nódulos e um piso já em 0,9463,
+sobra pouco espaço para medir um ganho. O que os dados sustentam é que o
+desempenho da CNN no teste é **compatível com o de um preditor só de
+diâmetro**. Esta é a resposta à pergunta central do trabalho e deve ser
+apresentada assim.
+
+Na faixa de 6 a 20 mm, onde o tamanho decide menos (§10.2), a CNN tem AUC
+0,927 e o diâmetro sozinho
+0,889. Essa diferença é só descritiva: a
+comparação não foi pré-registrada e não foi testada.
+<!-- fim: delong_diametro -->
+
+**Como conferir o 0,9463.** O cálculo da AUC de 0,9463 pode ser verificado de forma independente cruzando a coluna diametro_mm do arquivo de splits (selecao/nodulos_com_split.csv) com as predições em mineracao/resultados/comparacao_s5/predicoes_teste_pareadas.csv para os 111 nódulos do conjunto de teste. O script `mineracao/faixas_tamanho.py` faz esse cruzamento, recalcula a AUC e confere que ela bate com a usada no DeLong.
 
 As medianas de 7,5 mm e 17,1 mm vêm da coluna `diametro_mm`, separada por
 `rotulo_binario`, nos 747 nódulos do `transformacao/manifest_patches.csv`.
@@ -225,14 +255,18 @@ A tabela com os quatro modelos lado a lado está na §8.
   continuaram as do ImageNet, o que pode limitar a adaptação à tomografia.
 - **Piso do diâmetro.** Mesmo com o ajuste fino, a ResNet (AUC 0,9294) não
   superou o preditor baseado apenas no diâmetro (0,9463). A CNN rasa o superou
-  por 0,015. Essa comparação depende dos resultados versionados em
+  por 0,015, diferença que o DeLong em cluster pré-registrado não distinguiu de
+  zero (§8). Essa comparação depende dos resultados versionados em
   `mineracao/resultados/comparacao_s5/`.
 
 ## 10. Testes de estresse do Checkpoint 2
 
 O feedback do Checkpoint 2 considerou a AUC de 0,96 alta demais e pediu três
 testes de estresse. O primeiro, o modelo só de diâmetro (AUC 0,9463), está na
-PR #29. Esta seção traz os outros dois. Eles foram gerados por
+PR #29, e o teste pareado contra ele está na §8. Esta seção traz os outros
+dois. A §10.2 usa as faixas de tamanho exigidas pelo documento (< 6, 6 a 20 e
+> 20 mm), e a §10.3 mantém a análise original por tercis como complemento.
+Os itens 10.1 e 10.3 foram gerados por
 `python -m mineracao.teste_estresse --npz patches/patches_2_5d.npz`, com seed 42
 e 2000 réplicas de bootstrap. As saídas ficam em `mineracao/resultados/estresse/`:
 `log_estresse.txt` e `resultados.json`. O SHA-256 do `.npz` no log é
@@ -279,9 +313,87 @@ na direção oposta à de um vazamento.
 acaso. Não há evidência de canal escondido levando o rótulo até a entrada: nódulo
 repetido entre treino e validação, ordem dos arquivos ou artefato do patch
 correlacionado com o rótulo. Este teste **não** descarta que o problema seja
-fácil por construção, que é a hipótese da seção 10.2.
+fácil por construção, que é a hipótese das seções 10.2 e 10.3.
 
-### 10.2 Composição e desempenho por faixa de diâmetro (teste)
+<!-- inicio: faixas_documento -->
+### 10.2 Desempenho nas faixas exigidas: < 6, 6 a 20 e > 20 mm (teste)
+
+O documento de instruções exige desempenho separado em **< 6 mm, 6 a 20 mm e
+> 20 mm** e chama a análise de obrigatória. Esta é a análise exigida. Os
+tercis usados antes ficam na §10.3, como análise adicional. Gerado por
+`python -m mineracao.faixas_tamanho`, que só lê as predições de teste da §3
+(`comparacao_s5/predicoes_teste_pareadas.csv`) e o `diametro_mm` de
+`selecao/nodulos_com_split.csv`. O script não treina, não prevê e não escolhe
+limiar. Os cortes vêm do documento, não dos dados. Os nódulos com exatamente 6
+ou 20 mm entrariam na faixa do meio, mas no teste não há nenhum. O limiar é o
+oficial da CNN rasa (0,4305, Youden na validação).
+
+**Composição (teste):**
+
+| Faixa | Diâmetro (mm) | Nódulos | Pacientes | Malignos | Benignos | % malignos |
+|---|---|---|---|---|---|---|
+| < 6 mm | 4,83 – 5,83 | 5 | 5 | 0 | 5 | 0% |
+| 6 a 20 mm | 6,06 – 18,80 | 81 | 54 | 28 | 53 | 35% |
+| > 20 mm | 20,65 – 37,90 | 25 | 21 | 25 | 0 | 100% |
+| Total | | 111 | 69 | 53 | 58 | 48% |
+
+A soma de pacientes por faixa passa de 69 porque alguns pacientes têm
+nódulos em mais de uma faixa.
+
+**Por que as faixas extremas não permitem medir desempenho.** **Não existe
+nenhum nódulo maligno abaixo de 6 mm no teste** (5 nódulos, todos
+benignos). Sensibilidade e AUC nessa faixa seriam 0/0. Elas não podem ser
+calculadas, nem com este modelo nem com um modelo melhor. Acima de 20 mm,
+**todos os 25 nódulos são malignos**. Ali a especificidade e a AUC
+também são indefinidas, e o tamanho sozinho acerta a faixa inteira. A pergunta
+do documento, "o modelo erra mais em nódulos pequenos (< 6 mm)?", **não pode
+ser respondida nesta amostra**. Isso é uma limitação declarada, e não um
+resultado ruim do modelo.
+
+O padrão não é acaso do sorteio do teste. Nos 747
+nódulos com patch (treino, validação e teste), a composição é esta:
+
+| Faixa | Nódulos | Malignos | Benignos |
+|---|---|---|---|
+| < 6 mm | 66 | 1 | 65 |
+| 6 a 20 mm | 548 | 227 | 321 |
+| > 20 mm | 133 | 132 | 1 |
+
+Abaixo de 6 mm há 1 maligno em 66 nódulos.
+Acima de 20 mm há 1 benigno em 133. O padrão vem dos
+critérios de seleção. O conjunto exige que pelo menos três radiologistas
+tenham marcado o nódulo e exclui a malignidade mediana 3 ("indeterminado").
+O segundo filtro tira os casos que os radiologistas consideraram ambíguos.
+É provável que seja ali que estariam os nódulos pequenos suspeitos e os
+grandes de aparência benigna. O que sobra é quase separado pelo tamanho. Os arquivos versionados já trazem o conjunto
+depois desse filtro, então não dá para contar aqui quantos nódulos de cada
+faixa ele removeu.
+
+**Desempenho na faixa de 6 a 20 mm** (81 nódulos, 54
+pacientes, 28 malignos), a única com as duas classes em número
+suficiente. IC 95% por bootstrap por paciente, 2000 réplicas, seed
+42 (réplicas válidas: 2000/2000).
+
+| Métrica | CNN rasa (faixa 6 a 20 mm) | Diâmetro sozinho (referência, faixa 6 a 20 mm) |
+|---|---|---|
+| AUC-ROC | 0,927 [0,870; 0,973] | 0,889 [0,811; 0,958] |
+| Recall (maligno) | 0,893 [0,778; 1,000] | — |
+| Especificidade | 0,849 [0,750; 0,939] | — |
+| TP / FN / TN / FP | 25 / 3 / 45 / 8 | — |
+
+**O que significa.** Mesmo dentro de 6 a 20 mm, o diâmetro sozinho ainda
+separa bem as classes, porque a faixa é larga. A CNN fica acima dele nessa
+faixa, mas os intervalos se sobrepõem e essa comparação não foi testada. O
+teste formal contra o diâmetro, pré-registrado, é o do teste inteiro (§8), e
+ele não mostrou diferença. A faixa do meio é onde o problema é de fato
+difícil, e é nela que a AUC deve ser lida como medida de dificuldade.
+<!-- fim: faixas_documento -->
+
+### 10.3 Análise adicional: composição e desempenho por tercis de diâmetro (teste)
+
+> **Esta não é a análise exigida pelo documento.** A análise exigida, nas
+> faixas < 6, 6 a 20 e > 20 mm, está na §10.2. Esta usa os tercis do teste e
+> foi feita antes. Ela fica como complemento.
 
 **Desenho.** A leitura é descritiva sobre o teste congelado. O script só lê
 `predicoes_teste_pareadas.csv` (#18) e os diâmetros de
