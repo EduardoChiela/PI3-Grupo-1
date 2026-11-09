@@ -1,0 +1,38 @@
+2026-11-08 20:25:58,919 issue=45 modelo=ResNet18 configuracao=layer3_layer4
+2026-11-08 20:25:58,919 npz_sha256=31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd
+2026-11-08 20:25:58,920 dobras_sha256=121cc9ba535272c7af5b10f76a6fe1b0bb709e77261d6f7aaaa41063c3d563ae
+2026-11-08 20:25:58,920 dobra=1 seed=42 epocas=30 batch=32 lr_cabeca=0.001 lr_backbone=0.0001
+2026-11-08 20:25:58,920 TREINO=509 VALIDACAO=127; teste não carregado/avaliado
+2026-11-08 20:25:58,920 regra_cv=epoca_final_fixa; dobra externa não seleciona checkpoint nem threshold
+2026-11-08 20:25:58,924 pesos_calculados_somente_no_treino={0: 0.967680608365019, 1: 1.0345528455284554}
+2026-11-08 20:26:05,623 epoca 01 perda_treino=0.831887; dobra externa não consultada
+2026-11-08 20:26:09,585 epoca 02 perda_treino=0.658629; dobra externa não consultada
+2026-11-08 20:26:13,577 epoca 03 perda_treino=0.590596; dobra externa não consultada
+2026-11-08 20:26:17,527 epoca 04 perda_treino=0.591295; dobra externa não consultada
+2026-11-08 20:26:21,477 epoca 05 perda_treino=0.492477; dobra externa não consultada
+2026-11-08 20:26:25,492 epoca 06 perda_treino=0.452931; dobra externa não consultada
+2026-11-08 20:26:29,471 epoca 07 perda_treino=0.449115; dobra externa não consultada
+2026-11-08 20:26:33,493 epoca 08 perda_treino=0.428347; dobra externa não consultada
+2026-11-08 20:26:37,592 epoca 09 perda_treino=0.347610; dobra externa não consultada
+2026-11-08 20:26:41,602 epoca 10 perda_treino=0.326633; dobra externa não consultada
+2026-11-08 20:26:45,662 epoca 11 perda_treino=0.286046; dobra externa não consultada
+2026-11-08 20:26:49,750 epoca 12 perda_treino=0.299538; dobra externa não consultada
+2026-11-08 20:26:53,776 epoca 13 perda_treino=0.292637; dobra externa não consultada
+2026-11-08 20:26:57,848 epoca 14 perda_treino=0.251313; dobra externa não consultada
+2026-11-08 20:27:01,855 epoca 15 perda_treino=0.239948; dobra externa não consultada
+2026-11-08 20:27:06,053 epoca 16 perda_treino=0.227669; dobra externa não consultada
+2026-11-08 20:27:10,133 epoca 17 perda_treino=0.217503; dobra externa não consultada
+2026-11-08 20:27:14,224 epoca 18 perda_treino=0.148812; dobra externa não consultada
+2026-11-08 20:27:18,307 epoca 19 perda_treino=0.207649; dobra externa não consultada
+2026-11-08 20:27:22,370 epoca 20 perda_treino=0.165517; dobra externa não consultada
+2026-11-08 20:27:26,437 epoca 21 perda_treino=0.128192; dobra externa não consultada
+2026-11-08 20:27:30,490 epoca 22 perda_treino=0.168518; dobra externa não consultada
+2026-11-08 20:27:34,623 epoca 23 perda_treino=0.315598; dobra externa não consultada
+2026-11-08 20:27:38,700 epoca 24 perda_treino=0.187421; dobra externa não consultada
+2026-11-08 20:27:42,767 epoca 25 perda_treino=0.120419; dobra externa não consultada
+2026-11-08 20:27:46,845 epoca 26 perda_treino=0.101782; dobra externa não consultada
+2026-11-08 20:27:50,893 epoca 27 perda_treino=0.084015; dobra externa não consultada
+2026-11-08 20:27:54,954 epoca 28 perda_treino=0.116991; dobra externa não consultada
+2026-11-08 20:27:59,042 epoca 29 perda_treino=0.068801; dobra externa não consultada
+2026-11-08 20:28:03,154 epoca 30 perda_treino=0.069908; dobra externa não consultada
+2026-11-08 20:28:03,401 RESULTADO={"seed": 42, "dobra": 1, "epoca": 30, "n_treino": 509, "n_validacao": 127, "pacientes_treino": 316, "pacientes_validacao": 76, "benignos_treino": 263, "malignos_treino": 246, "benignos_validacao": 66, "malignos_validacao": 61, "threshold_relatorio": 0.5, "metricas": {"threshold": 0.5, "recall": 0.5245901639344263, "especificidade": 0.9848484848484849, "f1": 0.6808510638297872, "auc": 0.8827620466964728, "tp": 32, "tn": 65, "fp": 1, "fn": 29}, "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd"}

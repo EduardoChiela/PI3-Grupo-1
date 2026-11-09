@@ -1,0 +1,36 @@
+{
+  "issue": 45,
+  "modelo": "ResNet18",
+  "descongelar": "layer3_layer4",
+  "seed": 42,
+  "n_dobras": 5,
+  "epocas": 30,
+  "batch": 32,
+  "lr_cabeca": 0.001,
+  "lr_backbone": 0.0001,
+  "augmentation": "flip3d_so_treino",
+  "normalizacao": "ImageNet",
+  "threshold_relatorio": 0.5,
+  "regra_cv": "epoca_final_30_fixa_sem_consultar_dobra_externa",
+  "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+  "manifesto_sha256": "207f44c75a297f0c9bfd96bacc378248aae2165c493e9f795537cf6bbc16e4e0",
+  "dobras_sha256": "121cc9ba535272c7af5b10f76a6fe1b0bb709e77261d6f7aaaa41063c3d563ae",
+  "codigo_sha256": {
+    "experimentos_sprint6.py": "2306a33d96df890170aaee6612f4ea1f6c56538be127af181c9de5b4e8166959",
+    "dataset.py": "9e35bb1f0f48ffa479dae98bd5997298ae6a9ee5ae2a852f65d0a246b79d1b67",
+    "treino_resnet.py": "f00372f357f45e80d486ec051ae237d8b52c65cae2272a04f1edf5e43c827e3b",
+    "avaliacao.py": "23e90e638d7ee471f7a5ce56ae32a272d5a17f3a48aaddf32b66e0c69c494690"
+  },
+  "ambiente": {
+    "python": "3.13.14",
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "torch": "2.14.1+cpu",
+    "so": "Windows-11-10.0.26200-SP0",
+    "dispositivo": "cpu",
+    "threads_torch": 4,
+    "cuda": null,
+    "cudnn": null,
+    "hardware": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+  }
+}
