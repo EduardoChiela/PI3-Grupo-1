@@ -11,4 +11,8 @@
 # ao grupo trabalhar sem os 133 GB de DICOM. Nao adicionar patches/ aqui.
 
 sintetico/
-mineracao/resultados/
+# mineracao/resultados/
+
+!mineracao/resultados/interpretacao/tabela_erros_baseline.csv
+!mineracao/resultados/interpretacao/grafico_erros_baseline.png
+!mineracao/resultados/interpretacao/

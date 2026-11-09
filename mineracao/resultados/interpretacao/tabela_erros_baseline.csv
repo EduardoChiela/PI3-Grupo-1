@@ -1,0 +1,12 @@
+nodule_id,patient_id,tipo_erro,y_true,p_baseline,p_resnet,diametro_mm,malignidade_mediana,escores_individuais,faixa_preta
+LIDC-IDRI-0448_scan453_cluster001,LIDC-IDRI-0448,Falso Negativo (Maligno Perdido),1,0.276724249124527,0.1744094640016555,7.12,3.5,"4,3,2,4",False
+LIDC-IDRI-0045_scan56_cluster004,LIDC-IDRI-0045,Falso Negativo (Maligno Perdido),1,0.1621289849281311,0.2072612643241882,7.37,3.5,"4,4,3,2",False
+LIDC-IDRI-0768_scan887_cluster000,LIDC-IDRI-0768,Falso Negativo (Maligno Perdido),1,0.1239186450839042,0.5288028120994568,12.86,3.5,"4,3,3,4",False
+LIDC-IDRI-0182_scan183_cluster002,LIDC-IDRI-0182,Falso Positivo (Benigno Marcado),0,0.8996802568435669,0.4663988053798675,12.84,2.5,"3,2,3,2",False
+LIDC-IDRI-0024_scan35_cluster002,LIDC-IDRI-0024,Falso Positivo (Benigno Marcado),0,0.8996735215187073,0.6294426321983337,14.47,2.0,"3,1,2",False
+LIDC-IDRI-0061_scan72_cluster004,LIDC-IDRI-0061,Falso Positivo (Benigno Marcado),0,0.7307212352752686,0.655633807182312,11.75,2.5,"2,3,3,2",False
+LIDC-IDRI-0987_scan668_cluster000,LIDC-IDRI-0987,Falso Positivo (Benigno Marcado),0,0.6513696908950806,0.1136940866708755,6.06,2.0,"2,3,2,1",False
+LIDC-IDRI-0099_scan107_cluster000,LIDC-IDRI-0099,Falso Positivo (Benigno Marcado),0,0.6125837564468384,0.1909630596637725,9.3,2.0,"2,3,1",False
+LIDC-IDRI-0285_scan285_cluster000,LIDC-IDRI-0285,Falso Positivo (Benigno Marcado),0,0.6052592992782593,0.586426317691803,10.63,2.5,"1,3,3,2",False
+LIDC-IDRI-0463_scan468_cluster000,LIDC-IDRI-0463,Falso Positivo (Benigno Marcado),0,0.5466951131820679,0.0703182816505432,8.95,2.5,"2,3,3,2",True
+LIDC-IDRI-0118_scan123_cluster000,LIDC-IDRI-0118,Falso Positivo (Benigno Marcado),0,0.4986305832862854,0.8297224044799805,6.34,1.0,"1,1,2,1",False
