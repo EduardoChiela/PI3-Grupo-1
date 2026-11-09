@@ -139,8 +139,12 @@ def main():
         try:
             # scan.cluster_annotations() retorna uma lista de listas de
             # Annotation, onde cada lista interna corresponde a um unico
-            # nodulo fisico (anotado por 1 a 4 radiologistas distintos).
-            clusters = scan.cluster_annotations(verbose=False)
+            # nodulo fisico; os casos com >4 anotacoes foram investigados.
+            # verbose=False e intencional: preserva a execucao dos CSVs congelados.
+            # O aviso ocultava os 9 agrupamentos investigados em
+            # docs/criterios_selecao.md (§9) e
+            # selecao/diagnostico_agrupamentos_anomalos.md; nao ligar sem nova execucao.
+            clusters = scan.cluster_annotations(verbose=False)  # Intencional: CSVs congelados.
         except Exception as erro:
             print(
                 f"[erro] Falha ao agrupar anotacoes do scan id={scan.id} "
