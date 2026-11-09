@@ -1,0 +1,23 @@
+# Ambiente de referencia CPU: CPython 3.12 (validacao da issue #46).
+# Nao e um pip freeze dos treinos historicos. Proveniencia e limites:
+# docs/ambientes_reproducao.md
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Versoes registradas no protocolo da Sprint 5.
+numpy==2.3.5
+pandas==2.2.3
+scikit-learn==1.8.0
+torch==2.14.1+cpu
+# Versao registrada nos logs da ResNet; par correspondente ao torch acima.
+torchvision==0.29.1+cpu
+
+# pylidc documentado na selecao; demais pins sao escolhas de referencia.
+pylidc==0.2.3
+pydicom==2.4.4
+SimpleITK==2.5.3
+matplotlib==3.10.8
+scipy==1.17.0
+scikit-image==0.25.2
+SQLAlchemy==1.4.54
+# pylidc 0.2.3 importa pkg_resources, ausente em setuptools recentes.
+setuptools==78.1.0
