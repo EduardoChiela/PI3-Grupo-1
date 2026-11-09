@@ -7,6 +7,7 @@ liberadas por 30 épocas fixas, sem consultar a dobra externa durante o treino.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 import os
@@ -46,6 +47,11 @@ DESCONGELAR = "layer3_layer4"
 THRESHOLD_RELATORIO = 0.5
 
 RAIZ = Path(__file__).resolve().parents[1]
+
+
+def sha256_texto_lf(caminho: Path) -> str:
+    """Hash de artefato textual independente da conversão CRLF/LF pelo Git."""
+    return hashlib.sha256(caminho.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def gravar_json(caminho: Path, valor) -> None:
@@ -151,9 +157,13 @@ def treinar_dobra(treino, val, pasta: Path, config: dict):
             raise ValueError(f"Configuração mudou em {pasta}; não misture execuções.")
     if resumo_path.exists():
         resumo = json.loads(resumo_path.read_text(encoding="utf-8"))
+        normalizacao = resumo.get("normalizacao_arquivos_sha256")
+        if normalizacao not in (None, "CRLF_para_LF"):
+            raise ValueError(f"Normalização de hashes desconhecida em {resumo_path}.")
+        verificar_hash = sha256_texto_lf if normalizacao else sha256_arquivo
         for nome, digest in resumo["arquivos_sha256"].items():
             arq = pasta / nome
-            if not arq.is_file() or sha256_arquivo(arq) != digest:
+            if not arq.is_file() or verificar_hash(arq) != digest:
                 raise ValueError(f"Resultado alterado ou incompleto: {arq}")
         print(f"Reutilizando execução concluída: {pasta}", flush=True)
         return resumo
@@ -278,9 +288,16 @@ def treinar_dobra(treino, val, pasta: Path, config: dict):
             h.close()
             logger.removeHandler(h)
 
-    resultado["arquivos_sha256"] = {
+    # Os hashes originais dos bytes ficam registrados para rastrear a execução.
+    # A guarda usa LF canônico, pois o Git pode converter as quebras de linha.
+    resultado["arquivos_sha256_bytes_execucao"] = {
         nome: sha256_arquivo(pasta / nome)
         for nome in ("configuracao.json", "log_treino.txt", "predicoes_validacao.csv")
+    }
+    resultado["normalizacao_arquivos_sha256"] = "CRLF_para_LF"
+    resultado["arquivos_sha256"] = {
+        nome: sha256_texto_lf(pasta / nome)
+        for nome in resultado["arquivos_sha256_bytes_execucao"]
     }
     gravar_json(resumo_path, resultado)
     return resultado

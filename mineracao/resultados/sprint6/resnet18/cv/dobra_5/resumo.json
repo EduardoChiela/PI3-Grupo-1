@@ -24,8 +24,14 @@
   },
   "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
   "arquivos_sha256": {
+    "configuracao.json": "bea6d119c9263e20436ea3758262f554fc5108db3902a9f8ece9d9110be11c2b",
+    "log_treino.txt": "391658c13d26a75c7ab0cfb425ad42b1f38b49fd5485973d0fcb1d9452b2cf63",
+    "predicoes_validacao.csv": "a5dfef8324546ff21ebc246a774b70e946c0590ddc4944d073633b25d35ed1e1"
+  },
+  "arquivos_sha256_bytes_execucao": {
     "configuracao.json": "b94a9c9a19e94eed8f8b5855aeac33c0f9260980f1412608de16852259872684",
     "log_treino.txt": "3ba55429843804bb928f977ce75e272227d58361bd4be8d912e3326727e0503a",
     "predicoes_validacao.csv": "4f131c1bf8dfb3800461124b335bd3ffe6851f0155d599d9f37b44d51f7de6cb"
-  }
+  },
+  "normalizacao_arquivos_sha256": "CRLF_para_LF"
 }
