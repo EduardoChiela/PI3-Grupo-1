@@ -1,0 +1,39 @@
+{
+  "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+  "manifesto_sha256": "afba057696a94ee2d44282e77f6d3e9ea9c3e2331df8d00d19a86f2c0edb97d5",
+  "codigo_sha256": {
+    "experimentos_sprint5.py": "3cf19d3b446dcec9344b49aa7574317c574dd9fd983cf1747364ad7de362ea20",
+    "dataset.py": "f082d61a87eecef2eaaae8bb9f8e9fab7a7f4d50ec535110bbd9eb7dc927c129",
+    "treino_baseline.py": "d46bc5a29abb4c2e38e908d47ff50cbabd2081452e0e8a1ecee622522a6d26f9",
+    "avaliacao.py": "736e542bb758b0da7bf965cb5c69cd4680f67edd24c8fce8990afb696e9bcce3",
+    "comparar_pesos.py": "9c9233cd50390992306389821649d5d995100c31a00455d8cc995fb8f11f9eb7"
+  },
+  "epocas": 30,
+  "lr": 0.001,
+  "batch": 32,
+  "augmentation": "flip3d_so_treino",
+  "ambiente": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "sklearn": "1.8.0",
+    "torch": "2.14.1+cpu",
+    "so": "Linux-6.18.55-x86_64-with-glibc2.39",
+    "dispositivo": "cpu",
+    "threads_torch": 4,
+    "cuda": null,
+    "cudnn": null,
+    "hardware": "x86_64"
+  },
+  "sementes": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "n_dobras": 5,
+  "seed_cv": 42,
+  "cv_regra": "ultima_epoca_fixa_sem_selecao_na_dobra_externa",
+  "dados_reais": true
+}

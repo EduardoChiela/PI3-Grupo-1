@@ -1,0 +1,49 @@
+2026-10-28 14:35:46,115 python=3.12.10 torch=2.14.1+cpu torchvision=0.29.1+cpu dispositivo=cpu
+2026-10-28 14:35:46,115 seed=42 epocas=30 lr=0.001 batch=32
+2026-10-28 14:35:46,115 arquitetura=ResNet18 pesos=ImageNet1K_V1
+2026-10-28 14:35:46,115 configuracao_finetuning=nenhum
+2026-10-28 14:35:46,116 lr_cabeca=0.001 lr_backbone=0.0001
+2026-10-28 14:35:46,116 entrada=3x64x64 sem resize para 224
+2026-10-28 14:35:46,116 canais=axial,coronal,sagital (nao RGB)
+2026-10-28 14:35:46,116 normalizacao=ImageNet mean=(0.485, 0.456, 0.406) std=(0.229, 0.224, 0.225)
+2026-10-28 14:35:46,116 descongelamento=nenhum
+2026-10-28 14:35:46,116 parametros_total=11177025 parametros_treinaveis=513
+2026-10-28 14:35:46,117 augmentation=flip3d_so_treino
+2026-10-28 14:35:46,117 pesos_de_classe={0: 0.966667, 1: 1.035714}
+2026-10-28 14:35:46,117 npz=patches\patches_2_5d.npz
+2026-10-28 14:35:46,117 npz_sha256=31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd
+2026-10-28 14:35:46,117 manifesto=transformacao\manifest_patches.csv
+2026-10-28 14:35:46,117 n treino=522 validacao=114 teste=111
+2026-10-28 14:35:46,908 epoca=01 perda_treino=0.8451 perda_val=0.7698 auc_val=0.5313
+2026-10-28 14:35:47,574 epoca=02 perda_treino=0.7444 perda_val=0.7041 auc_val=0.5821
+2026-10-28 14:35:48,258 epoca=03 perda_treino=0.6960 perda_val=0.6938 auc_val=0.6136
+2026-10-28 14:35:48,917 epoca=04 perda_treino=0.6649 perda_val=0.7076 auc_val=0.6240
+2026-10-28 14:35:49,591 epoca=05 perda_treino=0.6514 perda_val=0.6838 auc_val=0.6308
+2026-10-28 14:35:50,293 epoca=06 perda_treino=0.6505 perda_val=0.6759 auc_val=0.6521
+2026-10-28 14:35:51,047 epoca=07 perda_treino=0.6175 perda_val=0.6615 auc_val=0.6629
+2026-10-28 14:35:51,767 epoca=08 perda_treino=0.6386 perda_val=0.7073 auc_val=0.6712
+2026-10-28 14:35:52,424 epoca=09 perda_treino=0.6434 perda_val=0.6548 auc_val=0.6804
+2026-10-28 14:35:53,078 epoca=10 perda_treino=0.6046 perda_val=0.6503 auc_val=0.6780
+2026-10-28 14:35:53,733 epoca=11 perda_treino=0.6080 perda_val=0.6470 auc_val=0.6909
+2026-10-28 14:35:54,376 epoca=12 perda_treino=0.6092 perda_val=0.6763 auc_val=0.6937
+2026-10-28 14:35:55,015 epoca=13 perda_treino=0.6008 perda_val=0.6445 auc_val=0.6931
+2026-10-28 14:35:55,660 epoca=14 perda_treino=0.5898 perda_val=0.6446 auc_val=0.6897
+2026-10-28 14:35:56,298 epoca=15 perda_treino=0.5856 perda_val=0.6487 auc_val=0.6884
+2026-10-28 14:35:56,925 epoca=16 perda_treino=0.5876 perda_val=0.6537 auc_val=0.6860
+2026-10-28 14:35:57,559 epoca=17 perda_treino=0.5733 perda_val=0.6577 auc_val=0.6894
+2026-10-28 14:35:58,200 epoca=18 perda_treino=0.5979 perda_val=0.6344 auc_val=0.7045
+2026-10-28 14:35:58,900 epoca=19 perda_treino=0.5656 perda_val=0.6392 auc_val=0.7156
+2026-10-28 14:35:59,570 epoca=20 perda_treino=0.5684 perda_val=0.6178 auc_val=0.7242
+2026-10-28 14:36:00,304 epoca=21 perda_treino=0.5706 perda_val=0.6142 auc_val=0.7217
+2026-10-28 14:36:00,974 epoca=22 perda_treino=0.5508 perda_val=0.6195 auc_val=0.7177
+2026-10-28 14:36:01,623 epoca=23 perda_treino=0.5581 perda_val=0.6265 auc_val=0.7063
+2026-10-28 14:36:02,288 epoca=24 perda_treino=0.5540 perda_val=0.6309 auc_val=0.7103
+2026-10-28 14:36:02,937 epoca=25 perda_treino=0.5516 perda_val=0.6151 auc_val=0.7236
+2026-10-28 14:36:03,588 epoca=26 perda_treino=0.5767 perda_val=0.6161 auc_val=0.7190
+2026-10-28 14:36:04,248 epoca=27 perda_treino=0.5513 perda_val=0.6198 auc_val=0.7220
+2026-10-28 14:36:05,010 epoca=28 perda_treino=0.5639 perda_val=0.6244 auc_val=0.7190
+2026-10-28 14:36:05,656 epoca=29 perda_treino=0.5598 perda_val=0.6284 auc_val=0.7223
+2026-10-28 14:36:06,271 epoca=30 perda_treino=0.5595 perda_val=0.6341 auc_val=0.7310
+2026-10-28 14:36:06,275 melhor_epoca_validacao=21
+2026-10-28 14:36:06,424 threshold_validacao={'threshold': 0.5811540484428406, 'sensibilidade': 0.6181818181818182, 'especificidade': 0.7457627118644068, 'j': 0.36394453004622496}
+2026-10-28 14:36:06,427 metricas_validacao={'threshold': 0.5811540484428406, 'recall': 0.6181818181818182, 'especificidade': 0.7457627118644068, 'f1': 0.6538461538461539, 'auc': 0.7217257318952234, 'tp': 34, 'tn': 44, 'fp': 15, 'fn': 21}

@@ -2,7 +2,7 @@
 
 ## 1. Arquitetura do Modelo Baseline
 * **Arquitetura adotada**: Rede Neural Convolucional (CNN) rasa composta por 3 camadas convolucionais seguidas de pooling e camadas densas.
-* **Justificativa**: Conforme estipulado na Issue #14, estabeleceu-se um modelo de referência simples, determinístico e de baixo custo computacional para dados 2.5D, avaliando seu desempenho antes e em paralelo à introdução de transfer learning com a ResNet18 (cujo backbone congelado alcançou AUC de 0,8269).
+* **Justificativa**: Conforme estipulado na Issue #14, estabeleceu-se um modelo de referência simples e de baixo custo computacional para dados 2.5D, avaliando seu desempenho antes e em paralelo à introdução de transfer learning com a ResNet18. Com o backbone congelado, a ResNet alcançou AUC de 0,8269; liberando `layer3` e `layer4`, alcançou AUC de 0,9294. Os resultados completos e a comparação pareada estão em `docs/resultados_comparacao.md`.
 * **Entrada**: Tensores de dimensão (3, 64, 64) em float16, representando fatias centradas nos planos ortogonais axial, coronal e sagital.
 
 ## 2. Protocolo de Treinamento e Reprodutibilidade
@@ -39,3 +39,24 @@
 
 ## 6. Seção de Métodos (Pronta para o Artigo Científico)
 A tarefa de classificação da malignidade de nódulos pulmonares foi formulada como um problema supervisionado binário sobre cortes 2.5D ortogonais (axial, coronal e sagital) de dimensão 64 × 64 pixels. A partição do acervo (N = 747 nódulos) seguiu divisão pré-estratificada por paciente em treino (n = 522), validação (n = 114) e teste independente (n = 111 nódulos de 69 pacientes). O modelo baseline foi estabelecido por meio de uma CNN de 3 camadas convolucionais. A etapa de data augmentation restringiu-se a espelhamentos coerentes com o volume tridimensional aplicados exclusivamente ao treino, sendo rotações 2D excluídas por induzirem inconsistências topológicas entre os planos ortogonais. A avaliação priorizou o Recall da classe maligna acompanhado da Especificidade, com limiar ótimo determinado pelo índice de Youden na validação. Intervalos de confiança de 95% foram computados através de bootstrap em nível de paciente com 2.000 replicações.
+
+
+### ResNet18 com transfer learning
+
+Foram avaliadas três configurações de transfer learning utilizando os mesmos patches, splits e seed:
+
+1. backbone completamente congelado, com apenas a camada final treinável;
+2. `layer4` e camada final treináveis;
+3. `layer3`, `layer4` e camada final treináveis.
+
+A escolha da configuração foi realizada exclusivamente no conjunto de validação, utilizando o recall da classe maligna como métrica principal.
+
+A configuração selecionada foi a terceira, com `layer3` e `layer4` liberados. Foram mantidos congelados `layer1` e `layer2`. Na validação, ela obteve recall 0,8909, especificidade 0,6949, F1 0,8033 e AUC 0,8502, superando `layer4` (recall 0,8000; AUC 0,8059) e o backbone congelado (recall 0,6182; AUC 0,7217). Os valores foram extraídos dos logs por `mineracao/resumo_finetuning.py`; a seleção não utilizou o conjunto de teste.
+
+A camada final utilizou taxa de aprendizado de `0.001`, enquanto os blocos pré-treinados liberados utilizaram `0.0001`.
+
+A avaliação no conjunto de teste foi realizada somente após a escolha definitiva da configuração.
+
+No código, todos os módulos `BatchNorm2d` são mantidos em modo de avaliação após cada chamada a `modelo.train()`. Assim, mesmo nas camadas liberadas, os pesos são atualizados, mas as estatísticas de normalização permanecem as do pré-treinamento ImageNet. Essa decisão evita atualizar estatísticas com lotes pequenos, mas pode limitar a adaptação ao domínio de tomografia.
+
+Em duas execuções da mesma configuração final na CPU, com seed 42, os cabeçalhos dos logs e a primeira época foram iguais; a partir da segunda época, as trajetórias divergiram. A AUC de validação foi 0,8502 na execução de seleção e 0,8656 na execução final (diferença de 0,0154). Portanto, a seed e `torch.use_deterministic_algorithms` não garantiram repetibilidade numérica integral nesse ambiente. Não foi feita nova rodada para alterar esse comportamento; a limitação fica registrada e os resultados publicados correspondem aos artefatos versionados de cada execução.

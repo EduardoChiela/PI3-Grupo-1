@@ -1,0 +1,72 @@
+{
+  "baseline": {
+    "auc": {
+      "media_5_dobras": 0.9374204026187105,
+      "desvio_padrao_amostral": 0.018962563068219203,
+      "estimativa_oof": 0.9347940160193262,
+      "ic95_bootstrap_paciente": [
+        0.9156010045510324,
+        0.9530631797644408
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "recall": {
+      "media_5_dobras": 0.8631940772078265,
+      "desvio_padrao_amostral": 0.029725652483677856,
+      "estimativa_oof": 0.8631921824104235,
+      "ic95_bootstrap_paciente": [
+        0.819040684234859,
+        0.9047660965794768
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "especificidade": {
+      "media_5_dobras": 0.854032634032634,
+      "desvio_padrao_amostral": 0.07861897593296142,
+      "estimativa_oof": 0.8541033434650456,
+      "ic95_bootstrap_paciente": [
+        0.8132504064701713,
+        0.8932298981741572
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    }
+  },
+  "resnet": {
+    "auc": {
+      "media_5_dobras": 0.8923087154340459,
+      "desvio_padrao_amostral": 0.017375430374292667,
+      "estimativa_oof": 0.8885775670029603,
+      "ic95_bootstrap_paciente": [
+        0.8628419630035195,
+        0.9131637017296389
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "recall": {
+      "media_5_dobras": 0.7260708619777896,
+      "desvio_padrao_amostral": 0.12124894710624029,
+      "estimativa_oof": 0.7263843648208469,
+      "ic95_bootstrap_paciente": [
+        0.6741832218725413,
+        0.7782168891296852
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "especificidade": {
+      "media_5_dobras": 0.8785081585081584,
+      "desvio_padrao_amostral": 0.07092041551907072,
+      "estimativa_oof": 0.878419452887538,
+      "ic95_bootstrap_paciente": [
+        0.8386164867033888,
+        0.9149145350227108
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    }
+  }
+}

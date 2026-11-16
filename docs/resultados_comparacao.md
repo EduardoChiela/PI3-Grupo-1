@@ -1,19 +1,24 @@
 # Comparação baseline × ResNet — Issue #18
 
 Números gerados por `python -m mineracao.comparacao` (seed 42, 2000 réplicas de
-bootstrap). Saídas em `mineracao/resultados/comparacao/`: `tabela_comparativa.md`,
-`resultados.json`, `roc_comparacao.png` e `predicoes_teste_pareadas.csv`.
+bootstrap). A pasta vigente é `mineracao/resultados/comparacao_s5/`, com
+`tabela_comparativa.md`, `resultados.json`, `roc_comparacao.png` e
+`predicoes_teste_pareadas.csv`. A pasta antiga `mineracao/resultados/comparacao/`
+é da comparação da Sprint 4, quando a ResNet ainda estava com o extrator
+congelado; ela continua no repositório como histórico e não é a referência
+deste documento.
 O script não treina nem prevê: lê as predições de teste e os thresholds
-congelados nos logs da #14 e da #17, confere tudo e só então calcula.
+congelados nos logs do baseline (#14) e da ResNet final (#32, pasta
+`resnet_s5/final`), confere tudo e só então calcula.
 
 ## 1. Conferência: os dois modelos foram avaliados do mesmo jeito
 
-| Item | Baseline (#14) | ResNet (#17) |
+| Item | Baseline (#14) | ResNet (#32, `layer3` + `layer4` liberados) |
 |---|---|---|
 | SHA-256 do `.npz` no log | `31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd` | `31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd` |
 | Manifesto lido no log | `transformacao/manifest_patches.csv` | `transformacao/manifest_patches.csv` |
 | Teste | 111 nódulos, 69 pacientes (53 malignos, 58 benignos) | idem, mesmos `nodule_id` |
-| Threshold (Youden na validação) | 0,4305 | 0,5812 |
+| Threshold (Youden na validação) | 0,4305 | 0,3614 |
 | Avaliações de teste no log | 1 | 1 |
 
 - **Hash do `.npz`:** idêntico nos dois logs e igual ao `patches/patches_2_5d.npz`
@@ -64,14 +69,16 @@ referência, marcadas como tais, porque assumem independência entre nódulos.
 Recall e especificidade estão no ponto de operação de cada modelo
 (threshold de Youden escolhido na validação e congelado).
 
+Os dois modelos foram avaliados sobre exatamente os mesmos 111 nódulos de teste, pertencentes a 69 pacientes.
+
 | Métrica | CNN rasa (baseline) | ResNet18 (transfer learning) | Diferença (ResNet − baseline) |
 |---|---|---|---|
-| Recall (maligno) | 0,943 [0,878; 1,000] | 0,679 [0,556; 0,803] | -0,264 [-0,375; -0,148] |
-| Especificidade | 0,862 [0,765; 0,946] | 0,793 [0,684; 0,885] | -0,069 [-0,177; 0,035] |
-| F1 | 0,901 [0,835; 0,951] | 0,713 [0,604; 0,810] | -0,188 [-0,285; -0,103] |
-| AUC-ROC | 0,961 [0,927; 0,986] | 0,827 [0,743; 0,900] | -0,134 [-0,215; -0,060] |
-| Limiar (Youden, validação) | 0,4305 | 0,5812 | — |
-| TP / FN / TN / FP | 50 / 3 / 50 / 8 | 36 / 17 / 46 / 12 | — |
+| Recall (maligno) | 0,943 [0,878; 1,000] | 0,906 [0,827; 0,977] | -0,038 [-0,111; 0,034] |
+| Especificidade | 0,862 [0,765; 0,946] | 0,810 [0,700; 0,902] | -0,052 [-0,172; 0,076] |
+| F1 | 0,901 [0,835; 0,951] | 0,857 [0,781; 0,923] | -0,044 [-0,115; 0,027] |
+| AUC-ROC | 0,961 [0,927; 0,986] | 0,929 [0,875; 0,973] | -0,032 [-0,076; 0,007] |
+| Limiar (Youden, validação) | 0,4305 | 0,3614 | — |
+| TP / FN / TN / FP | 50 / 3 / 50 / 8 | 48 / 5 / 47 / 11 | — |
 
 Todas as réplicas (2000/2000) foram válidas para todas as métricas.
 
@@ -79,18 +86,18 @@ Todas as réplicas (2000/2000) foram válidas para todas as métricas.
 
 | Teste | Estatística | p-valor |
 |---|---|---|
-| **McNemar em cluster por paciente** (principal) | X² = 11,57; 22 nódulos só o baseline acerta, 4 só a ResNet; 22 pacientes discordantes | **0,0007** |
-| McNemar exato por nódulo (referência) | b = 22, c = 4 | 0,0005 |
-| **DeLong em cluster por paciente** (principal) | ΔAUC = −0,134, EP 0,039, IC 95% [−0,211; −0,057], z = −3,40 | **0,0007** |
-| DeLong por nódulo (referência) | ΔAUC = −0,134, EP 0,037, z = −3,59 | 0,0003 |
+| **McNemar em cluster por paciente** (principal) | X² = 1,32; 11 nódulos só o baseline acerta e 6 só a ResNet, distribuídos em 16 pacientes discordantes | **0,251** |
+| McNemar exato por nódulo (referência) | b = 11, c = 6 | 0,332 |
+| **DeLong em cluster por paciente** (principal) | ΔAUC = −0,032, EP 0,021, IC 95% [−0,073; 0,010], z = −1,50 | **0,133** |
+| DeLong por nódulo (referência) | ΔAUC = −0,032, EP 0,020, z = −1,54 | 0,123 |
 
 O erro-padrão em cluster é maior que o por nódulo, como esperado com nódulos
-correlacionados no mesmo paciente. O IC do DeLong em cluster coincide com o do
-bootstrap pareado por paciente ([−0,215; −0,060]).
+correlacionados no mesmo paciente. O IC do DeLong em cluster ([−0,073; 0,010])
+é próximo ao do bootstrap pareado por paciente ([−0,076; 0,007]).
 
 ## 5. Curva ROC
 
-![ROC dos dois modelos no teste](../mineracao/resultados/comparacao/roc_comparacao.png)
+![ROC dos dois modelos no teste](../mineracao/resultados/comparacao_s5/roc_comparacao.png)
 
 Os marcadores são o ponto de operação de cada modelo (círculo: baseline;
 quadrado: ResNet).
@@ -104,18 +111,14 @@ quadrado: ResNet).
 > histopatologia. Números da literatura não são diretamente comparáveis.
 
 | Estudo | Conjunto e rótulo | Divisão | Resultado publicado |
-|---|---|---|---|
-| Causey et al. (2018), *Sci. Rep.* 8:9286 — NoduleX | LIDC; média dos escores arredondada; nota 3 excluída; um nódulo sorteado por paciente | 80/20 por paciente, partição única | CNN: AUC 0,974 (1 × 4–5) e 0,938 (1–2 × 4–5); com atributos radiômicos: 0,993 e 0,971 |
-| Al-Shabi, Lee e Tan (2019), *IEEE Access* — Gated-Dilated | LIDC-IDRI, > 1000 exames | ver artigo | AUC > 0,95 (resumo) |
+| :--- | :--- | :--- | :--- |
+| CAUSEY et al. (2018), *Sci. Rep.* 8:9286 — NoduleX | LIDC; média dos escores arredondada; nota 3 excluída; um nódulo sorteado por paciente + 206 nódulos adicionais nota 1 para balanceamento | 80/20 por paciente, partição única | CNN47: AUC 0,974 (S1×S45) e 0,938 (S12×S45); com radiômica (RF): CNN21+RF AUC 0,971 e CNN47+RF AUC 0,943 em S12×S45 |
+| AL-SHABI; LEE; TAN (2019), *IEEE Access* — Gated-Dilated | LIDC-IDRI, > 1000 exames (Seção I, p. 1-2) | Validação cruzada de 10 folds (partição por paciente/nódulo não detalhada explicitamente) (Seção III-G, p. 8) | AUC > 0,95 (Resumo, p. 1)|
+| SHANSHOOL; BOUCHAKWAB; AMOUS-BEN AMOR (2023), *Procedia Comput. Sci.*, v. 225, p. 394–403 | LIDC-IDRI (1.018 exames, contagem exata de nódulos não informada; 244.527 imagens/fatias). Rótulo binário derivado de escores de radiologistas (exclusão da nota 3 não informada); benigno (0) e maligno (1) | 60% treino, 20% validação e 20% teste divididos diretamente sobre as fatias, sem agrupamento por paciente/nódulo (Alto risco de data leakage: fatias do mesmo nódulo/paciente provável e inadvertidamente misturadas entre treino e teste; Seção 4, p. 399; Tabela 1, p. 400) | DenseNet201 + MLP (Modelo Proposto): Acurácia de 99,30%, Sensibilidade de 99,00% e Especificidade de 99,59% (Seção 4, p. 401; Tabela 2, p. 401). Nota: a linha reporta acurácia, não AUC, então não é comparável ao eixo da tabela. |
+| SHEWAYE; MEKONNEN (2016), *arXiv:1605.08350* — AdaBoost (Atributos Heterogêneos) | LIDC-IDRI (95 pacientes, 565 fatias 2D: 458 malignas / 107 benignas). Rótulo clínico/histológico (1 vs. 2-3); rótulo 0 (desconhecido) excluído | Não informado. Alerta metodológico: caso a divisão tenha sido feita por fatia, fatias do mesmo nódulo podem vazar entre o treino e o teste, inflando a métrica de AUC para 0,94 | AdaBoost (D=5): AUC 0,94 e Acurácia 0,84 (Tabela III, p. 5; Seção V-D, p. 5) |
+| DEY et al. (2018), **IEEE ISBI** — 3D MoDenseNet | LIDC-IDRI (686 nódulos 3D). Mediana dos radiologistas: < 3 (benigno) e > 3 (maligno); nota 3 excluída | 5-fold CV; partição não informada | 3D MoDenseNet: Acurácia de 90,40% e ROC-AUC 0,9548 (Tabela 1, p. 4; Seção 3.3, p. 5) |
 
-O baseline (AUC 0,961) está na mesma faixa desses trabalhos, mas as diferenças
-de seleção impedem dizer que ele "empata" com eles. O desenho 1 × 4–5 de Causey
-é ainda mais separado que o nosso (exclui também a nota 2); o desenho
-1–2 × 4–5 é o mais próximo e não exige consenso de 3 radiologistas. Muitos
-trabalhos sobre LIDC dividem por nódulo e não por paciente, o que infla o
-desempenho. A tabela deve ser ampliada por quem tiver acesso ao texto completo
-dos artigos, informando para cada estudo o critério de rotulagem, a divisão e
-a métrica — apenas os valores conferidos na fonte foram incluídos aqui.
+O baseline (AUC 0,961) está na mesma faixa desses trabalhos, mas as diferenças metodológicas impedem dizer que ele 'empata' diretamente. Enquanto o desenho de Causey et al. utiliza divisões como 1 × 4–5 ou 1–2 × 4–5, o trabalho de Dey et al. (2018) constitui a referência mais próxima e diretamente comparável ao nosso estudo, pois adota exatamente o mesmo critério de rótulo (avaliação por ≥ 3 radiologistas, utilização da mediana e exclusão da nota 3). Além disso, vale ressaltar que muitos trabalhos sobre a LIDC dividem os dados por nódulo e não por paciente, o que pode inflar artificialmente o desempenho reportado.
 
 ## 7. Texto para a seção de Resultados
 
@@ -123,48 +126,615 @@ a métrica — apenas os valores conferidos na fonte foram incluídos aqui.
 > obteve AUC-ROC de 0,961 (IC 95%: 0,927–0,986) e, no limiar escolhido na
 > validação, recall de 0,943 (0,878–1,000) para a classe maligna com
 > especificidade de 0,862 (0,765–0,946) e F1 de 0,901 (0,835–0,951). A ResNet18
-> pré-treinada no ImageNet, com o extrator congelado, obteve AUC-ROC de 0,827
-> (0,743–0,900), recall de 0,679 (0,556–0,803), especificidade de 0,793
-> (0,684–0,885) e F1 de 0,713 (0,604–0,810). Todos os intervalos foram obtidos
-> por bootstrap reamostrando pacientes. Os dois modelos foram treinados sobre o
-> mesmo arquivo de patches (SHA-256 conferido nos dois registros de execução)
-> e avaliados no mesmo split, definido por paciente.
+> pré-treinada no ImageNet, com `layer3` e `layer4` liberados, obteve AUC-ROC de
+> 0,929 (0,875–0,973), recall de 0,906 (0,827–0,977), especificidade de 0,810
+> (0,700–0,902) e F1 de 0,857 (0,781–0,923). A configuração com extrator
+> congelado, avaliada anteriormente, obteve AUC de 0,827. Todos os intervalos
+> foram obtidos por bootstrap reamostrando pacientes. Os dois modelos foram
+> treinados sobre o mesmo arquivo de patches (SHA-256 conferido nos registros
+> de execução) e avaliados no mesmo split, definido por paciente.
 >
 > Como os modelos foram avaliados nos mesmos nódulos, a comparação foi pareada
 > e agregada por paciente para respeitar a dependência entre nódulos do mesmo
-> indivíduo. A diferença de AUC (ResNet − CNN rasa) foi de −0,134 (IC 95%:
-> −0,211 a −0,057; DeLong em cluster, p < 0,001). No ponto de operação, o
-> baseline acertou 22 nódulos que a ResNet errou e a ResNet acertou 4 que o
-> baseline errou (McNemar em cluster, p < 0,001). A diferença concentrou-se na
-> sensibilidade (−0,264; IC 95%: −0,375 a −0,148); a diferença de
-> especificidade (−0,069; −0,177 a 0,035) não foi distinguível de zero.
+> indivíduo. A diferença de AUC (ResNet − CNN rasa) foi de −0,032 (IC 95%:
+> −0,073 a 0,010; DeLong em cluster, p = 0,133). No ponto de operação, o
+> baseline acertou 11 nódulos que a ResNet errou e a ResNet acertou 6 que o
+> baseline errou, distribuídos em 16 pacientes discordantes (McNemar em
+> cluster, p = 0,251). As diferenças de recall (−0,038; IC 95%: −0,111 a
+> 0,034) e especificidade (−0,052; −0,172 a 0,076) também não foram
+> distinguíveis de zero.
 >
-> Não houve evidência de que o transfer learning, na configuração avaliada
-> (extrator congelado e apenas a camada linear final treinada), ajude neste
-> tamanho de amostra; ao contrário, a CNN rasa treinada do zero foi superior.
-> Os resultados devem ser lidos à luz da seleção adotada: ao exigir consenso de
-> pelo menos três radiologistas e excluir a malignidade mediana 3, o conjunto
+> Não foi observada diferença estatisticamente significativa entre a CNN rasa e
+> a ResNet18 com `layer3` e `layer4` liberados nos testes pareados. A CNN teve
+> métricas pontuais maiores, mas os dados não sustentam afirmar superioridade
+> estatística de um dos modelos. A configuração com extrator congelado teve
+> desempenho inferior (AUC 0,827), enquanto o ajuste fino elevou a AUC para
+> 0,929. Os resultados devem ser lidos à luz da seleção adotada: ao exigir
+> consenso de pelo menos três radiologistas e excluir a malignidade mediana 3, o conjunto
 > remove os casos ambíguos e é mais fácil que o LIDC-IDRI completo, de modo que
 > os valores não são diretamente comparáveis aos de trabalhos que usam outros
 > critérios.
 
-## 8. Para a Discussão
+## 8. Piso do diâmetro
 
-- **O que foi comparado.** A ResNet da #17 treina só a camada final
-  (513 parâmetros) sobre atributos do ImageNet. O resultado mostra que esses
-  atributos, sem ajuste fino, não representam bem patches 2.5D de 64 × 64 cujos
-  canais são planos anatômicos, não RGB. Ele **não** diz que uma ResNet com
-  ajuste fino perderia para a CNN rasa — essa configuração não foi testada.
-- **O resultado já era visível na validação** (AUC de validação 0,72 da ResNet
-  contra 0,90 do baseline), portanto não depende do teste.
-- **Teste contaminado para a ResNet.** Qualquer variante nova (descongelar
-  camadas, redimensionar para 224) agora seria escolhida depois de ver o teste.
-  Se for feita, precisa ser declarada como análise exploratória pós-hoc.
+Quando usamos só o tamanho do nódulo (`diametro_mm`), sem olhar a imagem,
+a AUC no teste já é 0,9463. Esse é o **piso do diâmetro**: é o
+mínimo que um modelo com imagem precisa superar para mostrar que a imagem
+ajudou. Aqui o diâmetro é usado direto como nota (quanto maior, mais
+provável de ser maligno). Não tem treino.
+
+| Modelo | Usa imagem? | AUC-ROC (teste) |
+|---|---|---|
+| Diâmetro sozinho (`diametro_mm`) | Não | 0,9463 |
+| ResNet18 com extrator congelado | Sim | 0,8269 |
+| ResNet18 com `layer3` e `layer4` liberados | Sim | 0,9294 |
+| CNN 2.5D (baseline) | Sim | 0,9610 |
+
+Usamos quatro casas decimais porque a diferença entre o CNN e o diâmetro é
+de só 0,015 e ela some com três casas. As duas configurações da ResNet ficaram
+abaixo do diâmetro, inclusive a que recebeu ajuste fino, e o CNN ficou um pouco
+acima. Só a comparação entre o CNN e o diâmetro foi testada estatisticamente
+(abaixo). As comparações da ResNet com o diâmetro não foram testadas.
+
+**Por que o diâmetro vai tão bem (causa provável).** O rótulo vem da mediana
+da suspeita dos radiologistas, e o tamanho é um dos critérios que eles usam
+para suspeitar de um nódulo. Nos dados dá para ver: a mediana é 7,5 mm nos
+benignos e 17,1 mm nos malignos (747 nódulos). Então parte do que o modelo
+"aprende" pode ser só tamanho. Isso é uma explicação provável, e não foi
+provada.
+
+**Conclusão.** O CNN ganhou só 0,015 do diâmetro. Além disso, o intervalo de
+confiança do CNN (0,9270 a 0,9862) é largo e o 0,9463 cai dentro dele. Por
+isso, não dá para saber se esse ganho é real ou só sorte da amostra. O que os
+dados permitem dizer é que o modelo **não ficou abaixo do piso do diâmetro**.
+O que os dados **não** permitem dizer é que o modelo aprendeu textura ou algo
+além do tamanho.
+
+**O que resolveria a dúvida (regra registrada antes do teste).** Um teste que compare a AUC do CNN com a AUC do
+diâmetro nos mesmos nódulos do teste (111 nódulos de 69 pacientes), agrupando
+por paciente, porque nódulos do mesmo paciente não são independentes. O método 
+planejado é o DeLong em cluster por paciente (Obuchowski, 1997), o mesmo da
+seção 4. A regra de decisão foi definida antes de ver o resultado: se o 
+intervalo de confiança da diferença (CNN − diâmetro) não incluir o zero, há
+evidência de que o CNN usa algo além do diâmetro. Se incluir o zero, não há.
+
+<!-- inicio: delong_diametro -->
+**Teste pré-registrado: CNN contra o diâmetro.** Gerado por
+`python -m mineracao.faixas_tamanho` (saídas em `mineracao/resultados/faixas_tamanho_s6/`).
+O DeLong em cluster por paciente (Obuchowski, 1997), a mesma função da §4,
+compara as duas AUC nos mesmos 111 nódulos de teste
+(69 pacientes). O diâmetro entra direto como
+nota, sem treino.
+
+| Teste | AUC CNN | AUC diâmetro | Diferença (CNN − diâmetro) | IC 95% | p-valor |
+|---|---|---|---|---|---|
+| **DeLong em cluster por paciente** (principal) | 0,9610 | 0,9463 | 0,0146 (EP 0,0184) | **[-0,0215; 0,0508]** | 0,427 |
+| DeLong por nódulo (referência) | 0,9610 | 0,9463 | 0,0146 (EP 0,0175) | [-0,0197; 0,0489] | 0,403 |
+
+**Conclusão pela regra pré-registrada.** O IC 95% da diferença
+([-0,0215; 0,0508]) **inclui o zero**. Pela regra
+fixada antes do teste, **não há evidência de que a CNN use algo além do
+diâmetro**. O ganho de 0,015 na AUC não se distingue do
+acaso nesta amostra. Isso não prova que a CNN só olha o tamanho: com
+111 nódulos e um piso já em 0,9463,
+sobra pouco espaço para medir um ganho. O que os dados sustentam é que o
+desempenho da CNN no teste é **compatível com o de um preditor só de
+diâmetro**. Esta é a resposta à pergunta central do trabalho e deve ser
+apresentada assim.
+
+Na faixa de 6 a 20 mm, onde o tamanho decide menos (§10.2), a CNN tem AUC
+0,927 e o diâmetro sozinho
+0,889. Essa diferença é só descritiva: a
+comparação não foi pré-registrada e não foi testada.
+<!-- fim: delong_diametro -->
+
+**Como conferir o 0,9463.** O cálculo da AUC de 0,9463 pode ser verificado de forma independente cruzando a coluna diametro_mm do arquivo de splits (selecao/nodulos_com_split.csv) com as predições em mineracao/resultados/comparacao_s5/predicoes_teste_pareadas.csv para os 111 nódulos do conjunto de teste. O script `mineracao/faixas_tamanho.py` faz esse cruzamento, recalcula a AUC e confere que ela bate com a usada no DeLong.
+
+As medianas de 7,5 mm e 17,1 mm vêm da coluna `diametro_mm`, separada por
+`rotulo_binario`, nos 747 nódulos do `transformacao/manifest_patches.csv`.
+Só nos 111 do teste, seriam 7,9 mm e 18,6 mm.
+
+## 9. Para a Discussão
+
+A tabela com os quatro modelos lado a lado está na §8.
+
+- **O que foi comparado.** Foram avaliadas três configurações da ResNet18 na
+  validação: backbone congelado (513 parâmetros treináveis; AUC 0,7217),
+  `layer4` liberado (8.394.241 parâmetros; AUC 0,8059) e `layer3` + `layer4`
+  liberados (10.493.953 parâmetros; AUC 0,8502). A escolha foi feita pelo
+  recall maligno de validação, sem usar o teste. A configuração final alcançou
+  AUC 0,9294 no teste, ainda abaixo do modelo de diâmetro sozinho (0,9463);
+  a CNN rasa ficou em 0,9610.
+- **Repetibilidade da execução final.** Duas execuções com a mesma seed e
+  configuração, na CPU, divergiram a partir da segunda época: a AUC de
+  validação foi 0,8502 e 0,8656. A diferença observada foi 0,0154; por isso,
+  os resultados devem ser interpretados considerando essa variação numérica.
+- **Limitação do BatchNorm.** Todos os módulos `BatchNorm2d`, inclusive os de
+  `layer3` e `layer4`, permaneceram em modo de avaliação durante o ajuste fino.
+  Os pesos dessas camadas foram treinados, mas suas estatísticas de normalização
+  continuaram as do ImageNet, o que pode limitar a adaptação à tomografia.
+- **Piso do diâmetro.** Mesmo com o ajuste fino, a ResNet (AUC 0,9294) não
+  superou o preditor baseado apenas no diâmetro (0,9463). A CNN rasa o superou
+  por 0,015, diferença que o DeLong em cluster pré-registrado não distinguiu de
+  zero (§8). Essa comparação depende dos resultados versionados em
+  `mineracao/resultados/comparacao_s5/`.
+
+## 10. Testes de estresse do Checkpoint 2
+
+O feedback do Checkpoint 2 considerou a AUC de 0,96 alta demais e pediu três
+testes de estresse. O primeiro, o modelo só de diâmetro (AUC 0,9463), está na
+PR #29, e o teste pareado contra ele está na §8. Esta seção traz os outros
+dois. A §10.2 usa as faixas de tamanho exigidas pelo documento (< 6, 6 a 20 e
+> 20 mm), e a §10.3 mantém a análise original por tercis como complemento.
+Os itens 10.1 e 10.3 foram gerados por
+`python -m mineracao.teste_estresse --npz patches/patches_2_5d.npz`, com seed 42
+e 2000 réplicas de bootstrap. As saídas ficam em `mineracao/resultados/estresse/`:
+`log_estresse.txt` e `resultados.json`. O SHA-256 do `.npz` no log é
+`31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd`, o mesmo da
+#14 e da #18. Duas execuções seguidas deram números idênticos.
+
+### 10.1 Rótulos embaralhados (validação)
+
+**Desenho.** O split vem do manifesto, como na #14
+(`dataset.carregar_particoes`). Os rótulos dos 522 nódulos de **treino** foram
+permutados **depois** dessa divisão. A permutação mantém 252 malignos, então
+os pesos de classe não mudam. Todo o resto é o baseline da #14: CNN rasa,
+seed de treino 42, 30 épocas, lr 1e-3, batch 32, flip 3D só no treino, pesos
+de classe, época escolhida pela menor perda de validação, CPU. Foram feitos 3
+embaralhamentos (seeds 1, 2 e 3) e uma rodada de controle com os rótulos
+verdadeiros. O controle mostra que o pipeline reproduz o baseline neste
+ambiente; sem ele, uma AUC de 0,5 poderia indicar só um ambiente quebrado.
+A avaliação usa só a validação (114 nódulos, 55 malignos). O teste não foi
+usado.
+
+**Previsto antes de rodar** (registrado no log antes do primeiro treino):
+sem vazamento, a AUC de validação de cada embaralhamento cai em
+0,5 ± 1,96 × EP nulo, ou seja, em **[0,393; 0,607]** (EP nulo = 0,054 para
+55 × 59). O controle deve ficar perto da AUC de validação da #14 (0,898).
+
+**O que saiu:**
+
+| Rodada | Rótulos do treino inalterados | Época escolhida | AUC val. (época escolhida) | AUC val. (época 30) |
+|---|---|---|---|---|
+| Controle (rótulos verdadeiros) | 100% | 27 | 0,901 | 0,895 |
+| Embaralhado, seed 1 | 52% | 7 | 0,570 | 0,487 |
+| Embaralhado, seed 2 | 52% | 3 | 0,449 | 0,358 |
+| Embaralhado, seed 3 | 45% | 9 | 0,581 | 0,461 |
+
+O controle escolheu a mesma época da #14 (27) e chegou a AUC 0,901 contra
+0,898 no log original. A pequena diferença vem do ambiente (torch 2.7.1 aqui,
+2.11.0 na #14). Os três embaralhamentos ficaram dentro da faixa prevista, com
+média de 0,533. A AUC da época escolhida é ligeiramente otimista, porque a
+época é escolhida pela perda na própria validação. Na época 30 os três ficam
+em 0,49, 0,36 e 0,46. O 0,36 fica abaixo da faixa, ou seja, abaixo do acaso,
+na direção oposta à de um vazamento.
+
+**O que significa.** Com os rótulos embaralhados a rede não acerta acima do
+acaso. Não há evidência de canal escondido levando o rótulo até a entrada: nódulo
+repetido entre treino e validação, ordem dos arquivos ou artefato do patch
+correlacionado com o rótulo. Este teste **não** descarta que o problema seja
+fácil por construção, que é a hipótese das seções 10.2 e 10.3.
+
+<!-- inicio: faixas_documento -->
+### 10.2 Desempenho nas faixas exigidas: < 6, 6 a 20 e > 20 mm (teste)
+
+O documento de instruções exige desempenho separado em **< 6 mm, 6 a 20 mm e
+> 20 mm** e chama a análise de obrigatória. Esta é a análise exigida. Os
+tercis usados antes ficam na §10.3, como análise adicional. Gerado por
+`python -m mineracao.faixas_tamanho`, que só lê as predições de teste da §3
+(`comparacao_s5/predicoes_teste_pareadas.csv`) e o `diametro_mm` de
+`selecao/nodulos_com_split.csv`. O script não treina, não prevê e não escolhe
+limiar. Os cortes vêm do documento, não dos dados. Os nódulos com exatamente 6
+ou 20 mm entrariam na faixa do meio, mas no teste não há nenhum. O limiar é o
+oficial da CNN rasa (0,4305, Youden na validação).
+
+**Composição (teste):**
+
+| Faixa | Diâmetro (mm) | Nódulos | Pacientes | Malignos | Benignos | % malignos |
+|---|---|---|---|---|---|---|
+| < 6 mm | 4,83 – 5,83 | 5 | 5 | 0 | 5 | 0% |
+| 6 a 20 mm | 6,06 – 18,80 | 81 | 54 | 28 | 53 | 35% |
+| > 20 mm | 20,65 – 37,90 | 25 | 21 | 25 | 0 | 100% |
+| Total | | 111 | 69 | 53 | 58 | 48% |
+
+A soma de pacientes por faixa passa de 69 porque alguns pacientes têm
+nódulos em mais de uma faixa.
+
+**Por que as faixas extremas não permitem medir desempenho.** **Não existe
+nenhum nódulo maligno abaixo de 6 mm no teste** (5 nódulos, todos
+benignos). Sensibilidade e AUC nessa faixa seriam 0/0. Elas não podem ser
+calculadas, nem com este modelo nem com um modelo melhor. Acima de 20 mm,
+**todos os 25 nódulos são malignos**. Ali a especificidade e a AUC
+também são indefinidas, e o tamanho sozinho acerta a faixa inteira. A pergunta
+do documento, "o modelo erra mais em nódulos pequenos (< 6 mm)?", **não pode
+ser respondida nesta amostra**. Isso é uma limitação declarada, e não um
+resultado ruim do modelo.
+
+O padrão não é acaso do sorteio do teste. Nos 747
+nódulos com patch (treino, validação e teste), a composição é esta:
+
+| Faixa | Nódulos | Malignos | Benignos |
+|---|---|---|---|
+| < 6 mm | 66 | 1 | 65 |
+| 6 a 20 mm | 548 | 227 | 321 |
+| > 20 mm | 133 | 132 | 1 |
+
+Abaixo de 6 mm há 1 maligno em 66 nódulos.
+Acima de 20 mm há 1 benigno em 133. O padrão vem dos
+critérios de seleção. O conjunto exige que pelo menos três radiologistas
+tenham marcado o nódulo e exclui a malignidade mediana 3 ("indeterminado").
+O segundo filtro tira os casos que os radiologistas consideraram ambíguos.
+É provável que seja ali que estariam os nódulos pequenos suspeitos e os
+grandes de aparência benigna. O que sobra é quase separado pelo tamanho. Os arquivos versionados já trazem o conjunto
+depois desse filtro, então não dá para contar aqui quantos nódulos de cada
+faixa ele removeu.
+
+**Desempenho na faixa de 6 a 20 mm** (81 nódulos, 54
+pacientes, 28 malignos), a única com as duas classes em número
+suficiente. IC 95% por bootstrap por paciente, 2000 réplicas, seed
+42 (réplicas válidas: 2000/2000).
+
+| Métrica | CNN rasa (faixa 6 a 20 mm) | Diâmetro sozinho (referência, faixa 6 a 20 mm) |
+|---|---|---|
+| AUC-ROC | 0,927 [0,870; 0,973] | 0,889 [0,811; 0,958] |
+| Recall (maligno) | 0,893 [0,778; 1,000] | — |
+| Especificidade | 0,849 [0,750; 0,939] | — |
+| TP / FN / TN / FP | 25 / 3 / 45 / 8 | — |
+
+**O que significa.** Mesmo dentro de 6 a 20 mm, o diâmetro sozinho ainda
+separa bem as classes, porque a faixa é larga. A CNN fica acima dele nessa
+faixa, mas os intervalos se sobrepõem e essa comparação não foi testada. O
+teste formal contra o diâmetro, pré-registrado, é o do teste inteiro (§8), e
+ele não mostrou diferença. A faixa do meio é onde o problema é de fato
+difícil, e é nela que a AUC deve ser lida como medida de dificuldade.
+<!-- fim: faixas_documento -->
+
+### 10.3 Análise adicional: composição e desempenho por tercis de diâmetro (teste)
+
+> **Esta não é a análise exigida pelo documento.** A análise exigida, nas
+> faixas < 6, 6 a 20 e > 20 mm, está na §10.2. Esta usa os tercis do teste e
+> foi feita antes. Ela fica como complemento.
+
+**Desenho.** A leitura é descritiva sobre o teste congelado. O script só lê
+`predicoes_teste_pareadas.csv` (#18) e os diâmetros de
+`selecao/nodulos_com_split.csv`, sem treinar, prever ou escolher nada. Os
+cortes foram fixados na issue antes de olhar os resultados: pequeno
+≤ 8,4 mm, médio 8,4–14,4 mm e grande > 14,4 mm. O limiar é o oficial do
+baseline (0,4305, Youden na validação, #14).
+
+**Previsto antes de rodar:** o diâmetro sozinho já dá AUC 0,9463 (PR #29),
+então a fração de malignos deveria subir muito de uma faixa para outra. Só a
+faixa do meio teria as duas classes em número suficiente para medir
+desempenho.
+
+**O que saiu — composição (resultado principal):**
+
+| Faixa | Diâmetro (mm) | Nódulos | Pacientes | Malignos | Benignos | % malignos |
+|---|---|---|---|---|---|---|
+| Pequeno | 4,83 – 8,40 | 38 | 28 | **2** | 36 | 5% |
+| Médio | 8,43 – 14,39 | 36 | 29 | 15 | 21 | 42% |
+| Grande | 14,47 – 37,90 | 37 | 28 | 36 | **1** | 97% |
+| Total | | 111 | 69 | 53 | 58 | 48% |
+
+A soma de pacientes por faixa passa de 69 porque alguns pacientes têm nódulos
+em mais de uma faixa.
+
+> **Conferência da tabela da issue.** Os tercis exatos do teste são
+> 8,387 mm e 14,417 mm. A tabela da issue usou esses tercis exatos (37/37/37
+> nódulos). Os cortes registrados, arredondados para 8,4 mm com "≤", põem na
+> faixa pequena um nódulo **benigno com exatamente 8,40 mm**
+> (`LIDC-IDRI-0443_scan448_cluster000`). Por isso aqui saem 38/36/37. Valem
+> os cortes registrados. A diferença é um único benigno com probabilidade
+> prevista de 0,0007 e não muda a conclusão: com os tercis exatos, a faixa do
+> meio dá AUC 0,852, o número da issue.
+
+**O que saiu — desempenho na faixa do meio (CNN rasa, limiar 0,4305,
+IC 95% por bootstrap por paciente, 2000/2000 réplicas válidas):**
+
+| Métrica | Faixa do meio (36 nódulos, 29 pacientes) | Teste inteiro (seção 3) |
+|---|---|---|
+| AUC-ROC | 0,844 [0,692; 0,956] | 0,961 [0,927; 0,986] |
+| Recall (maligno) | 0,933 [0,786; 1,000] | 0,943 [0,878; 1,000] |
+| Especificidade | 0,762 [0,563; 0,929] | 0,862 [0,765; 0,946] |
+| TP / FN / TN / FP | 14 / 1 / 16 / 5 | 50 / 3 / 50 / 8 |
+
+**As faixas extremas não permitem medir desempenho.** A faixa pequena tem 2
+malignos e a grande, 1 benigno. Com isso, a AUC é a fração de acertos de 2 × 36
+ou 36 × 1 pares, e o recall ou a especificidade de cada faixa são calculados
+sobre 1 ou 2 nódulos. Um único nódulo muda o resultado em 50 ou 100 pontos
+percentuais. Esses números seriam ruído com cara de resultado, então não são
+reportados.
+
+**O que significa.** O rótulo é quase uma função do tamanho: 5% de malignos
+entre os pequenos, 97% entre os grandes. É isso que sustenta o piso de 0,9463
+do modelo só de diâmetro. Boa parte da AUC de 0,961 vem de separar pequenos
+de grandes, o que o diâmetro já faz. Onde o tamanho não decide, na faixa do
+meio, a AUC cai para 0,844, com IC largo (0,69–0,96) porque são 36 nódulos.
+O recall se mantém (14 de 15 malignos), mas a especificidade cai para 0,76.
+Somado à seção 10.1, o resultado alto não indica vazamento. Ele vem de um
+problema fácil por construção: o critério de seleção (consenso de ≥ 3
+radiologistas e exclusão da malignidade mediana 3) deixa malignos e benignos
+muito separados em tamanho. A medida honesta da dificuldade "de verdade" é
+a faixa do meio, e ela tem amostra pequena demais para uma estimativa
+precisa. Nenhuma escolha de modelo, limiar ou época foi feita com base nesta
+leitura.
+
+<!-- inicio: issue31 -->
+## 11. Sprint 5 — Variabilidade do baseline (Issue #31)
+
+Esta seção é gerada por `python -m mineracao.relatorio_sprint5` a partir dos
+logs e predições versionados. O comando confere a integridade dos arquivos e
+recalcula a AUC de cada rodada; não carrega imagens nem dados de teste.
+
+### Cinco sementes no split original
+
+Sementes: 42, 43, 44, 45, 46. Mantidos CNN rasa, Adam,
+lr=0.001, batch=32, 30 épocas, pesos calculados no treino
+e augmentation por flip 3D somente no treino. Muda apenas a semente.
+O checkpoint escolhido minimiza a perda de validação, como no baseline.
+
+Ambiente: Python 3.12.14, PyTorch 2.14.1+cpu, dispositivo cpu.
+SHA-256 do NPZ: `31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd`.
+Versões e hashes completos: [protocolo](../mineracao/resultados/sprint5/protocolo.json).
+As fontes exatas usadas nos treinos estão em `mineracao/resultados/sprint5/codigo_executado/`;
+o patch de integração normaliza apenas o fim de arquivo das fontes originais.
+
+| seed | AUC validação | Época | N treino | N validação | Pacientes validação |
+|---|---:|---:|---:|---:|---:|
+| 42 | 0.899538 | 27 | 522 | 114 | 70 |
+| 43 | 0.876733 | 22 | 522 | 114 | 70 |
+| 44 | 0.889368 | 25 | 522 | 114 | 70 |
+| 45 | 0.887211 | 20 | 522 | 114 | 70 |
+| 46 | 0.897381 | 30 | 522 | 114 | 70 |
+| **Média** | **0.890046** | — | — | — | — |
+| **Desvio-padrão amostral** | **0.009078** | — | — | — | — |
+
+Mínimo–máximo: 0.876733–0.899538.
+
+### Validação cruzada agrupada por paciente
+
+Treino e validação originais somam 636 nódulos.
+Usou-se StratifiedGroupKFold com 5 dobras e seed 42.
+A guarda de separação por paciente de `mineracao/dataset.py` é reutilizada.
+Cada paciente pertence a uma única dobra de avaliação; os pesos são calculados
+somente no treino de cada dobra. As partições estão em
+[dobras.csv](../mineracao/resultados/sprint5/dobras.csv).
+
+A seed de treino permanece fixa. Na CV, avalia-se a época final 30,
+fixada antes das execuções: a dobra externa não seleciona checkpoint nem limiar.
+Essa regra difere da seleção de época das cinco sementes; portanto, as médias
+dos dois experimentos não isolam apenas o efeito da partição.
+
+| dobra | AUC validação | Época | N treino | N validação | Pacientes validação |
+|---|---:|---:|---:|---:|---:|
+| 1 | 0.945107 | 30 | 509 | 127 | 76 |
+| 2 | 0.947591 | 30 | 509 | 127 | 83 |
+| 3 | 0.927792 | 30 | 509 | 127 | 78 |
+| 4 | 0.957278 | 30 | 509 | 127 | 76 |
+| 5 | 0.909335 | 30 | 508 | 128 | 79 |
+| **Média** | **0.937420** | — | — | — | — |
+| **Desvio-padrão amostral** | **0.018963** | — | — | — | — |
+
+Mínimo–máximo: 0.909335–0.957278.
+
+<!-- inicio: issue45 -->
+### Extensão da validação cruzada — Sprint 6 (Issue #45)
+
+A validação cruzada usa exatamente as cinco dobras agrupadas por paciente
+congeladas na Sprint 5 (`mineracao/resultados/sprint5/dobras.csv`). Para os dois
+modelos, a seed de treino é 42 e a avaliação ocorre somente após a época 30,
+fixada antes das execuções. A dobra externa não seleciona checkpoint nem
+threshold.
+
+A ResNet18 usa a configuração escolhida na Issue #32, com `layer3` e `layer4`
+liberadas para fine-tuning. O conjunto de teste não é carregado nem avaliado
+nesta rotina.
+
+Sensibilidade e especificidade exigem ponto de operação. Como escolher um
+threshold pela própria dobra externa introduziria viés, usa-se **threshold fixo
+0,5 para ambos os modelos**. A AUC independe desse threshold.
+
+#### Métricas por dobra e por modelo
+
+| Modelo | Dobra | AUC | Sensibilidade | Especificidade |
+|---|---:|---:|---:|---:|
+| CNN rasa (baseline) | 1 | 0.945107 | 0.868852 | 0.893939 |
+| ResNet18 (layer3+layer4) | 1 | 0.882762 | 0.524590 | 0.984848 |
+| CNN rasa (baseline) | 2 | 0.947591 | 0.901639 | 0.893939 |
+| ResNet18 (layer3+layer4) | 2 | 0.886985 | 0.737705 | 0.803030 |
+| CNN rasa (baseline) | 3 | 0.927792 | 0.870968 | 0.830769 |
+| ResNet18 (layer3+layer4) | 3 | 0.871712 | 0.725806 | 0.907692 |
+| CNN rasa (baseline) | 4 | 0.957278 | 0.819672 | 0.924242 |
+| ResNet18 (layer3+layer4) | 4 | 0.905862 | 0.819672 | 0.833333 |
+| CNN rasa (baseline) | 5 | 0.909335 | 0.854839 | 0.727273 |
+| ResNet18 (layer3+layer4) | 5 | 0.914223 | 0.822581 | 0.863636 |
+
+#### Resumo das cinco dobras e IC 95%
+
+| Modelo | Métrica | Média das 5 dobras | DP amostral | Estimativa OOF | IC 95% bootstrap por paciente |
+|---|---|---:|---:|---:|---:|
+| CNN rasa (baseline) | AUC | 0.937420 | 0.018963 | 0.934794 | [0.915601; 0.953063] |
+| CNN rasa (baseline) | Sensibilidade | 0.863194 | 0.029726 | 0.863192 | [0.819041; 0.904766] |
+| CNN rasa (baseline) | Especificidade | 0.854033 | 0.078619 | 0.854103 | [0.813250; 0.893230] |
+| ResNet18 (layer3+layer4) | AUC | 0.892309 | 0.017375 | 0.888578 | [0.862842; 0.913164] |
+| ResNet18 (layer3+layer4) | Sensibilidade | 0.726071 | 0.121249 | 0.726384 | [0.674183; 0.778217] |
+| ResNet18 (layer3+layer4) | Especificidade | 0.878508 | 0.070920 | 0.878419 | [0.838616; 0.914915] |
+
+A média e o desvio-padrão são calculados sobre as cinco dobras. O IC 95% é
+percentil por bootstrap de pacientes (2000 réplicas, seed 42) sobre as
+predições out-of-fold concatenadas; portanto, o intervalo é do desempenho OOF
+agregado, e não um intervalo t que trate as cinco dobras como independentes.
+Cada paciente é reamostrado como unidade para preservar o agrupamento dos
+nódulos.
+
+Todos os números acima são regenerados por
+`python -m mineracao.relatorio_sprint6`; o script lê somente predições de
+validação versionadas e não acessa imagens nem o conjunto de teste.
+<!-- fim: issue45 -->
+
+### Comparação com e sem pesos
+
+A rodada ponderada usa a primeira semente acima e é reutilizada, sem novo treino.
+A rodada sem pesos usa a mesma semente e a mesma seleção de checkpoint.
+
+| Configuração | AUC validação | Época selecionada |
+|---|---:|---:|
+| Com pesos | 0.899538 | 27 |
+| Sem pesos | 0.905393 | 29 |
+
+A saída completa do script existente `comparar_pesos.py` está em
+[comparacao_pesos.txt](../mineracao/resultados/sprint5/comparacao_pesos.txt).
+Uma única semente não sustenta declarar uma configuração superior à outra.
+
+### A AUC histórica de teste é típica ou foi sorte?
+
+As cinco sementes mostram baixa dispersão no split de validação fixo; a CV
+mostra maior variação entre grupos de pacientes. Os desvios acima são amostrais
+(ddof=1), não intervalos de confiança. As dobras compartilham dados de treino.
+
+A AUC histórica de teste apresentada na seção de comparação continua sendo
+uma medida de uma execução. Estes experimentos não estimam sua variância:
+as novas métricas usam validação e outros grupos de pacientes. Não é correto
+somar o desvio da validação à AUC de teste, nem concluir que o resultado de
+teste foi sorte por comparar médias de conjuntos diferentes. A conclusão
+sustentada é estabilidade entre sementes nesta validação e sensibilidade à
+partição por paciente; a tipicidade daquele resultado de teste permanece
+indeterminada sem violar o congelamento estabelecido para esta issue.
+
+Os testes de rótulos embaralhados da issue #30, já integrados na seção 10,
+não apontaram sinal de vazamento nesse controle. Isso não prova ausência de
+toda forma de vazamento nem remove as limitações de seleção do conjunto.
+Nenhuma rodada desta issue avaliou o teste; os arquivos da comparação histórica
+permanecem inalterados.
+<!-- fim: issue31 -->
+
+<!-- inicio: pontos_operacao -->
+## 12. Sprint 6 — Pontos de operação clínicos
+
+Esta seção é gerada por `python -m mineracao.pontos_operacao` (seed 42,
+2000 réplicas de bootstrap por paciente). Saídas em
+`mineracao/resultados/pontos_operacao_s6/`: `resultados.json` e `secao_resultados.md`. O script não
+treina nem prevê. Ele lê as predições de teste pareadas da §3
+(`comparacao_s5/predicoes_teste_pareadas.csv`) e confere que elas reproduzem a
+linha `TESTE` de cada log. Também confere que cada CSV de validação reproduz o
+limiar de Youden do mesmo log, o que prova que vem da mesma execução.
+
+O documento de instruções define três métricas primárias: AUC-ROC (§3),
+**sensibilidade com especificidade fixada em 0,90** e **especificidade com
+sensibilidade fixada em 0,85**. As duas últimas estão aqui, junto com o F1 no
+limiar que o documento pede.
+
+### 12.1 Regra de escolha do ponto
+
+Com 111 nódulos, a ROC do teste é escalonada e
+quase nunca passa exatamente por 0,90 ou 0,85. A regra adotada é:
+
+1. **Limiares candidatos:** as probabilidades previstas no teste (mais 0 e 1),
+   com "probabilidade ≥ limiar é maligno", a mesma convenção da §3.
+2. **Restrição como piso:** especificidade **≥ 0,90** (ou sensibilidade
+   **≥ 0,85**). Entre os limiares que cumprem o piso, fica o que dá a **maior**
+   métrica-alvo. Como a curva anda em degraus, o ponto escolhido fica com a
+   métrica fixada acima do piso (CNN: especificidade
+   0,948), e não exatamente em 0,90.
+3. **Empate:** vários limiares dão a mesma métrica-alvo. Fica o de **melhor
+   métrica acompanhante** (o ponto não dominado da ROC: mesma especificidade e
+   mais malignos detectados, por exemplo).
+4. **Sem interpolação.** Interpolar entre os dois vértices vizinhos dá um ponto
+   que nenhum limiar real produz. Como referência, a interpolação daria
+   sensibilidade 0,811 (CNN) e
+   0,774 (ResNet) em especificidade 0,90, e
+   especificidade 0,879 (CNN) e
+   0,897 (ResNet) em sensibilidade 0,85. Nos
+   quatro casos o cruzamento cai num trecho plano da escada, então as duas
+   regras coincidem nestes dados. Em outra amostra poderiam divergir.
+5. **IC 95%:** bootstrap reamostrando pacientes, como na §3. Em cada réplica o
+   ponto é **reescolhido** pela mesma regra, porque o que se estima é "a
+   sensibilidade quando a especificidade é fixada", e não o desempenho de um
+   limiar fixo.
+
+Os limiares destes pontos foram **lidos na curva do teste**. Eles descrevem a
+curva e não são limiares congelados na validação como o de Youden. Usá-los
+para operar o modelo daria um resultado otimista.
+
+### 12.2 Tabela (teste, IC 95% por paciente)
+
+| Ponto de operação (teste) | CNN rasa (baseline) | ResNet18 (`layer3` + `layer4`) |
+|---|---|---|
+| **Sensibilidade com especificidade ≥ 0,90** | 0,811 [0,685; 0,982] | 0,774 [0,627; 0,961] |
+| ↳ especificidade no ponto (limiar) | 0,948 (0,6863) | 0,914 (0,7199) |
+| ↳ TP / FN / TN / FP | 43 / 10 / 55 / 3 | 41 / 12 / 53 / 5 |
+| **Especificidade com sensibilidade ≥ 0,85** | 0,879 [0,792; 0,984] | 0,897 [0,750; 0,967] |
+| ↳ sensibilidade no ponto (limiar) | 0,906 (0,5012) | 0,887 (0,5355) |
+| ↳ TP / FN / TN / FP | 48 / 5 / 51 / 7 | 47 / 6 / 52 / 6 |
+| Referência: Youden da validação (§3), sens / espec (limiar) | 0,943 / 0,862 (0,4305) | 0,906 / 0,810 (0,3614) |
+
+Réplicas válidas: no mínimo 2000 de 2000 em cada linha.
+
+**A ordem entre os modelos muda conforme o critério.** Com especificidade fixada
+em 0,90, a CNN tem a sensibilidade maior (0,811 contra
+0,774). Com sensibilidade fixada em 0,85, a ResNet tem
+a especificidade maior (0,897 contra
+0,879). As curvas se cruzam: nenhum modelo domina o
+outro em todos os pontos de operação, apesar de a CNN ter a AUC maior. As
+diferenças são pequenas perto da largura dos intervalos e não foram testadas
+estatisticamente nesta seção.
+
+### 12.3 F1 no limiar de máximo F1 da validação
+
+A §3 reporta o F1 no limiar de Youden. O documento pede o F1 no limiar que
+**maximiza o F1 na validação**. Esse limiar é escolhido só na validação
+(empate: maior limiar, a mesma convenção do Youden) e aplicado congelado no
+teste. O IC usa o limiar fixo, como na §3.
+
+| F1 no teste (IC 95% por paciente) | CNN rasa (baseline) | ResNet18 (`layer3` + `layer4`) |
+|---|---|---|
+| F1 no limiar de **Youden** (o reportado na §3) | 0,901 [0,835; 0,951] | 0,857 [0,781; 0,923] |
+| ↳ limiar (Youden, validação) | 0,4305 | 0,3614 |
+| F1 no limiar de **máximo F1 da validação** (pedido no documento) | 0,901 [0,835; 0,951] | **pendente** — `predicoes_validacao.csv` da rodada final não versionado (ver abaixo) |
+| ↳ limiar (máximo F1, validação) | 0,4305 | pendente |
+| ↳ F1 na própria validação nesse limiar | 0,870 | pendente |
+| ↳ TP / FN / TN / FP no teste nesse limiar | 50 / 3 / 50 / 8 | pendente |
+
+Na CNN rasa (baseline), o máximo de F1 na validação (0,8696) é atingido num único limiar, e ele é **o mesmo do Youden**. Por isso os dois F1 do teste são idênticos. Os dois limiares são calculados separadamente, cada um pelo seu critério, sobre as mesmas predições de validação.
+
+> **Pendência — ResNet18 (`layer3` + `layer4`).** O arquivo `mineracao/resultados/resnet_s5/final/predicoes_validacao.csv` não está no repositório: a rodada final (#32, commit `d468daf`) versionou só o log e as predições de teste, e o `modelo_resnet.pt` também não foi guardado. Sem as probabilidades da validação não há como achar o limiar de máximo F1. Retreinar não serve: duas execuções com a mesma seed divergem (§9), então o limiar seria de outro modelo. Escolher o limiar no teste também não serve, porque seria escolher olhando o teste. Quando o CSV original for commitado, basta rodar `python -m mineracao.pontos_operacao` de novo: o script confere se ele reproduz o limiar de Youden do log e preenche esta célula.
+
+### 12.4 Ponto de operação adotado pelo grupo (atividade 4.4)
+
+**O grupo mantém o limiar de Youden escolhido na validação** (CNN rasa:
+0,4305), com sensibilidade 0,943 e
+especificidade 0,862 no teste. Isso fica **abaixo** dos
+0,90 de especificidade que o documento trata como o ponto clinicamente
+relevante, e a escolha é consciente. No ponto exigido (especificidade ≥ 0,90),
+a sensibilidade cai de 0,943 para 0,811.
+Nos 53 malignos do teste, isso significa
+10 cânceres não detectados em vez de 3
+(7 a mais), para evitar 5 falsos positivos
+(3 em vez de 8 nos 58
+benignos).
+
+O trade-off que o grupo aceita é este: **errar um maligno custa mais que errar
+um benigno.** O falso negativo atrasa o diagnóstico de um câncer. O falso
+positivo leva a exames de seguimento (nova tomografia, eventualmente biópsia),
+que têm custo e risco, mas são recuperáveis. Por isso o grupo prioriza a
+sensibilidade e aceita especificidade abaixo de 0,90. O Youden também cumpre o
+piso de sensibilidade de 0,85 com folga.
+
+O limiar de Youden foi escolhido na validação e aplicado congelado. Os pontos
+da §12.2 foram lidos na própria curva do teste. Então a comparação favorece os
+pontos da §12.2, e a perda de sensibilidade real ao exigir especificidade 0,90
+tende a ser pelo menos a mostrada aqui. A decisão vale para este conjunto, mais
+fácil que o LIDC completo (§6 e §10). Em uso clínico real, o limiar teria de
+ser recalibrado numa população de referência.
+<!-- fim: pontos_operacao -->
 
 ## Referências
 
-- Causey JL et al. Highly accurate model for prediction of lung nodule malignancy with CT scans. *Sci Rep*. 2018;8:9286. doi:10.1038/s41598-018-27569-w
 - Al-Shabi M, Lee HK, Tan M. Gated-Dilated Networks for Lung Nodule Classification in CT Scans. *IEEE Access*. 2019. doi:10.1109/ACCESS.2019.2958663
+- Causey JL et al. Highly accurate model for prediction of lung nodule malignancy with CT scans. *Sci Rep*. 2018;8:9286. doi:10.1038/s41598-018-27569-w
 - DeLong ER, DeLong DM, Clarke-Pearson DL. Comparing the areas under two or more correlated ROC curves. *Biometrics*. 1988;44(3):837–845.
-- Obuchowski NA. Nonparametric analysis of clustered ROC curve data. *Biometrics*. 1997;53(2):567–578.
+- Dey R, Lu Z, Hong Y. Diagnostic classification of lung nodules using 3D neural networks. In: *2018 IEEE 15th International Symposium on Biomedical Imaging (ISBI 2018)*. 2018:774–778. doi:10.1109/ISBI.2018.8363687
 - Durkalski VL, Palesch YY, Lipsitz SR, Rust PF. Analysis of clustered matched-pair data. *Stat Med*. 2003;22(15):2417–2428.
+- Obuchowski NA. Nonparametric analysis of clustered ROC curve data. *Biometrics*. 1997;53(2):567–578.
+- Shanshool AM, Bouchakwa M, Amous-Ben Amor I. Improved accuracy of pulmonary nodule classification on LIDC-IDRI dataset using deep learning. *Procedia Comput Sci*. 2023;225:394–403. doi:10.1016/j.procs.2023.10.024
+- Shewaye TN, Mekonnen AA. Benign-malignant lung nodule classification with geometric and appearance histogram features. *arXiv*. 2016;1605.08350.

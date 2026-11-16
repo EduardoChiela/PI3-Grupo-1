@@ -1,0 +1,190 @@
+{
+  "conferencia": {
+    "n_nodulos_teste": 111,
+    "n_pacientes_teste": 69,
+    "malignos": 53,
+    "benignos": 58,
+    "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd"
+  },
+  "regra": {
+    "especificidade_minima": 0.9,
+    "sensibilidade_minima": 0.85,
+    "restricao": "piso (>=), sem interpolacao",
+    "empate": "melhor metrica acompanhante; depois maior limiar",
+    "bootstrap": "pacientes reamostrados; ponto reescolhido em cada replica",
+    "f1_limiar": "maximo F1 na validacao; empate: maior limiar"
+  },
+  "bootstrap": {
+    "repeticoes": 2000,
+    "seed": 42
+  },
+  "pontos_clinicos": {
+    "baseline": {
+      "sens_com_espec_minima": {
+        "sensibilidade": 0.8113207547169812,
+        "especificidade": 0.9482758620689655,
+        "limiar": 0.6862577199935913,
+        "tp": 43,
+        "fn": 10,
+        "tn": 55,
+        "fp": 3,
+        "ic95": {
+          "sensibilidade": [
+            0.6851010101010101,
+            0.9824637023593465
+          ],
+          "especificidade": [
+            0.9,
+            1.0
+          ]
+        },
+        "interpolado_referencia": 0.8113207547169812,
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "espec_com_sens_minima": {
+        "sensibilidade": 0.9056603773584906,
+        "especificidade": 0.8793103448275862,
+        "limiar": 0.5011515617370605,
+        "tp": 48,
+        "fn": 5,
+        "tn": 51,
+        "fp": 7,
+        "ic95": {
+          "sensibilidade": [
+            0.8518518518518519,
+            0.9807783018867924
+          ],
+          "especificidade": [
+            0.792433176100629,
+            0.9841331845238095
+          ]
+        },
+        "interpolado_referencia": 0.8793103448275862,
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    },
+    "resnet": {
+      "sens_com_espec_minima": {
+        "sensibilidade": 0.7735849056603774,
+        "especificidade": 0.9137931034482759,
+        "limiar": 0.7198944687843323,
+        "tp": 41,
+        "fn": 12,
+        "tn": 53,
+        "fp": 5,
+        "ic95": {
+          "sensibilidade": [
+            0.6274426719840478,
+            0.9607843137254902
+          ],
+          "especificidade": [
+            0.9,
+            0.9846212121212121
+          ]
+        },
+        "interpolado_referencia": 0.7735849056603774,
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "espec_com_sens_minima": {
+        "sensibilidade": 0.8867924528301887,
+        "especificidade": 0.896551724137931,
+        "limiar": 0.5354856252670288,
+        "tp": 47,
+        "fn": 6,
+        "tn": 52,
+        "fp": 6,
+        "ic95": {
+          "sensibilidade": [
+            0.8518518518518519,
+            0.9592040816326529
+          ],
+          "especificidade": [
+            0.75,
+            0.9666666666666667
+          ]
+        },
+        "interpolado_referencia": 0.896551724137931,
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    }
+  },
+  "youden_teste": {
+    "baseline": {
+      "threshold": 0.4304952919483185,
+      "recall": 0.9433962264150944,
+      "especificidade": 0.8620689655172413,
+      "f1": 0.9009009009009009,
+      "auc": 0.9609629147690305,
+      "tp": 50,
+      "tn": 50,
+      "fp": 8,
+      "fn": 3
+    },
+    "resnet": {
+      "threshold": 0.3614325523376465,
+      "recall": 0.9056603773584906,
+      "especificidade": 0.8103448275862069,
+      "f1": 0.8571428571428571,
+      "auc": 0.9294079375406636,
+      "tp": 48,
+      "tn": 47,
+      "fp": 11,
+      "fn": 5
+    }
+  },
+  "f1": {
+    "baseline": {
+      "youden": {
+        "limiar": 0.4304952919483185,
+        "estimativa": 0.9009009009009009,
+        "ic95": [
+          0.8351595006934813,
+          0.9514563106796117
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "caminho_validacao": "mineracao/resultados/baseline/predicoes_validacao.csv",
+      "max_f1_validacao": {
+        "limiar": 0.4304952919483185,
+        "f1_validacao": 0.8695652173913043,
+        "estimativa": 0.9009009009009009,
+        "ic95": [
+          0.8351595006934813,
+          0.9514563106796117
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000,
+        "teste": {
+          "threshold": 0.4304952919483185,
+          "recall": 0.9433962264150944,
+          "especificidade": 0.8620689655172413,
+          "f1": 0.9009009009009009,
+          "auc": 0.9609629147690305,
+          "tp": 50,
+          "tn": 50,
+          "fp": 8,
+          "fn": 3
+        }
+      }
+    },
+    "resnet": {
+      "youden": {
+        "limiar": 0.3614325523376465,
+        "estimativa": 0.8571428571428571,
+        "ic95": [
+          0.780952380952381,
+          0.9230769230769231
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "caminho_validacao": "mineracao/resultados/resnet_s5/final/predicoes_validacao.csv",
+      "max_f1_validacao": null
+    }
+  }
+}

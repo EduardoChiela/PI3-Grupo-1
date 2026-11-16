@@ -1,0 +1,159 @@
+{
+  "conferencia": {
+    "n_nodulos": 111,
+    "n_pacientes": 69,
+    "malignos": 53,
+    "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd"
+  },
+  "limiar_cnn": 0.4304952919483185,
+  "auc_diametro_teste": 0.9463240078074171,
+  "delong": {
+    "cluster_paciente": {
+      "auc": [
+        0.9463240078074171,
+        0.9609629147690306
+      ],
+      "diferenca": 0.014638906961613518,
+      "erro_padrao": 0.0184434141649026,
+      "ic95": [
+        -0.021509520838685646,
+        0.05078733476191268
+      ],
+      "z": 0.7937200146744536,
+      "p_valor": 0.42735844582099103,
+      "correlacao_auc": 0.4503434818020791,
+      "teste": "DeLong em cluster por paciente (Obuchowski, 1997)"
+    },
+    "nodulo_referencia": {
+      "auc": [
+        0.9463240078074171,
+        0.9609629147690306
+      ],
+      "diferenca": 0.014638906961613518,
+      "erro_padrao": 0.01749952910980345,
+      "ic95": [
+        -0.019659540110553292,
+        0.04893735403378033
+      ],
+      "z": 0.8365314786334807,
+      "p_valor": 0.40285597544322227,
+      "correlacao_auc": 0.5487480023961874,
+      "teste": "DeLong por nódulo (DeLong et al., 1988)"
+    }
+  },
+  "regra_pre_registrada": "IC 95% de (CNN - diametro) sem o zero => evidencia de algo alem do diametro; com o zero => nao ha",
+  "composicao_teste": [
+    {
+      "faixa": "< 6 mm",
+      "n": 5,
+      "pacientes": 5,
+      "malignos": 0,
+      "benignos": 5,
+      "diametro_min": 4.83,
+      "diametro_max": 5.83
+    },
+    {
+      "faixa": "6 a 20 mm",
+      "n": 81,
+      "pacientes": 54,
+      "malignos": 28,
+      "benignos": 53,
+      "diametro_min": 6.06,
+      "diametro_max": 18.8
+    },
+    {
+      "faixa": "> 20 mm",
+      "n": 25,
+      "pacientes": 21,
+      "malignos": 25,
+      "benignos": 0,
+      "diametro_min": 20.65,
+      "diametro_max": 37.9
+    }
+  ],
+  "composicao_conjunto": [
+    {
+      "faixa": "< 6 mm",
+      "n": 66,
+      "malignos": 1,
+      "benignos": 65
+    },
+    {
+      "faixa": "6 a 20 mm",
+      "n": 548,
+      "malignos": 227,
+      "benignos": 321
+    },
+    {
+      "faixa": "> 20 mm",
+      "n": 133,
+      "malignos": 132,
+      "benignos": 1
+    }
+  ],
+  "faixa_meio": {
+    "cnn": {
+      "recall": {
+        "estimativa": 0.8928571428571429,
+        "ic95": [
+          0.7777777777777778,
+          1.0
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "especificidade": {
+        "estimativa": 0.8490566037735849,
+        "ic95": [
+          0.75,
+          0.9387755102040817
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "f1": {
+        "estimativa": 0.819672131147541,
+        "ic95": [
+          0.6976568005637773,
+          0.9117776057791537
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "auc": {
+        "estimativa": 0.9272237196765499,
+        "ic95": [
+          0.8695546025815217,
+          0.9725567850030694
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    },
+    "cnn_pontual": {
+      "threshold": 0.4304952919483185,
+      "recall": 0.8928571428571429,
+      "especificidade": 0.8490566037735849,
+      "f1": 0.819672131147541,
+      "auc": 0.9272237196765499,
+      "tp": 25,
+      "tn": 45,
+      "fp": 8,
+      "fn": 3
+    },
+    "diametro_auc": {
+      "estimativa": 0.8888140161725069,
+      "ic95": [
+        0.8114397755022755,
+        0.957939708141321
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    }
+  },
+  "bootstrap": {
+    "repeticoes": 2000,
+    "seed": 42
+  },
+  "regra_conclusao": "nao ha evidencia"
+}

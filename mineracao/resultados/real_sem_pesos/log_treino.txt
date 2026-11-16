@@ -1,0 +1,36 @@
+2026-10-27 04:23:43,032 npz_sha256=31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd
+2026-10-27 04:23:43,032 manifesto_sha256=afba057696a94ee2d44282e77f6d3e9ea9c3e2331df8d00d19a86f2c0edb97d5
+2026-10-27 04:23:43,032 configuracao={"npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd", "manifesto_sha256": "afba057696a94ee2d44282e77f6d3e9ea9c3e2331df8d00d19a86f2c0edb97d5", "codigo_sha256": {"experimentos_sprint5.py": "3cf19d3b446dcec9344b49aa7574317c574dd9fd983cf1747364ad7de362ea20", "dataset.py": "f082d61a87eecef2eaaae8bb9f8e9fab7a7f4d50ec535110bbd9eb7dc927c129", "treino_baseline.py": "d46bc5a29abb4c2e38e908d47ff50cbabd2081452e0e8a1ecee622522a6d26f9", "avaliacao.py": "736e542bb758b0da7bf965cb5c69cd4680f67edd24c8fce8990afb696e9bcce3", "comparar_pesos.py": "9c9233cd50390992306389821649d5d995100c31a00455d8cc995fb8f11f9eb7"}, "epocas": 30, "lr": 0.001, "batch": 32, "augmentation": "flip3d_so_treino", "ambiente": {"python": "3.12.14", "numpy": "2.3.5", "pandas": "2.2.3", "sklearn": "1.8.0", "torch": "2.14.1+cpu", "so": "Linux-6.18.55-x86_64-with-glibc2.39", "dispositivo": "cpu", "threads_torch": 4, "cuda": null, "cudnn": null, "hardware": "x86_64"}, "sementes": [42, 43, 44, 45, 46], "n_dobras": 5, "seed_cv": 42, "cv_regra": "ultima_epoca_fixa_sem_selecao_na_dobra_externa", "dados_reais": true, "seed": 42, "selecionar_epoca": true, "sem_pesos": true}
+2026-10-27 04:23:43,032 TREINO=522 VALIDACAO=114; teste não carregado/avaliado
+2026-10-27 04:23:43,034 pesos={0: 1.0, 1: 1.0} calculados_somente_no_treino={0: 0.966667, 1: 1.035714}
+2026-10-27 04:23:43,411 epoca 01 perda_treino=0.695851 perda_val=0.686815 auc_val=0.702003
+2026-10-27 04:23:43,770 epoca 02 perda_treino=0.678132 perda_val=0.650970 auc_val=0.776271
+2026-10-27 04:23:44,141 epoca 03 perda_treino=0.598985 perda_val=0.574480 auc_val=0.770416
+2026-10-27 04:23:44,494 epoca 04 perda_treino=0.522319 perda_val=0.622980 auc_val=0.748536
+2026-10-27 04:23:44,851 epoca 05 perda_treino=0.497830 perda_val=0.543144 auc_val=0.803082
+2026-10-27 04:23:45,305 epoca 06 perda_treino=0.445497 perda_val=0.565138 auc_val=0.802773
+2026-10-27 04:23:45,707 epoca 07 perda_treino=0.449689 perda_val=0.561817 auc_val=0.809245
+2026-10-27 04:23:46,112 epoca 08 perda_treino=0.431039 perda_val=0.532686 auc_val=0.834823
+2026-10-27 04:23:46,462 epoca 09 perda_treino=0.435680 perda_val=0.521566 auc_val=0.835131
+2026-10-27 04:23:46,830 epoca 10 perda_treino=0.401896 perda_val=0.537498 auc_val=0.832666
+2026-10-27 04:23:47,194 epoca 11 perda_treino=0.375690 perda_val=0.502140 auc_val=0.861941
+2026-10-27 04:23:47,555 epoca 12 perda_treino=0.358396 perda_val=0.478277 auc_val=0.871803
+2026-10-27 04:23:47,919 epoca 13 perda_treino=0.361767 perda_val=0.509735 auc_val=0.851464
+2026-10-27 04:23:48,286 epoca 14 perda_treino=0.340705 perda_val=0.477491 auc_val=0.867488
+2026-10-27 04:23:48,652 epoca 15 perda_treino=0.321608 perda_val=0.510290 auc_val=0.867797
+2026-10-27 04:23:49,011 epoca 16 perda_treino=0.330635 perda_val=0.437861 auc_val=0.880740
+2026-10-27 04:23:49,366 epoca 17 perda_treino=0.318009 perda_val=0.521239 auc_val=0.869029
+2026-10-27 04:23:49,754 epoca 18 perda_treino=0.332381 perda_val=0.504283 auc_val=0.871186
+2026-10-27 04:23:50,105 epoca 19 perda_treino=0.329030 perda_val=0.453918 auc_val=0.882280
+2026-10-27 04:23:50,461 epoca 20 perda_treino=0.305532 perda_val=0.441158 auc_val=0.884129
+2026-10-27 04:23:50,813 epoca 21 perda_treino=0.308754 perda_val=0.489852 auc_val=0.881048
+2026-10-27 04:23:51,170 epoca 22 perda_treino=0.297747 perda_val=0.464863 auc_val=0.883513
+2026-10-27 04:23:51,528 epoca 23 perda_treino=0.291600 perda_val=0.421610 auc_val=0.901079
+2026-10-27 04:23:51,899 epoca 24 perda_treino=0.275558 perda_val=0.457632 auc_val=0.891834
+2026-10-27 04:23:52,266 epoca 25 perda_treino=0.299629 perda_val=0.428404 auc_val=0.897689
+2026-10-27 04:23:52,635 epoca 26 perda_treino=0.304730 perda_val=0.448133 auc_val=0.885670
+2026-10-27 04:23:53,004 epoca 27 perda_treino=0.290636 perda_val=0.412458 auc_val=0.900154
+2026-10-27 04:23:53,358 epoca 28 perda_treino=0.291911 perda_val=0.485011 auc_val=0.884746
+2026-10-27 04:23:53,711 epoca 29 perda_treino=0.292691 perda_val=0.405387 auc_val=0.905393
+2026-10-27 04:23:54,085 epoca 30 perda_treino=0.271182 perda_val=0.415214 auc_val=0.904468
+2026-10-27 04:23:54,146 RESULTADO={"seed": 42, "dobra": null, "auc": 0.9053929121725732, "epoca": 29, "n_treino": 522, "n_validacao": 114, "pacientes_treino": 322, "pacientes_validacao": 70, "benignos_treino": 270, "malignos_treino": 252, "benignos_validacao": 59, "malignos_validacao": 55, "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd", "threshold_youden": 0.40315720438957214}

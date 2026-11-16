@@ -1,0 +1,37 @@
+{
+  "seed": 42,
+  "dobra": 1,
+  "epoca": 30,
+  "n_treino": 509,
+  "n_validacao": 127,
+  "pacientes_treino": 316,
+  "pacientes_validacao": 76,
+  "benignos_treino": 263,
+  "malignos_treino": 246,
+  "benignos_validacao": 66,
+  "malignos_validacao": 61,
+  "threshold_relatorio": 0.5,
+  "metricas": {
+    "threshold": 0.5,
+    "recall": 0.5245901639344263,
+    "especificidade": 0.9848484848484849,
+    "f1": 0.6808510638297872,
+    "auc": 0.8827620466964728,
+    "tp": 32,
+    "tn": 65,
+    "fp": 1,
+    "fn": 29
+  },
+  "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+  "arquivos_sha256": {
+    "configuracao.json": "fe0b17d586ad3063750c7e799254bd8442ccbfc370534b0e61698b8ae539d6ff",
+    "log_treino.txt": "208acd8e3bde7800201e8db6335d745498c7d4f7b7c29665ae8833937a49f3ff",
+    "predicoes_validacao.csv": "1357037f7920a74efc2ff4628bb51868413bfb6bb1fddb32d218180521f99ea0"
+  },
+  "arquivos_sha256_bytes_execucao": {
+    "configuracao.json": "2166465ab7388388dc2f622108336b1aed8c41beb6122ea1fa188b5970cf76d9",
+    "log_treino.txt": "2b25002aed1e653926635a2fabacf0f0ea012d924061d1eff010acb558dbdc76",
+    "predicoes_validacao.csv": "79a6f14ac944b2b5a849583211dff846328fcbb78158c2222fffa7979525777d"
+  },
+  "normalizacao_arquivos_sha256": "CRLF_para_LF"
+}

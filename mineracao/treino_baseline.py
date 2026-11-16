@@ -74,11 +74,13 @@ class CNNRasa(nn.Module):
         return self.cabeca(self.conv(x))
 
 
-def pesos_de_classe(y_treino: np.ndarray) -> dict[int, float]:
+def pesos_de_classe(y_treino: np.ndarray, conferir_referencia: bool = True) -> dict[int, float]:
     """w = N / (2 * n_classe), só no treino (mesma fórmula de pesos_classe.py)."""
     n = len(y_treino)
+    if not n or set(np.unique(y_treino)) != {0, 1}:
+        raise ValueError("Treino deve conter ambas as classes 0 e 1.")
     pesos = {c: round(n / (2 * int((y_treino == c).sum())), 6) for c in (0, 1)}
-    if any(abs(pesos[c] - PESOS_REFERENCIA[c]) > 1e-6 for c in (0, 1)):
+    if conferir_referencia and any(abs(pesos[c] - PESOS_REFERENCIA[c]) > 1e-6 for c in (0, 1)):
         raise ValueError(f"Pesos {pesos} diferem da referência {PESOS_REFERENCIA}.")
     return pesos
 

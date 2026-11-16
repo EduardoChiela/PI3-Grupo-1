@@ -9,7 +9,9 @@ Só depende de numpy e pandas; PatchesDataset funciona como Dataset do PyTorch
 from __future__ import annotations
 
 import hashlib
+import csv
 from pathlib import Path
+from zipfile import ZipFile
 
 import numpy as np
 import pandas as pd
@@ -46,6 +48,12 @@ class PatchesDataset:
         return x, np.float32(self.y[i])
 
 
+def validar_separacao_pacientes(man):
+    """Guarda comum ao split original e a cada dobra da Sprint 5."""
+    if man.groupby("patient_id").split.nunique().gt(1).any():
+        raise ValueError("Paciente em mais de um split no manifesto.")
+
+
 def carregar_particoes(caminho_npz, caminho_manifesto, transform_treino=None):
     """Devolve ({'treino','validacao','teste'} -> PatchesDataset, sha256_do_npz).
 
@@ -63,8 +71,7 @@ def carregar_particoes(caminho_npz, caminho_manifesto, transform_treino=None):
         raise ValueError(f"split fora de {SPLITS}.")
     if not man.label.isin(ROTULOS).all():
         raise ValueError("label fora de benigno/maligno.")
-    if man.groupby("patient_id").split.nunique().gt(1).any():
-        raise ValueError("Paciente em mais de um split no manifesto.")
+    validar_separacao_pacientes(man)
 
     with np.load(caminho_npz, allow_pickle=False) as z:
         patches, ids = z["patches"], z["nodule_id"].astype(str)
@@ -91,6 +98,69 @@ def carregar_particoes(caminho_npz, caminho_manifesto, transform_treino=None):
             transform=transform_treino if nome == "treino" else None,
         )
     return particoes, sha256_arquivo(caminho_npz)
+
+
+def carregar_desenvolvimento(caminho_npz, caminho_manifesto):
+    """Só treino/validação; nunca constrói Dataset nem lê rótulos do teste.
+
+    Identificadores e splits completos servem exclusivamente para conferir o
+    alinhamento e a separação de pacientes. As imagens selecionadas são lidas
+    diretamente de patches.npy, dentro do ZIP, sem z['patches'] (que carregaria
+    tudo). seek pode descompactar bytes ignorados; SHA-256 lê o arquivo inteiro
+    como bytes. Nenhum pixel/label de teste é interpretado ou usado pelo modelo.
+    """
+    with open(caminho_manifesto, newline="", encoding="utf-8-sig") as f:
+        leitor = csv.DictReader(f)
+        colunas = {"nodule_id", "patient_id", "split", "label"}
+        if not colunas.issubset(leitor.fieldnames or []):
+            raise ValueError("Manifesto sem colunas obrigatórias.")
+        metadados, desenvolvimento = [], []
+        for linha in leitor:
+            meta = {k: linha[k] for k in ("nodule_id", "patient_id", "split")}
+            metadados.append(meta)
+            if meta["split"] in ("treino", "validacao"):
+                desenvolvimento.append({**meta, "label": linha["label"]})
+    meta = pd.DataFrame(metadados)
+    if meta.empty or meta.isna().any().any() or meta.eq("").any().any():
+        raise ValueError("Identificação ausente no manifesto.")
+    if meta.nodule_id.duplicated().any() or not meta.split.isin(SPLITS).all():
+        raise ValueError("IDs duplicados ou split inválido.")
+    validar_separacao_pacientes(meta)
+    man = pd.DataFrame(desenvolvimento)
+    if man.empty or not man.label.isin(ROTULOS).all():
+        raise ValueError("Desenvolvimento vazio ou com rótulo inválido.")
+
+    with np.load(caminho_npz, allow_pickle=False) as z:
+        ids = z["nodule_id"].astype(str)
+        canais = tuple(z["canais"].astype(str))
+    if ids.ndim != 1 or len(set(ids)) != len(ids) or set(ids) != set(meta.nodule_id):
+        raise ValueError("IDs do NPZ e manifesto não coincidem.")
+    if canais != CANAIS_ESPERADOS:
+        raise ValueError(f"Ordem de canais inválida: {canais}.")
+    posicoes = {n: i for i, n in enumerate(ids)}
+    selecao = sorted((posicoes[n], j) for j, n in enumerate(man.nodule_id))
+    with ZipFile(caminho_npz) as z, z.open("patches.npy") as f:
+        versao = np.lib.format.read_magic(f)
+        leitores = {(1, 0): np.lib.format.read_array_header_1_0,
+                    (2, 0): np.lib.format.read_array_header_2_0}
+        if versao not in leitores:
+            raise ValueError(f"Cabeçalho NPY não suportado: {versao}.")
+        forma, fortran, dtype = leitores[versao](f)
+        if forma != (len(ids), *FORMA_PATCH) or fortran or dtype.kind != "f":
+            raise ValueError("Esperado patches float em ordem C, (N,3,64,64).")
+        inicio, tamanho = f.tell(), int(np.prod(FORMA_PATCH)) * dtype.itemsize
+        patches = np.empty((len(man), *FORMA_PATCH), dtype=dtype)
+        for origem, destino in selecao:
+            f.seek(inicio + origem * tamanho)
+            dados = f.read(tamanho)
+            if len(dados) != tamanho:
+                raise ValueError("NPZ truncado.")
+            patches[destino] = np.frombuffer(dados, dtype=dtype).reshape(FORMA_PATCH)
+    if not np.isfinite(patches).all() or (patches < 0).any() or (patches > 1).any():
+        raise ValueError("Patches de desenvolvimento fora de [0,1] ou não finitos.")
+    ds = PatchesDataset(patches, man.label.map(ROTULOS).to_numpy(),
+                        man.nodule_id.to_numpy(), man.patient_id.to_numpy())
+    return ds, man, sha256_arquivo(Path(caminho_npz))
 
 
 class AugmentacaoFlip3D:
