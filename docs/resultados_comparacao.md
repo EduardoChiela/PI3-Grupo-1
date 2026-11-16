@@ -728,6 +728,17 @@ fácil que o LIDC completo (§6 e §10). Em uso clínico real, o limiar teria de
 ser recalibrado numa população de referência.
 <!-- fim: pontos_operacao -->
 
+### 12.5 Análise individualizada dos erros do baseline
+A auditoria detalhada dos 11 erros cometidos pelo modelo baseline no conjunto 
+de teste (sob o limiar oficial de Youden de 0,4305: 3 Falsos Negativos e 8 Falsos 
+Positivos) demonstra que as omissões diagnósticas não estão associadas ao diâmetro
+anatômico da lesão (variação de 6,0 mm a 14,4 mm) nem a artefatos de borda por corte 
+ortogonal (apenas 1 caso possui truncamento por faixa preta). As incorreções 
+concentram-se em nódulos limítrofes com alta variabilidade nos escores individuais 
+atribuídos pelos radiologistas (notas divididas entre 2, 3 e 4), ratificando que as 
+limitações do modelo refletem a penumbra de incerteza diagnóstica da própria rotulagem 
+especialista.
+
 ## Referências
 
 - Al-Shabi M, Lee HK, Tan M. Gated-Dilated Networks for Lung Nodule Classification in CT Scans. *IEEE Access*. 2019. doi:10.1109/ACCESS.2019.2958663
