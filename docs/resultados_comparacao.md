@@ -728,6 +728,23 @@ fácil que o LIDC completo (§6 e §10). Em uso clínico real, o limiar teria de
 ser recalibrado numa população de referência.
 <!-- fim: pontos_operacao -->
 
+### 12.5 Análise individualizada dos erros do baseline
+No limiar oficial de Youden (0,4305), o baseline erra 11 dos 111 nódulos do teste: 
+3 falsos negativos e 8 falsos positivos. Os 11 estão todos entre 6 e 20 mm. 
+Abaixo de 6 mm (5 nódulos) e acima de 20 mm (25 nódulos) o modelo não erra nenhuma vez, 
+porque nessas pontas o tamanho já separa as classes: nenhum nódulo abaixo de 6 mm 
+é maligno e todos acima de 20 mm são.
+
+Dentro da faixa do meio, o que distingue acerto de erro é a discordância entre os radiologistas. 
+Os 3 falsos negativos têm todos malignidade mediana 3,5, a nota mais baixa que ainda classifica 
+o nódulo como maligno, já que a nota 3 foi excluída por indicar dúvida. Dos 36 malignos 
+com mediana acima de 3,5, o modelo não perdeu nenhum. Entre os 8 falsos positivos, 
+7 têm mediana 2,0 ou 2,5, os benignos que mais levantaram suspeita. Artefato de borda 
+não explica os erros: só 1 dos 11 casos tem recorte com faixa preta.
+
+O modelo não erra em casos evidentes. Ele erra onde os próprios radiologistas divergiram, 
+o que confirma a limitação de rótulo ruidoso levantada na seção 5.3 do documento de instruções.
+
 ## Referências
 
 - Al-Shabi M, Lee HK, Tan M. Gated-Dilated Networks for Lung Nodule Classification in CT Scans. *IEEE Access*. 2019. doi:10.1109/ACCESS.2019.2958663
