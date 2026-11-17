@@ -729,15 +729,21 @@ ser recalibrado numa população de referência.
 <!-- fim: pontos_operacao -->
 
 ### 12.5 Análise individualizada dos erros do baseline
-A auditoria detalhada dos 11 erros cometidos pelo modelo baseline no conjunto 
-de teste (sob o limiar oficial de Youden de 0,4305: 3 Falsos Negativos e 8 Falsos 
-Positivos) demonstra que as omissões diagnósticas não estão associadas ao diâmetro
-anatômico da lesão (variação de 6,0 mm a 14,4 mm) nem a artefatos de borda por corte 
-ortogonal (apenas 1 caso possui truncamento por faixa preta). As incorreções 
-concentram-se em nódulos limítrofes com alta variabilidade nos escores individuais 
-atribuídos pelos radiologistas (notas divididas entre 2, 3 e 4), ratificando que as 
-limitações do modelo refletem a penumbra de incerteza diagnóstica da própria rotulagem 
-especialista.
+No limiar oficial de Youden (0,4305), o baseline erra 11 dos 111 nódulos do teste: 
+3 falsos negativos e 8 falsos positivos. Os 11 estão todos entre 6 e 20 mm. 
+Abaixo de 6 mm (5 nódulos) e acima de 20 mm (25 nódulos) o modelo não erra nenhuma vez, 
+porque nessas pontas o tamanho já separa as classes: nenhum nódulo abaixo de 6 mm 
+é maligno e todos acima de 20 mm são.
+
+Dentro da faixa do meio, o que distingue acerto de erro é a discordância entre os radiologistas. 
+Os 3 falsos negativos têm todos malignidade mediana 3,5, a nota mais baixa que ainda classifica 
+o nódulo como maligno, já que a nota 3 foi excluída por indicar dúvida. Dos 36 malignos 
+com mediana acima de 3,5, o modelo não perdeu nenhum. Entre os 8 falsos positivos, 
+7 têm mediana 2,0 ou 2,5, os benignos que mais levantaram suspeita. Artefato de borda 
+não explica os erros: só 1 dos 11 casos tem recorte com faixa preta.
+
+O modelo não erra em casos evidentes. Ele erra onde os próprios radiologistas divergiram, 
+o que confirma a limitação de rótulo ruidoso levantada na seção 5.3 do documento de instruções.
 
 ## Referências
 
