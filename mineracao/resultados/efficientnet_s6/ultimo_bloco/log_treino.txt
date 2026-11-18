@@ -1,0 +1,46 @@
+2026-11-18 19:25:05,226 python=3.13.7 torch=2.10.0+cpu torchvision=0.25.0+cpu dispositivo=cpu
+2026-11-18 19:25:05,227 seed=42 epocas=30 lr=0.001 batch=32
+2026-11-18 19:25:05,227 arquitetura=EfficientNet_B0 pesos=ImageNet1K_V1
+2026-11-18 19:25:05,227 configuracao_finetuning=ultimo_bloco
+2026-11-18 19:25:05,227 lr_cabeca=0.001 lr_backbone=0.0001
+2026-11-18 19:25:05,227 entrada=3x64x64 sem resize; canais=axial,coronal,sagital (nao RGB)
+2026-11-18 19:25:05,227 normalizacao=ImageNet mean=(0.485, 0.456, 0.406) std=(0.229, 0.224, 0.225)
+2026-11-18 19:25:05,227 blocos_liberados=[7]
+2026-11-18 19:25:05,228 parametros_total=4008829 parametros_treinaveis=718513
+2026-11-18 19:25:05,245 augmentation=flip3d_so_treino pesos_de_classe={0: 0.966667, 1: 1.035714}
+2026-11-18 19:25:05,245 npz=patches\patches_2_5d.npz npz_sha256=31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd manifesto=transformacao\manifest_patches.csv
+2026-11-18 19:25:05,245 n treino=522 validacao=114 teste=111
+2026-11-18 19:25:08,741 epoca=01 perda_treino=0.6600 perda_val=0.6396 auc_val=0.6998
+2026-11-18 19:25:15,886 epoca=02 perda_treino=0.6281 perda_val=0.6160 auc_val=0.7374
+2026-11-18 19:25:20,360 epoca=03 perda_treino=0.5699 perda_val=0.5910 auc_val=0.7587
+2026-11-18 19:25:24,857 epoca=04 perda_treino=0.5419 perda_val=0.5744 auc_val=0.7689
+2026-11-18 19:25:29,127 epoca=05 perda_treino=0.5068 perda_val=0.5697 auc_val=0.7609
+2026-11-18 19:25:32,831 epoca=06 perda_treino=0.4916 perda_val=0.5723 auc_val=0.7667
+2026-11-18 19:25:37,389 epoca=07 perda_treino=0.4918 perda_val=0.5701 auc_val=0.7784
+2026-11-18 19:25:41,951 epoca=08 perda_treino=0.4539 perda_val=0.5919 auc_val=0.7923
+2026-11-18 19:25:46,568 epoca=09 perda_treino=0.4477 perda_val=0.6041 auc_val=0.7941
+2026-11-18 19:25:51,284 epoca=10 perda_treino=0.4243 perda_val=0.5561 auc_val=0.8065
+2026-11-18 19:25:55,767 epoca=11 perda_treino=0.4244 perda_val=0.5517 auc_val=0.8040
+2026-11-18 19:26:00,406 epoca=12 perda_treino=0.3951 perda_val=0.5625 auc_val=0.8105
+2026-11-18 19:26:05,099 epoca=13 perda_treino=0.4260 perda_val=0.5694 auc_val=0.7982
+2026-11-18 19:26:09,661 epoca=14 perda_treino=0.4010 perda_val=0.5592 auc_val=0.7966
+2026-11-18 19:26:14,224 epoca=15 perda_treino=0.3850 perda_val=0.5811 auc_val=0.7834
+2026-11-18 19:26:18,903 epoca=16 perda_treino=0.3963 perda_val=0.5948 auc_val=0.7760
+2026-11-18 19:26:23,390 epoca=17 perda_treino=0.3620 perda_val=0.6381 auc_val=0.7649
+2026-11-18 19:26:27,867 epoca=18 perda_treino=0.4151 perda_val=0.5623 auc_val=0.7948
+2026-11-18 19:26:32,357 epoca=19 perda_treino=0.3567 perda_val=0.5703 auc_val=0.7895
+2026-11-18 19:26:36,871 epoca=20 perda_treino=0.3684 perda_val=0.5966 auc_val=0.7778
+2026-11-18 19:26:41,538 epoca=21 perda_treino=0.3172 perda_val=0.6155 auc_val=0.7787
+2026-11-18 19:26:46,078 epoca=22 perda_treino=0.3257 perda_val=0.5968 auc_val=0.7895
+2026-11-18 19:26:50,589 epoca=23 perda_treino=0.3142 perda_val=0.5904 auc_val=0.8052
+2026-11-18 19:26:55,245 epoca=24 perda_treino=0.3225 perda_val=0.5755 auc_val=0.8037
+2026-11-18 19:26:59,771 epoca=25 perda_treino=0.3477 perda_val=0.6088 auc_val=0.7886
+2026-11-18 19:27:04,278 epoca=26 perda_treino=0.3129 perda_val=0.5894 auc_val=0.8031
+2026-11-18 19:27:08,775 epoca=27 perda_treino=0.3012 perda_val=0.5853 auc_val=0.8117
+2026-11-18 19:27:13,365 epoca=28 perda_treino=0.3251 perda_val=0.6067 auc_val=0.7960
+2026-11-18 19:27:17,889 epoca=29 perda_treino=0.2900 perda_val=0.5693 auc_val=0.8126
+2026-11-18 19:27:22,486 epoca=30 perda_treino=0.2743 perda_val=0.5889 auc_val=0.8157
+2026-11-18 19:27:22,508 melhor_epoca_validacao=11
+2026-11-18 19:27:23,028 threshold_validacao={'threshold': 0.5194487571716309, 'sensibilidade': 0.7818181818181819, 'especificidade': 0.7457627118644068, 'j': 0.5275808936825888}
+2026-11-18 19:27:23,028 metricas_validacao={'threshold': 0.5194487571716309, 'recall': 0.7818181818181819, 'especificidade': 0.7457627118644068, 'f1': 0.7610619469026548, 'auc': 0.8040061633281973, 'tp': 43, 'tn': 44, 'fp': 15, 'fn': 12}
+2026-11-18 19:27:24,570 teste_nao_avaliado=true

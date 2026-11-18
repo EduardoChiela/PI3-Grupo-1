@@ -1,0 +1,46 @@
+2026-11-18 19:27:30,310 python=3.13.7 torch=2.10.0+cpu torchvision=0.25.0+cpu dispositivo=cpu
+2026-11-18 19:27:30,311 seed=42 epocas=30 lr=0.001 batch=32
+2026-11-18 19:27:30,311 arquitetura=EfficientNet_B0 pesos=ImageNet1K_V1
+2026-11-18 19:27:30,311 configuracao_finetuning=dois_ultimos_blocos
+2026-11-18 19:27:30,312 lr_cabeca=0.001 lr_backbone=0.0001
+2026-11-18 19:27:30,312 entrada=3x64x64 sem resize; canais=axial,coronal,sagital (nao RGB)
+2026-11-18 19:27:30,312 normalizacao=ImageNet mean=(0.485, 0.456, 0.406) std=(0.229, 0.224, 0.225)
+2026-11-18 19:27:30,312 blocos_liberados=[6, 7]
+2026-11-18 19:27:30,314 parametros_total=4008829 parametros_treinaveis=2744861
+2026-11-18 19:27:30,314 augmentation=flip3d_so_treino pesos_de_classe={0: 0.966667, 1: 1.035714}
+2026-11-18 19:27:30,315 npz=patches\patches_2_5d.npz npz_sha256=31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd manifesto=transformacao\manifest_patches.csv
+2026-11-18 19:27:30,315 n treino=522 validacao=114 teste=111
+2026-11-18 19:27:38,011 epoca=01 perda_treino=0.6544 perda_val=0.6406 auc_val=0.7421
+2026-11-18 19:27:40,655 epoca=02 perda_treino=0.6033 perda_val=0.6106 auc_val=0.7624
+2026-11-18 19:27:43,666 epoca=03 perda_treino=0.5446 perda_val=0.5521 auc_val=0.7867
+2026-11-18 19:27:47,081 epoca=04 perda_treino=0.5348 perda_val=0.5663 auc_val=0.8342
+2026-11-18 19:27:53,502 epoca=05 perda_treino=0.4629 perda_val=0.5264 auc_val=0.8444
+2026-11-18 19:27:58,255 epoca=06 perda_treino=0.4102 perda_val=0.4875 auc_val=0.8435
+2026-11-18 19:28:02,357 epoca=07 perda_treino=0.4353 perda_val=0.6316 auc_val=0.8327
+2026-11-18 19:28:06,633 epoca=08 perda_treino=0.3924 perda_val=0.4864 auc_val=0.8555
+2026-11-18 19:28:11,000 epoca=09 perda_treino=0.3556 perda_val=0.4858 auc_val=0.8478
+2026-11-18 19:28:14,923 epoca=10 perda_treino=0.3302 perda_val=0.5188 auc_val=0.8693
+2026-11-18 19:28:19,185 epoca=11 perda_treino=0.3432 perda_val=0.5136 auc_val=0.8364
+2026-11-18 19:28:25,546 epoca=12 perda_treino=0.3042 perda_val=0.5204 auc_val=0.8604
+2026-11-18 19:28:29,712 epoca=13 perda_treino=0.3502 perda_val=0.5585 auc_val=0.8342
+2026-11-18 19:28:33,221 epoca=14 perda_treino=0.2854 perda_val=0.5840 auc_val=0.8320
+2026-11-18 19:28:36,919 epoca=15 perda_treino=0.3108 perda_val=0.5723 auc_val=0.8302
+2026-11-18 19:28:41,433 epoca=16 perda_treino=0.3074 perda_val=0.5430 auc_val=0.8302
+2026-11-18 19:28:45,496 epoca=17 perda_treino=0.2344 perda_val=0.6212 auc_val=0.8376
+2026-11-18 19:28:49,838 epoca=18 perda_treino=0.2947 perda_val=0.6151 auc_val=0.8330
+2026-11-18 19:28:54,547 epoca=19 perda_treino=0.2455 perda_val=0.6505 auc_val=0.8250
+2026-11-18 19:28:59,423 epoca=20 perda_treino=0.2231 perda_val=0.6438 auc_val=0.8354
+2026-11-18 19:29:04,637 epoca=21 perda_treino=0.2452 perda_val=0.6401 auc_val=0.8398
+2026-11-18 19:29:09,638 epoca=22 perda_treino=0.2921 perda_val=0.5262 auc_val=0.8478
+2026-11-18 19:29:15,152 epoca=23 perda_treino=0.2138 perda_val=0.6850 auc_val=0.8357
+2026-11-18 19:29:20,082 epoca=24 perda_treino=0.1911 perda_val=0.6289 auc_val=0.8450
+2026-11-18 19:29:25,473 epoca=25 perda_treino=0.1873 perda_val=0.6529 auc_val=0.8508
+2026-11-18 19:29:30,308 epoca=26 perda_treino=0.2013 perda_val=0.7006 auc_val=0.8259
+2026-11-18 19:29:34,896 epoca=27 perda_treino=0.1579 perda_val=0.6914 auc_val=0.8342
+2026-11-18 19:29:39,618 epoca=28 perda_treino=0.1804 perda_val=0.7166 auc_val=0.8342
+2026-11-18 19:29:44,293 epoca=29 perda_treino=0.1456 perda_val=0.7130 auc_val=0.8256
+2026-11-18 19:29:48,929 epoca=30 perda_treino=0.1554 perda_val=0.7925 auc_val=0.8262
+2026-11-18 19:29:48,945 melhor_epoca_validacao=9
+2026-11-18 19:29:49,246 threshold_validacao={'threshold': 0.5370272397994995, 'sensibilidade': 0.7636363636363637, 'especificidade': 0.8305084745762712, 'j': 0.5941448382126349}
+2026-11-18 19:29:49,246 metricas_validacao={'threshold': 0.5370272397994995, 'recall': 0.7636363636363637, 'especificidade': 0.8305084745762712, 'f1': 0.7850467289719626, 'auc': 0.8477657935285053, 'tp': 42, 'tn': 49, 'fp': 10, 'fn': 13}
+2026-11-18 19:29:50,039 teste_nao_avaliado=true
