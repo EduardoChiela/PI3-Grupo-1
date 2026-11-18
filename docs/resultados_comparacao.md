@@ -745,6 +745,8 @@ não explica os erros: só 1 dos 11 casos tem recorte com faixa preta.
 O modelo não erra em casos evidentes. Ele erra onde os próprios radiologistas divergiram, 
 o que confirma a limitação de rótulo ruidoso levantada na seção 5.3 do documento de instruções.
 
+O feedback do Checkpoint 2 cita 5 malignos perdidos e 8 benignos marcados. Esses números vêm de limiares diferentes. No limiar ingênuo de 0,50, o baseline erra 5 falsos negativos e 7 falsos positivos. No limiar oficial do grupo, 0,4305, escolhido por Youden na validação e congelado antes de o teste ser aberto, são 3 falsos negativos e 8 falsos positivos. Baixar a linha de corte troca falso negativo por falso positivo, que é a troca que interessa quando o erro caro é perder um nódulo maligno.
+
 ## Referências
 
 - Al-Shabi M, Lee HK, Tan M. Gated-Dilated Networks for Lung Nodule Classification in CT Scans. *IEEE Access*. 2019. doi:10.1109/ACCESS.2019.2958663
