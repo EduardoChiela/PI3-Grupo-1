@@ -57,6 +57,33 @@ A camada final utilizou taxa de aprendizado de `0.001`, enquanto os blocos pré-
 
 A avaliação no conjunto de teste foi realizada somente após a escolha definitiva da configuração.
 
+### EfficientNet-B0 com transfer learning (Issue #44)
+
+A segunda arquitetura pré-treinada é a EfficientNet-B0 com pesos ImageNet
+`IMAGENET1K_V1`. A entrada permanece em 3 × 64 × 64, com os canais axial,
+coronal e sagital mantidos na ordem já usada pela ResNet; não há interpolação
+para 224 × 224. Normalização ImageNet, partições por paciente, seed, flip 3D
+somente no treino, pesos de classe e demais parâmetros seguem o protocolo
+anterior. BatchNorm permanece em avaliação durante o ajuste fino.
+
+São comparadas três configurações: classificador treinável com backbone
+congelado; último bloco (`features[7]`) e classificador treináveis; dois últimos
+blocos (`features[6]` e `features[7]`) e classificador treináveis. A melhor
+época de cada configuração é definida pela perda de validação, e a configuração
+final é selecionada exclusivamente pelo maior recall maligno na validação.
+Empates interrompem a seleção e exigem critério decidido antes de acessar o
+teste. `mineracao/resumo_efficientnet.py` verifica hash dos dados, tamanhos dos
+splits e identidade dos nódulos de validação, e registra
+`escolha_validacao.json` com `teste_utilizado_na_escolha: false`.
+
+Somente depois dessa escolha, `mineracao/avaliar_efficientnet.py` avalia a
+configuração vencedora no teste. O script aplica os limiares de Youden e de
+máximo F1 escolhidos na validação, calcula os pontos clínicos e seus intervalos
+de 95% por bootstrap de paciente (2.000 réplicas), e bloqueia uma segunda
+execução do teste. Os resultados e predições são gravados em
+`mineracao/resultados/efficientnet_s6/`; os valores comparativos e a conclusão
+são adicionados ao relatório depois da execução, sem antecipar resultados.
+
 No código, todos os módulos `BatchNorm2d` são mantidos em modo de avaliação após cada chamada a `modelo.train()`. Assim, mesmo nas camadas liberadas, os pesos são atualizados, mas as estatísticas de normalização permanecem as do pré-treinamento ImageNet. Essa decisão evita atualizar estatísticas com lotes pequenos, mas pode limitar a adaptação ao domínio de tomografia.
 
 Em duas execuções da mesma configuração final na CPU, com seed 42, os cabeçalhos dos logs e a primeira época foram iguais; a partir da segunda época, as trajetórias divergiram. A AUC de validação foi 0,8502 na execução de seleção e 0,8656 na execução final (diferença de 0,0154). Portanto, a seed e `torch.use_deterministic_algorithms` não garantiram repetibilidade numérica integral nesse ambiente. Não foi feita nova rodada para alterar esse comportamento; a limitação fica registrada e os resultados publicados correspondem aos artefatos versionados de cada execução.
