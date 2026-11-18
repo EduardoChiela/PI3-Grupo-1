@@ -1,3 +1,6 @@
+# Uso: a partir da raiz do repositorio
+#     PYTHONPATH=. python mineracao/resultados/gera_figuras_baseline.py
+# Gera: mineracao/resultados/interpretacao/matriz_confusao_baseline.png
 import json
 from pathlib import Path
 import matplotlib.pyplot as plt
@@ -5,9 +8,9 @@ import pandas as pd
 from mineracao.avaliacao import calcular_metricas
 
 # 1. Carrega as predições e obtém o limiar oficial do JSON
-pred = pd.read_csv("mineracao/resultados/comparacao/predicoes_teste_pareadas.csv")
+pred = pd.read_csv("mineracao/resultados/comparacao_s5/predicoes_teste_pareadas.csv")
 limiar = json.loads(
-    Path("mineracao/resultados/comparacao/resultados.json").read_text()
+    Path("mineracao/resultados/comparacao_s5/resultados.json").read_text()
 )["thresholds"]["baseline"]
 
 # 2. Calcula as métricas usando a função oficial do repositório
