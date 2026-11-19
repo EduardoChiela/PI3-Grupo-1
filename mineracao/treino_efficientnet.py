@@ -1,8 +1,18 @@
 """Issue #44 — EfficientNet-B0 com transfer learning em patches 2.5D.
 
-Rode cada uma das três configurações em diretório separado. Este módulo não
-avalia o conjunto de teste; a avaliação final é feita uma vez, depois de
-`mineracao.resumo_efficientnet` gravar a configuração escolhida na validação.
+Na raiz do repositório, execute:
+
+    python -m mineracao.treino_efficientnet --configuracao congelado --saida mineracao/resultados/efficientnet_s6/congelado
+    python -m mineracao.treino_efficientnet --configuracao ultimo_bloco --saida mineracao/resultados/efficientnet_s6/ultimo_bloco
+    python -m mineracao.treino_efficientnet --configuracao dois_ultimos_blocos --saida mineracao/resultados/efficientnet_s6/dois_ultimos_blocos
+    python -m mineracao.resumo_efficientnet
+
+Confira `escolha_validacao.json` antes de executar a avaliação final única:
+
+    python -m mineracao.avaliar_efficientnet --confirmar-teste-final
+
+Este módulo não avalia o conjunto de teste. Os três comandos de treino usam
+pastas fixas porque o resumo lê esses caminhos.
 """
 
 from __future__ import annotations
@@ -65,6 +75,8 @@ class EfficientNetB0_2_5D(nn.Module):
             parametro.requires_grad = False
         entrada = self.rede.classifier[-1].in_features
         self.rede.classifier[-1] = nn.Linear(entrada, 1)
+        # features[8] é a projeção convolucional comum após os blocos MBConv.
+        # Ela permanece congelada nas três configurações deste experimento.
         if configuracao == "ultimo_bloco":
             blocos = (7,)
         elif configuracao == "dois_ultimos_blocos":

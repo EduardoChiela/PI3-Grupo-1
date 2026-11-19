@@ -71,18 +71,37 @@ congelado; último bloco (`features[7]`) e classificador treináveis; dois últi
 blocos (`features[6]` e `features[7]`) e classificador treináveis. A melhor
 época de cada configuração é definida pela perda de validação, e a configuração
 final é selecionada exclusivamente pelo maior recall maligno na validação.
-Empates interrompem a seleção e exigem critério decidido antes de acessar o
-teste. `mineracao/resumo_efficientnet.py` verifica hash dos dados, tamanhos dos
-splits e identidade dos nódulos de validação, e registra
-`escolha_validacao.json` com `teste_utilizado_na_escolha: false`.
+O bloco de projeção `features[8]` permanece congelado em todas as configurações:
+as variantes comparam apenas o descongelamento progressivo dos estágios MBConv
+`[6]` e `[7]`, preservando a projeção ImageNet comum de 1280 canais. A decisão
+de configuração foi registrada antes do treino; se recalls ficassem a menos de
+0,01, o desempate pré-registrado seria maior especificidade e, depois, maior
+AUC. `mineracao/resumo_efficientnet.py` verifica hash, tamanhos dos splits e
+identidade dos nódulos de validação, e registra `escolha_validacao.json` com
+`teste_utilizado_na_escolha: false`.
+
+Na validação, os recalls foram 0,8364 (`congelado`), 0,7818 (`ultimo_bloco`)
+e 0,7636 (`dois_ultimos_blocos`). O vencedor ficou 0,0545 acima do segundo,
+portanto o desempate não foi aplicado. `congelado` teve especificidade 0,5763
+e AUC 0,7587; a configuração com dois blocos teve maior especificidade
+(0,8305) e AUC (0,8478), mas não venceu o critério pré-registrado.
 
 Somente depois dessa escolha, `mineracao/avaliar_efficientnet.py` avalia a
 configuração vencedora no teste. O script aplica os limiares de Youden e de
 máximo F1 escolhidos na validação, calcula os pontos clínicos e seus intervalos
 de 95% por bootstrap de paciente (2.000 réplicas), e bloqueia uma segunda
-execução do teste. Os resultados e predições são gravados em
-`mineracao/resultados/efficientnet_s6/`; os valores comparativos e a conclusão
-são adicionados ao relatório depois da execução, sem antecipar resultados.
+execução do teste. A avaliação final usou o limiar 0,3992 e obteve recall
+0,8868, especificidade 0,6207, F1 0,7705 e AUC 0,8549, em 111 nódulos de 69
+pacientes. As 2.000 réplicas por paciente foram válidas. O checkpoint foi
+treinado com Python 3.13.7, torch 2.10.0+cpu e torchvision 0.25.0+cpu; a
+inferência final foi executada no ambiente de referência CPython 3.12.10,
+torch 2.14.1+cpu e torchvision 0.29.1+cpu. Essa diferença de versões fica
+registrada como limitação da avaliação.
+
+Os logs, predições, escolha e avaliação final estão em
+`mineracao/resultados/efficientnet_s6/`. `mineracao/comparacao_efficientnet.py`
+confere os artefatos e calcula diferenças pareadas por bootstrap de paciente,
+McNemar em cluster e DeLong em cluster para baseline, ResNet e EfficientNet.
 
 No código, todos os módulos `BatchNorm2d` são mantidos em modo de avaliação após cada chamada a `modelo.train()`. Assim, mesmo nas camadas liberadas, os pesos são atualizados, mas as estatísticas de normalização permanecem as do pré-treinamento ImageNet. Essa decisão evita atualizar estatísticas com lotes pequenos, mas pode limitar a adaptação ao domínio de tomografia.
 

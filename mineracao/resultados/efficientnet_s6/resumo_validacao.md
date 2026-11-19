@@ -1,6 +1,6 @@
 # EfficientNet-B0 — seleção na validação
 
-Critério definido antes da avaliação final: maior recall da classe maligna na validação.
+Critério pré-registrado: maior recall maligno na validação; se a diferença entre os melhores for < 0,01, maior especificidade e depois maior AUC.
 
 | Configuração | Parâmetros treináveis | Melhor época | Recall | Especificidade | F1 | AUC |
 |---|---:|---:|---:|---:|---:|---:|

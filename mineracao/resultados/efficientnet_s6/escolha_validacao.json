@@ -1,5 +1,6 @@
 {
   "criterio": "maior recall da classe maligna na validacao",
+  "regra_desempate": "se diferenca de recall < 0.01: maior especificidade; depois maior AUC",
   "teste_utilizado_na_escolha": false,
   "configuracao_escolhida": {
     "nome": "congelado",
@@ -16,7 +17,7 @@
     "n_treino": 522,
     "n_validacao": 114,
     "n_teste": 111,
-    "log_origem": "mineracao\\resultados\\efficientnet_s6\\congelado\\log_treino.txt"
+    "log_origem": "mineracao/resultados/efficientnet_s6/congelado/log_treino.txt"
   },
   "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
   "experimentos_considerados": [

@@ -1,37 +1,40 @@
-# Comparação baseline × ResNet — Issue #18
+# Comparação CNN, ResNet e EfficientNet — Issues #18 e #44
 
 Números gerados por `python -m mineracao.comparacao` (seed 42, 2000 réplicas de
 bootstrap). A pasta vigente é `mineracao/resultados/comparacao_s5/`, com
 `tabela_comparativa.md`, `resultados.json`, `roc_comparacao.png` e
-`predicoes_teste_pareadas.csv`. A pasta antiga `mineracao/resultados/comparacao/`
+`predicoes_teste_pareadas.csv`. A comparação da EfficientNet usa
+`mineracao.comparacao_efficientnet`, com bootstrap e testes pareados sobre as
+predições versionadas; ela não treina nem prevê. A pasta antiga
+`mineracao/resultados/comparacao/`
 é da comparação da Sprint 4, quando a ResNet ainda estava com o extrator
 congelado; ela continua no repositório como histórico e não é a referência
 deste documento.
-O script não treina nem prevê: lê as predições de teste e os thresholds
-congelados nos logs do baseline (#14) e da ResNet final (#32, pasta
-`resnet_s5/final`), confere tudo e só então calcula.
+O script de comparação original não treina nem prevê: lê as predições de teste
+e os thresholds congelados nos logs do baseline (#14) e da ResNet final (#32,
+pasta `resnet_s5/final`), confere tudo e só então calcula.
 
-## 1. Conferência: os dois modelos foram avaliados do mesmo jeito
+## 1. Conferência: três modelos avaliados no mesmo teste
 
-| Item | Baseline (#14) | ResNet (#32, `layer3` + `layer4` liberados) |
-|---|---|---|
-| SHA-256 do `.npz` no log | `31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd` | `31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd` |
-| Manifesto lido no log | `transformacao/manifest_patches.csv` | `transformacao/manifest_patches.csv` |
-| Teste | 111 nódulos, 69 pacientes (53 malignos, 58 benignos) | idem, mesmos `nodule_id` |
-| Threshold (Youden na validação) | 0,4305 | 0,3614 |
-| Avaliações de teste no log | 1 | 1 |
+| Item | Baseline (#14) | ResNet (#32, `layer3` + `layer4`) | EfficientNet-B0 selecionada (`congelado`) |
+|---|---|---|---|
+| SHA-256 do `.npz` | `31a84904c9c39c97c362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd` | idem | idem |
+| Manifesto | `transformacao/manifest_patches.csv` | idem | idem |
+| Teste | 111 nódulos, 69 pacientes (53 malignos, 58 benignos) | mesmos `nodule_id` | mesmos `nodule_id` |
+| Threshold (Youden na validação) | 0,4305 | 0,3614 | 0,3992 |
+| Avaliações finais do modelo | 1 | 1 | 1 |
 
-- **Hash do `.npz`:** idêntico nos dois logs e igual ao `patches/patches_2_5d.npz`
+- **Hash do `.npz`:** idêntico nos três registros e igual ao `patches/patches_2_5d.npz`
   atual. A comparação vale.
 - **Split:** os dois scripts leem o split da coluna `split` do manifesto via
   `mineracao/dataset.carregar_particoes`, sem sorteio próprio. O script de
-  comparação passa as duas tabelas por `validar_com_manifesto` e exige que
+  comparação passa as três tabelas por `validar_com_manifesto` e exige que
   cubram exatamente os 111 nódulos de teste do manifesto, com os mesmos
   pacientes e rótulos. Os logs registram o caminho do manifesto, não o hash;
   o SHA-256 do manifesto atual (`207f44c7…16e4e0`) está em `resultados.json`.
-- **CSV × log:** as métricas recalculadas de cada `predicoes_teste.csv` com o
-  threshold do log batem exatamente com a linha `TESTE` do mesmo log, o que
-  garante que predição e threshold vêm da mesma execução.
+- **Predições × registro:** baseline e ResNet têm métricas recalculadas que
+  reproduzem suas linhas `TESTE` dos logs. A EfficientNet reproduz o JSON da
+  avaliação final; o script confere split, rótulos, pacientes e hash do `.npz`.
 - **Teste usado uma vez:** cada modelo foi avaliado no teste uma única vez, com
   arquitetura, época e threshold congelados na validação. Este script só lê as
   predições gravadas; não reabre o teste.
@@ -54,7 +57,7 @@ concentram 67 nódulos (até 6 em um paciente). **A análise agrega por paciente
 - IC 95% de cada métrica: bootstrap percentil reamostrando pacientes
   (`avaliacao.bootstrap_por_paciente`, #15).
 - IC 95% das diferenças: bootstrap **pareado** por paciente — o mesmo sorteio
-  de pacientes é aplicado aos dois modelos em cada réplica.
+de pacientes é aplicado aos dois modelos de cada comparação pareada.
 - McNemar: versão para pares em cluster de Durkalski et al. (2003), com o
   paciente como cluster.
 - DeLong: versão em cluster de Obuchowski (1997), que soma os componentes
@@ -69,18 +72,18 @@ referência, marcadas como tais, porque assumem independência entre nódulos.
 Recall e especificidade estão no ponto de operação de cada modelo
 (threshold de Youden escolhido na validação e congelado).
 
-Os dois modelos foram avaliados sobre exatamente os mesmos 111 nódulos de teste, pertencentes a 69 pacientes.
+Os três modelos foram avaliados sobre exatamente os mesmos 111 nódulos de teste, pertencentes a 69 pacientes. A EfficientNet mostrada é a configuração **selecionada pelo critério pré-registrado de recall na validação** (backbone congelado), não a configuração de maior AUC na validação.
 
-| Métrica | CNN rasa (baseline) | ResNet18 (transfer learning) | Diferença (ResNet − baseline) |
+| Métrica | CNN rasa (baseline) | ResNet18 (transfer learning) | EfficientNet-B0 (selecionada; backbone congelado) |
 |---|---|---|---|
-| Recall (maligno) | 0,943 [0,878; 1,000] | 0,906 [0,827; 0,977] | -0,038 [-0,111; 0,034] |
-| Especificidade | 0,862 [0,765; 0,946] | 0,810 [0,700; 0,902] | -0,052 [-0,172; 0,076] |
-| F1 | 0,901 [0,835; 0,951] | 0,857 [0,781; 0,923] | -0,044 [-0,115; 0,027] |
-| AUC-ROC | 0,961 [0,927; 0,986] | 0,929 [0,875; 0,973] | -0,032 [-0,076; 0,007] |
-| Limiar (Youden, validação) | 0,4305 | 0,3614 | — |
-| TP / FN / TN / FP | 50 / 3 / 50 / 8 | 48 / 5 / 47 / 11 | — |
+| Recall (maligno) | 0,943 [0,878; 1,000] | 0,906 [0,827; 0,977] | 0,887 [0,803; 0,957] |
+| Especificidade | 0,862 [0,765; 0,946] | 0,810 [0,700; 0,902] | 0,621 [0,475; 0,755] |
+| F1 | 0,901 [0,835; 0,951] | 0,857 [0,781; 0,923] | 0,770 [0,672; 0,849] |
+| AUC-ROC | 0,961 [0,927; 0,986] | 0,929 [0,875; 0,973] | 0,855 [0,783; 0,917] |
+| Limiar (Youden, validação) | 0,4305 | 0,3614 | 0,3992 |
+| TP / FN / TN / FP | 50 / 3 / 50 / 8 | 48 / 5 / 47 / 11 | 47 / 6 / 36 / 22 |
 
-Todas as réplicas (2000/2000) foram válidas para todas as métricas.
+Todas as réplicas (2000/2000) foram válidas para todas as métricas. A validação completa das três configurações está em `mineracao/resultados/efficientnet_s6/resumo_validacao.md`; a configuração congelada venceu em recall (0,8364), apesar de ter a menor AUC (0,7587) e especificidade (0,5763) na validação.
 
 ## 4. Testes pareados
 
@@ -91,16 +94,32 @@ Todas as réplicas (2000/2000) foram válidas para todas as métricas.
 | **DeLong em cluster por paciente** (principal) | ΔAUC = −0,032, EP 0,021, IC 95% [−0,073; 0,010], z = −1,50 | **0,133** |
 | DeLong por nódulo (referência) | ΔAUC = −0,032, EP 0,020, z = −1,54 | 0,123 |
 
+Comparações pareadas adicionais da EfficientNet (diferença = segundo modelo − primeiro; 2.000 reamostragens compartilhadas de pacientes):
+
+| Par | Δ recall [IC 95%] | Δ especificidade [IC 95%] | Δ F1 [IC 95%] | Δ AUC [IC 95%] |
+|---|---:|---:|---:|---:|
+| EfficientNet − CNN | −0,057 [−0,156; 0,041] | −0,241 [−0,400; −0,081] | −0,130 [−0,226; −0,044] | −0,106 [−0,177; −0,044] |
+| EfficientNet − ResNet | −0,019 [−0,104; 0,063] | −0,190 [−0,298; −0,089] | −0,087 [−0,161; −0,024] | −0,074 [−0,150; −0,013] |
+
+| Par | McNemar em cluster por paciente (p) | DeLong em cluster por paciente: ΔAUC [IC 95%], p |
+|---|---:|---:|
+| EfficientNet × CNN | 23 acertos só da CNN, 6 só da EfficientNet; **0,004** | −0,106 [−0,174; −0,038], **0,002** |
+| EfficientNet × ResNet | 14 acertos só da ResNet, 2 só da EfficientNet; **0,005** | −0,074 [−0,143; −0,006], **0,032** |
+
+Os p-valores das comparações adicionais não foram ajustados para multiplicidade; são apresentados como análises pareadas exploratórias. O JSON completo, incluindo testes por nódulo como referência, está em `mineracao/resultados/efficientnet_s6/comparacao_pareada.json`.
+
 O erro-padrão em cluster é maior que o por nódulo, como esperado com nódulos
 correlacionados no mesmo paciente. O IC do DeLong em cluster ([−0,073; 0,010])
 é próximo ao do bootstrap pareado por paciente ([−0,076; 0,007]).
 
 ## 5. Curva ROC
 
-![ROC dos dois modelos no teste](../mineracao/resultados/comparacao_s5/roc_comparacao.png)
+![ROC CNN e ResNet no teste](../mineracao/resultados/comparacao_s5/roc_comparacao.png)
 
-Os marcadores são o ponto de operação de cada modelo (círculo: baseline;
-quadrado: ResNet).
+O gráfico abaixo mostra a EfficientNet selecionada, com o limiar de Youden da
+validação marcado.
+
+![ROC EfficientNet-B0 no teste](../mineracao/resultados/efficientnet_s6/roc_teste.png)
 
 ## 6. Comparação com a literatura — com ressalva
 
@@ -129,10 +148,13 @@ O baseline (AUC 0,961) está na mesma faixa desses trabalhos, mas as diferenças
 > pré-treinada no ImageNet, com `layer3` e `layer4` liberados, obteve AUC-ROC de
 > 0,929 (0,875–0,973), recall de 0,906 (0,827–0,977), especificidade de 0,810
 > (0,700–0,902) e F1 de 0,857 (0,781–0,923). A configuração com extrator
-> congelado, avaliada anteriormente, obteve AUC de 0,827. Todos os intervalos
-> foram obtidos por bootstrap reamostrando pacientes. Os dois modelos foram
-> treinados sobre o mesmo arquivo de patches (SHA-256 conferido nos registros
-> de execução) e avaliados no mesmo split, definido por paciente.
+> congelado, avaliada anteriormente, obteve AUC de 0,827. A EfficientNet-B0
+> selecionada pelo maior recall da validação, com backbone congelado, obteve
+> AUC de 0,855 (0,783–0,917), recall de 0,887 (0,803–0,957), especificidade
+> de 0,621 (0,475–0,755) e F1 de 0,770 (0,672–0,849). Todos os intervalos
+> foram obtidos por bootstrap reamostrando pacientes. Os três modelos foram
+> avaliados nos mesmos nódulos e no mesmo split por paciente, com SHA-256
+> idêntico do arquivo de patches.
 >
 > Como os modelos foram avaliados nos mesmos nódulos, a comparação foi pareada
 > e agregada por paciente para respeitar a dependência entre nódulos do mesmo
@@ -144,12 +166,21 @@ O baseline (AUC 0,961) está na mesma faixa desses trabalhos, mas as diferenças
 > 0,034) e especificidade (−0,052; −0,172 a 0,076) também não foram
 > distinguíveis de zero.
 >
+> Nas comparações pareadas adicionais, a AUC da EfficientNet ficou abaixo da
+> CNN (Δ = −0,106; IC 95% em cluster por paciente: −0,174 a −0,038; p = 0,002)
+> e da ResNet (Δ = −0,074; −0,143 a −0,006; p = 0,032). O McNemar em cluster
+> também favoreceu os outros modelos (p = 0,004 contra CNN; p = 0,005 contra
+> ResNet). Esses p-valores adicionais não foram ajustados para multiplicidade
+> e devem ser lidos como exploratórios.
+>
 > Não foi observada diferença estatisticamente significativa entre a CNN rasa e
 > a ResNet18 com `layer3` e `layer4` liberados nos testes pareados. A CNN teve
 > métricas pontuais maiores, mas os dados não sustentam afirmar superioridade
-> estatística de um dos modelos. A configuração com extrator congelado teve
-> desempenho inferior (AUC 0,827), enquanto o ajuste fino elevou a AUC para
-> 0,929. Os resultados devem ser lidos à luz da seleção adotada: ao exigir
+> estatística entre esses dois modelos. A configuração da ResNet com extrator
+> congelado teve AUC 0,827; o ajuste fino elevou a AUC para 0,929. A EfficientNet
+> selecionada pelo protocolo alcançou AUC 0,855, embora outra configuração da
+> EfficientNet tenha tido AUC de validação maior. Os resultados devem ser lidos
+> à luz da seleção adotada: ao exigir
 > consenso de pelo menos três radiologistas e excluir a malignidade mediana 3, o conjunto
 > remove os casos ambíguos e é mais fácil que o LIDC-IDRI completo, de modo que
 > os valores não são diretamente comparáveis aos de trabalhos que usam outros
@@ -168,13 +199,15 @@ provável de ser maligno). Não tem treino.
 | Diâmetro sozinho (`diametro_mm`) | Não | 0,9463 |
 | ResNet18 com extrator congelado | Sim | 0,8269 |
 | ResNet18 com `layer3` e `layer4` liberados | Sim | 0,9294 |
+| EfficientNet-B0 selecionada pelo recall (`congelado`) | Sim | 0,8549 |
 | CNN 2.5D (baseline) | Sim | 0,9610 |
 
 Usamos quatro casas decimais porque a diferença entre o CNN e o diâmetro é
-de só 0,015 e ela some com três casas. As duas configurações da ResNet ficaram
-abaixo do diâmetro, inclusive a que recebeu ajuste fino, e o CNN ficou um pouco
-acima. Só a comparação entre o CNN e o diâmetro foi testada estatisticamente
-(abaixo). As comparações da ResNet com o diâmetro não foram testadas.
+de só 0,015 e ela some com três casas. As duas configurações da ResNet e a
+EfficientNet selecionada ficaram abaixo do diâmetro; o CNN ficou um pouco
+acima. Só a comparação entre o CNN e o diâmetro foi pré-registrada e testada
+estatisticamente (abaixo). Não foi feito teste inferencial da EfficientNet
+contra o diâmetro; essa linha é descritiva.
 
 **Por que o diâmetro vai tão bem (causa provável).** O rótulo vem da mediana
 da suspeita dos radiologistas, e o tamanho é um dos critérios que eles usam
@@ -183,8 +216,12 @@ benignos e 17,1 mm nos malignos (747 nódulos). Então parte do que o modelo
 "aprende" pode ser só tamanho. Isso é uma explicação provável, e não foi
 provada.
 
-**Conclusão.** O CNN ganhou só 0,015 do diâmetro. Além disso, o intervalo de
-confiança do CNN (0,9270 a 0,9862) é largo e o 0,9463 cai dentro dele. Por
+**Conclusão.** O CNN ganhou só 0,015 do diâmetro. A EfficientNet selecionada
+teve AUC 0,8549, abaixo do piso de 0,9463, e não altera a conclusão principal:
+entre os modelos avaliados, só o baseline ficou acima do piso. Não foi
+pré-registrada comparação inferencial entre a EfficientNet e o diâmetro.
+Além disso, o intervalo de confiança do CNN (0,9270 a 0,9862) é largo e o
+0,9463 cai dentro dele. Por
 isso, não dá para saber se esse ganho é real ou só sorte da amostra. O que os
 dados permitem dizer é que o modelo **não ficou abaixo do piso do diâmetro**.
 O que os dados **não** permitem dizer é que o modelo aprendeu textura ou algo
@@ -236,7 +273,7 @@ Só nos 111 do teste, seriam 7,9 mm e 18,6 mm.
 
 ## 9. Para a Discussão
 
-A tabela com os quatro modelos lado a lado está na §8.
+A tabela com os modelos e o piso do diâmetro está na §8.
 
 - **O que foi comparado.** Foram avaliadas três configurações da ResNet18 na
   validação: backbone congelado (513 parâmetros treináveis; AUC 0,7217),
@@ -245,6 +282,11 @@ A tabela com os quatro modelos lado a lado está na §8.
   recall maligno de validação, sem usar o teste. A configuração final alcançou
   AUC 0,9294 no teste, ainda abaixo do modelo de diâmetro sozinho (0,9463);
   a CNN rasa ficou em 0,9610.
+- **EfficientNet-B0.** Três configurações foram avaliadas na validação. A
+  configuração congelada foi selecionada pelo maior recall pré-registrado
+  (0,8364), embora `dois_ultimos_blocos` tenha alcançado AUC de validação 0,8478.
+  No teste, o modelo selecionado obteve AUC 0,8549, abaixo do piso do diâmetro;
+  essa linha é descritiva, sem teste inferencial contra o diâmetro.
 - **Repetibilidade da execução final.** Duas execuções com a mesma seed e
   configuração, na CPU, divergiram a partir da segunda época: a AUC de
   validação foi 0,8502 e 0,8656. A diferença observada foi 0,0154; por isso,
@@ -746,6 +788,27 @@ O modelo não erra em casos evidentes. Ele erra onde os próprios radiologistas 
 o que confirma a limitação de rótulo ruidoso levantada na seção 5.3 do documento de instruções.
 
 O feedback do Checkpoint 2 cita 5 malignos perdidos e 8 benignos marcados. Esses números vêm de limiares diferentes. No limiar ingênuo de 0,50, o baseline erra 5 falsos negativos e 7 falsos positivos. No limiar oficial do grupo, 0,4305, escolhido por Youden na validação e congelado antes de o teste ser aberto, são 3 falsos negativos e 8 falsos positivos. Baixar a linha de corte troca falso negativo por falso positivo, que é a troca que interessa quando o erro caro é perder um nódulo maligno.
+
+## 13. EfficientNet-B0 — pontos clínicos no teste
+
+A configuração `congelado` foi escolhida pelo recall na validação. O limiar de
+Youden congelado foi 0,3992. O limiar de máximo F1 na validação também foi
+0,3992, portanto os dois critérios resultaram nas mesmas métricas de teste:
+recall 0,8868 [0,8032; 0,9574], especificidade 0,6207 [0,4746; 0,7552],
+F1 0,7705 [0,6721; 0,8493] e AUC 0,8549 [0,7832; 0,9174]. ICs por bootstrap
+reamostrando 69 pacientes (2.000/2.000 réplicas válidas).
+
+| Ponto de operação lido na curva de teste | Métrica-alvo [IC 95% paciente] | Métrica acompanhante | Limiar | TP / FN / TN / FP |
+|---|---:|---:|---:|---:|
+| Sensibilidade com especificidade ≥ 0,90 | 0,509 [0,304; 0,804] | especificidade 0,931 | 0,7032 | 27 / 26 / 54 / 4 |
+| Especificidade com sensibilidade ≥ 0,85 | 0,690 [0,475; 0,860] | sensibilidade 0,887 | 0,4196 | 47 / 6 / 40 / 18 |
+
+Os limiares dos pontos clínicos foram lidos na curva de teste e são descritivos;
+não substituem o limiar de operação escolhido na validação. Os resultados e a
+regra de seleção estão em `mineracao/resultados/efficientnet_s6/avaliacao_final.json`.
+O checkpoint foi treinado com torch 2.10.0+cpu/torchvision 0.25.0+cpu e avaliado
+com torch 2.14.1+cpu/torchvision 0.29.1+cpu; essa diferença deve ser considerada
+ao interpretar a comparação.
 
 ## Referências
 
