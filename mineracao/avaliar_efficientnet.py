@@ -4,11 +4,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import platform
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 import torch
+import torchvision
 
 from mineracao.avaliacao import (
     avaliar_com_threshold,
@@ -86,6 +88,12 @@ def main() -> None:
     )
     resultado = {
         "arquitetura": "EfficientNet-B0 ImageNet1K_V1",
+        "ambiente_avaliacao": {
+            "python": platform.python_version(),
+            "torch": torch.__version__,
+            "torchvision": torchvision.__version__,
+            "dispositivo": str(dispositivo),
+        },
         "configuracao": configuracao,
         "npz_sha256": sha,
         "teste_utilizado_na_escolha": False,

@@ -1,0 +1,5 @@
+{
+  "configuracao": "congelado",
+  "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+  "checkpoint": "mineracao\\resultados\\efficientnet_s6\\congelado\\modelo_efficientnet.pt"
+}

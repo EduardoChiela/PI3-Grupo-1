@@ -1,0 +1,46 @@
+2026-11-18 19:23:57,798 python=3.13.7 torch=2.10.0+cpu torchvision=0.25.0+cpu dispositivo=cpu
+2026-11-18 19:23:57,799 seed=42 epocas=30 lr=0.001 batch=32
+2026-11-18 19:23:57,799 arquitetura=EfficientNet_B0 pesos=ImageNet1K_V1
+2026-11-18 19:23:57,800 configuracao_finetuning=congelado
+2026-11-18 19:23:57,800 lr_cabeca=0.001 lr_backbone=0.0001
+2026-11-18 19:23:57,800 entrada=3x64x64 sem resize; canais=axial,coronal,sagital (nao RGB)
+2026-11-18 19:23:57,800 normalizacao=ImageNet mean=(0.485, 0.456, 0.406) std=(0.229, 0.224, 0.225)
+2026-11-18 19:23:57,800 blocos_liberados=[]
+2026-11-18 19:23:57,801 parametros_total=4008829 parametros_treinaveis=1281
+2026-11-18 19:23:57,801 augmentation=flip3d_so_treino pesos_de_classe={0: 0.966667, 1: 1.035714}
+2026-11-18 19:23:57,801 npz=patches\patches_2_5d.npz npz_sha256=31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd manifesto=transformacao\manifest_patches.csv
+2026-11-18 19:23:57,801 n treino=522 validacao=114 teste=111
+2026-11-18 19:23:59,075 epoca=01 perda_treino=0.6726 perda_val=0.6638 auc_val=0.6733
+2026-11-18 19:24:00,044 epoca=02 perda_treino=0.6496 perda_val=0.6466 auc_val=0.6943
+2026-11-18 19:24:01,033 epoca=03 perda_treino=0.6186 perda_val=0.6272 auc_val=0.7378
+2026-11-18 19:24:02,074 epoca=04 perda_treino=0.6047 perda_val=0.6165 auc_val=0.7476
+2026-11-18 19:24:03,254 epoca=05 perda_treino=0.5960 perda_val=0.6081 auc_val=0.7565
+2026-11-18 19:24:04,389 epoca=06 perda_treino=0.5774 perda_val=0.6020 auc_val=0.7559
+2026-11-18 19:24:05,486 epoca=07 perda_treino=0.5911 perda_val=0.5975 auc_val=0.7602
+2026-11-18 19:24:06,706 epoca=08 perda_treino=0.5556 perda_val=0.5926 auc_val=0.7673
+2026-11-18 19:24:07,871 epoca=09 perda_treino=0.5517 perda_val=0.5911 auc_val=0.7652
+2026-11-18 19:24:08,970 epoca=10 perda_treino=0.5418 perda_val=0.5881 auc_val=0.7646
+2026-11-18 19:24:09,987 epoca=11 perda_treino=0.5590 perda_val=0.5847 auc_val=0.7627
+2026-11-18 19:24:11,440 epoca=12 perda_treino=0.5425 perda_val=0.5827 auc_val=0.7639
+2026-11-18 19:24:12,916 epoca=13 perda_treino=0.5397 perda_val=0.5832 auc_val=0.7630
+2026-11-18 19:24:14,423 epoca=14 perda_treino=0.5416 perda_val=0.5836 auc_val=0.7612
+2026-11-18 19:24:15,813 epoca=15 perda_treino=0.5203 perda_val=0.5839 auc_val=0.7587
+2026-11-18 19:24:17,264 epoca=16 perda_treino=0.5347 perda_val=0.5826 auc_val=0.7584
+2026-11-18 19:24:18,663 epoca=17 perda_treino=0.5254 perda_val=0.5825 auc_val=0.7593
+2026-11-18 19:24:20,053 epoca=18 perda_treino=0.5348 perda_val=0.5795 auc_val=0.7587
+2026-11-18 19:24:22,347 epoca=19 perda_treino=0.5134 perda_val=0.5797 auc_val=0.7602
+2026-11-18 19:24:26,618 epoca=20 perda_treino=0.5369 perda_val=0.5806 auc_val=0.7652
+2026-11-18 19:24:29,959 epoca=21 perda_treino=0.5014 perda_val=0.5845 auc_val=0.7593
+2026-11-18 19:24:33,328 epoca=22 perda_treino=0.4968 perda_val=0.5816 auc_val=0.7587
+2026-11-18 19:24:36,773 epoca=23 perda_treino=0.5096 perda_val=0.5839 auc_val=0.7559
+2026-11-18 19:24:40,094 epoca=24 perda_treino=0.5170 perda_val=0.5865 auc_val=0.7535
+2026-11-18 19:24:43,481 epoca=25 perda_treino=0.5237 perda_val=0.5843 auc_val=0.7516
+2026-11-18 19:24:47,111 epoca=26 perda_treino=0.5065 perda_val=0.5804 auc_val=0.7575
+2026-11-18 19:24:50,554 epoca=27 perda_treino=0.4911 perda_val=0.5837 auc_val=0.7587
+2026-11-18 19:24:53,999 epoca=28 perda_treino=0.4994 perda_val=0.5870 auc_val=0.7522
+2026-11-18 19:24:57,383 epoca=29 perda_treino=0.4917 perda_val=0.5812 auc_val=0.7606
+2026-11-18 19:24:59,109 epoca=30 perda_treino=0.4892 perda_val=0.5803 auc_val=0.7633
+2026-11-18 19:24:59,114 melhor_epoca_validacao=18
+2026-11-18 19:24:59,351 threshold_validacao={'threshold': 0.399160772562027, 'sensibilidade': 0.8363636363636363, 'especificidade': 0.576271186440678, 'j': 0.4126348228043142}
+2026-11-18 19:24:59,351 metricas_validacao={'threshold': 0.399160772562027, 'recall': 0.8363636363636363, 'especificidade': 0.576271186440678, 'f1': 0.7301587301587301, 'auc': 0.7587057010785825, 'tp': 46, 'tn': 34, 'fp': 25, 'fn': 9}
+2026-11-18 19:25:00,844 teste_nao_avaliado=true

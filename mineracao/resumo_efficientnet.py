@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 import csv
 import json
+import math
 import re
 from pathlib import Path
 
@@ -51,7 +52,7 @@ def ler_log(configuracao: str) -> dict:
         "n_validacao": n_validacao,
         "n_teste": n_teste,
         "predicoes_validacao": predicoes,
-        "log_origem": str(caminho.relative_to(RAIZ)),
+        "log_origem": caminho.relative_to(RAIZ).as_posix(),
     }
 
 
@@ -70,10 +71,19 @@ def main() -> None:
         ):
             raise ValueError("As configurações não avaliaram os mesmos nódulos de validação.")
     maior_recall = max(r["recall"] for r in resultados)
-    vencedores = [r for r in resultados if abs(r["recall"] - maior_recall) < 1e-12]
-    if len(vencedores) != 1:
-        raise ValueError("Empate no recall de validação; defina desempate antes do teste final.")
-    vencedor = vencedores[0]
+    candidatos = [r for r in resultados if maior_recall - r["recall"] < 0.01]
+    if len(candidatos) > 1:
+        maior_especificidade = max(r["especificidade"] for r in candidatos)
+        candidatos = [r for r in candidatos if math.isclose(
+            r["especificidade"], maior_especificidade, rel_tol=0, abs_tol=1e-12
+        )]
+        maior_auc = max(r["auc"] for r in candidatos)
+        candidatos = [r for r in candidatos if math.isclose(
+            r["auc"], maior_auc, rel_tol=0, abs_tol=1e-12
+        )]
+    if len(candidatos) != 1:
+        raise ValueError("Empate após aplicar o desempate pré-registrado; teste não avaliado.")
+    vencedor = candidatos[0]
     for resultado in resultados:
         resultado.pop("predicoes_validacao")
 
@@ -87,7 +97,7 @@ def main() -> None:
         escritor.writerows(resultados)
     linhas = [
         "# EfficientNet-B0 — seleção na validação", "",
-        "Critério definido antes da avaliação final: maior recall da classe maligna na validação.",
+        "Critério pré-registrado: maior recall maligno na validação; se a diferença entre os melhores for < 0,01, maior especificidade e depois maior AUC.",
         "", "| Configuração | Parâmetros treináveis | Melhor época | Recall | Especificidade | F1 | AUC |",
         "|---|---:|---:|---:|---:|---:|---:|",
     ]
@@ -100,6 +110,7 @@ def main() -> None:
     (BASE / "resumo_validacao.md").write_text("\n".join(linhas) + "\n", encoding="utf-8")
     escolha = {
         "criterio": "maior recall da classe maligna na validacao",
+        "regra_desempate": "se diferenca de recall < 0.01: maior especificidade; depois maior AUC",
         "teste_utilizado_na_escolha": False,
         "configuracao_escolhida": vencedor,
         "npz_sha256": vencedor["npz_sha256"],

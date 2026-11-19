@@ -1,0 +1,28 @@
+{
+  "criterio": "maior recall da classe maligna na validacao",
+  "regra_desempate": "se diferenca de recall < 0.01: maior especificidade; depois maior AUC",
+  "teste_utilizado_na_escolha": false,
+  "configuracao_escolhida": {
+    "nome": "congelado",
+    "configuracao": "congelado",
+    "arquitetura": "EfficientNet_B0",
+    "parametros_treinaveis": 1281,
+    "melhor_epoca": 18,
+    "threshold_youden_validacao": 0.399160772562027,
+    "recall": 0.8363636363636363,
+    "especificidade": 0.576271186440678,
+    "f1": 0.7301587301587301,
+    "auc": 0.7587057010785825,
+    "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+    "n_treino": 522,
+    "n_validacao": 114,
+    "n_teste": 111,
+    "log_origem": "mineracao/resultados/efficientnet_s6/congelado/log_treino.txt"
+  },
+  "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+  "experimentos_considerados": [
+    "congelado",
+    "ultimo_bloco",
+    "dois_ultimos_blocos"
+  ]
+}
