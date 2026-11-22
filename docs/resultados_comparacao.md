@@ -18,7 +18,7 @@ pasta `resnet_s5/final`), confere tudo e só então calcula.
 
 | Item | Baseline (#14) | ResNet (#32, `layer3` + `layer4`) | EfficientNet-B0 selecionada (`congelado`) |
 |---|---|---|---|
-| SHA-256 do `.npz` | `31a84904c9c39c97c362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd` | idem | idem |
+| SHA-256 do `.npz` | `31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd` | idem | idem |
 | Manifesto | `transformacao/manifest_patches.csv` | idem | idem |
 | Teste | 111 nódulos, 69 pacientes (53 malignos, 58 benignos) | mesmos `nodule_id` | mesmos `nodule_id` |
 | Threshold (Youden na validação) | 0,4305 | 0,3614 | 0,3992 |
@@ -74,14 +74,14 @@ Recall e especificidade estão no ponto de operação de cada modelo
 
 Os três modelos foram avaliados sobre exatamente os mesmos 111 nódulos de teste, pertencentes a 69 pacientes. A EfficientNet mostrada é a configuração **selecionada pelo critério pré-registrado de recall na validação** (backbone congelado), não a configuração de maior AUC na validação.
 
-| Métrica | CNN rasa (baseline) | ResNet18 (transfer learning) | EfficientNet-B0 (selecionada; backbone congelado) |
-|---|---|---|---|
-| Recall (maligno) | 0,943 [0,878; 1,000] | 0,906 [0,827; 0,977] | 0,887 [0,803; 0,957] |
-| Especificidade | 0,862 [0,765; 0,946] | 0,810 [0,700; 0,902] | 0,621 [0,475; 0,755] |
-| F1 | 0,901 [0,835; 0,951] | 0,857 [0,781; 0,923] | 0,770 [0,672; 0,849] |
-| AUC-ROC | 0,961 [0,927; 0,986] | 0,929 [0,875; 0,973] | 0,855 [0,783; 0,917] |
-| Limiar (Youden, validação) | 0,4305 | 0,3614 | 0,3992 |
-| TP / FN / TN / FP | 50 / 3 / 50 / 8 | 48 / 5 / 47 / 11 | 47 / 6 / 36 / 22 |
+| Métrica | CNN rasa (baseline) | ResNet18 (transfer learning) | EfficientNet-B0 (selecionada; backbone congelado) | Diferença (ResNet − baseline) |
+|---|---|---|---|---|
+| Recall (maligno) | 0,943 [0,878; 1,000] | 0,906 [0,827; 0,977] | 0,887 [0,803; 0,957] | -0,038 [-0,111; 0,034] |
+| Especificidade | 0,862 [0,765; 0,946] | 0,810 [0,700; 0,902] | 0,621 [0,475; 0,755] | -0,052 [-0,172; 0,076] |
+| F1 | 0,901 [0,835; 0,951] | 0,857 [0,781; 0,923] | 0,770 [0,672; 0,849] | -0,044 [-0,115; 0,027] |
+| AUC-ROC | 0,961 [0,927; 0,986] | 0,929 [0,875; 0,973] | 0,855 [0,783; 0,917] | -0,032 [-0,076; 0,007] |
+| Limiar (Youden, validação) | 0,4305 | 0,3614 | 0,3992 | — |
+| TP / FN / TN / FP | 50 / 3 / 50 / 8 | 48 / 5 / 47 / 11 | 47 / 6 / 36 / 22 | — |
 
 Todas as réplicas (2000/2000) foram válidas para todas as métricas. A validação completa das três configurações está em `mineracao/resultados/efficientnet_s6/resumo_validacao.md`; a configuração congelada venceu em recall (0,8364), apesar de ter a menor AUC (0,7587) e especificidade (0,5763) na validação.
 
@@ -199,7 +199,7 @@ provável de ser maligno). Não tem treino.
 | Diâmetro sozinho (`diametro_mm`) | Não | 0,9463 |
 | ResNet18 com extrator congelado | Sim | 0,8269 |
 | ResNet18 com `layer3` e `layer4` liberados | Sim | 0,9294 |
-| EfficientNet-B0 selecionada pelo recall (`congelado`) | Sim | 0,8549 |
+| EfficientNet-B0 (backbone congelado) | Sim | 0,8549 |
 | CNN 2.5D (baseline) | Sim | 0,9610 |
 
 Usamos quatro casas decimais porque a diferença entre o CNN e o diâmetro é
