@@ -1,0 +1,164 @@
+{
+  "arquitetura": "EfficientNet-B0 ImageNet1K_V1",
+  "configuracao": "congelado",
+  "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+  "teste_utilizado_na_escolha": false,
+  "threshold_youden_validacao": 0.399160772562027,
+  "metricas_youden_teste": {
+    "threshold": 0.399160772562027,
+    "recall": 0.8867924528301887,
+    "especificidade": 0.6206896551724138,
+    "f1": 0.7704918032786885,
+    "auc": 0.8549121665582303,
+    "tp": 47,
+    "tn": 36,
+    "fp": 22,
+    "fn": 6
+  },
+  "ic95_youden_bootstrap_paciente": {
+    "recall": {
+      "estimativa": 0.8867924528301887,
+      "ic95": [
+        0.8,
+        0.9622641509433962
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "especificidade": {
+      "estimativa": 0.6206896551724138,
+      "ic95": [
+        0.4716703662597114,
+        0.7547169811320755
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "f1": {
+      "estimativa": 0.7704918032786885,
+      "ic95": [
+        0.6730724299065421,
+        0.8547008547008547
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "auc": {
+      "estimativa": 0.8549121665582303,
+      "ic95": [
+        0.7815739612838599,
+        0.918952841997365
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    }
+  },
+  "threshold_max_f1_validacao": 0.399160772562027,
+  "f1_maximo_validacao": 0.7301587301587301,
+  "metricas_max_f1_teste": {
+    "threshold": 0.399160772562027,
+    "recall": 0.8867924528301887,
+    "especificidade": 0.6206896551724138,
+    "f1": 0.7704918032786885,
+    "auc": 0.8549121665582303,
+    "tp": 47,
+    "tn": 36,
+    "fp": 22,
+    "fn": 6
+  },
+  "ic95_max_f1_bootstrap_paciente": {
+    "recall": {
+      "estimativa": 0.8867924528301887,
+      "ic95": [
+        0.8,
+        0.9622641509433962
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "especificidade": {
+      "estimativa": 0.6206896551724138,
+      "ic95": [
+        0.4716703662597114,
+        0.7547169811320755
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "f1": {
+      "estimativa": 0.7704918032786885,
+      "ic95": [
+        0.6730724299065421,
+        0.8547008547008547
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    },
+    "auc": {
+      "estimativa": 0.8549121665582303,
+      "ic95": [
+        0.7815739612838599,
+        0.918952841997365
+      ],
+      "replicas_validas": 2000,
+      "replicas_totais": 2000
+    }
+  },
+  "sensibilidade_especificidade_minima_090": {
+    "sensibilidade": 0.5094339622641509,
+    "especificidade": 0.9310344827586207,
+    "limiar": 0.7032229900360107,
+    "tp": 27,
+    "fn": 26,
+    "tn": 54,
+    "fp": 4,
+    "ic95": {
+      "sensibilidade": [
+        0.30357142857142855,
+        0.803984819734345
+      ],
+      "especificidade": [
+        0.9,
+        0.9787344858156027
+      ]
+    },
+    "interpolado_referencia": 0.5094339622641509,
+    "replicas_validas": 2000,
+    "replicas_totais": 2000
+  },
+  "especificidade_sensibilidade_minima_085": {
+    "sensibilidade": 0.8867924528301887,
+    "especificidade": 0.6896551724137931,
+    "limiar": 0.41956713795661926,
+    "tp": 47,
+    "fn": 6,
+    "tn": 40,
+    "fp": 18,
+    "ic95": {
+      "sensibilidade": [
+        0.851063829787234,
+        0.9322316384180789
+      ],
+      "especificidade": [
+        0.47481854838709675,
+        0.8604919499105544
+      ]
+    },
+    "interpolado_referencia": 0.6896551724137931,
+    "replicas_validas": 2000,
+    "replicas_totais": 2000
+  },
+  "n_teste": 111,
+  "n_pacientes_teste": 69,
+  "bootstrap": {
+    "repeticoes": 2000,
+    "seed": 42,
+    "unidade": "patient_id"
+  },
+  "ambiente_avaliacao": {
+    "python": "3.12.10",
+    "torch": "2.14.1+cpu",
+    "torchvision": "0.29.1+cpu",
+    "dispositivo": "cpu"
+  }
+}

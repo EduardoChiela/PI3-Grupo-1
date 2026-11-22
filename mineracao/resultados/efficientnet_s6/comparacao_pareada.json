@@ -1,0 +1,444 @@
+{
+  "conferencia": {
+    "npz_sha256": "31a84904c9c39c97d362c46cbfef353afaecf3f531e68a90c1bfbf51d2a73fdd",
+    "n_teste": 111,
+    "n_pacientes_teste": 69,
+    "malignos": 53,
+    "benignos": 58
+  },
+  "thresholds_youden_validacao": {
+    "baseline": 0.4304952919483185,
+    "resnet": 0.3614325523376465,
+    "efficientnet": 0.399160772562027
+  },
+  "metricas_ic95_bootstrap_paciente": {
+    "baseline": {
+      "recall": {
+        "estimativa": 0.9433962264150944,
+        "ic95": [
+          0.875,
+          1.0
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "especificidade": {
+        "estimativa": 0.8620689655172413,
+        "ic95": [
+          0.7636363636363637,
+          0.9428706199460916
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "f1": {
+        "estimativa": 0.9009009009009009,
+        "ic95": [
+          0.8333333333333334,
+          0.9516129032258065
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "auc": {
+        "estimativa": 0.9609629147690305,
+        "ic95": [
+          0.9272284226190477,
+          0.9863969701355719
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    },
+    "resnet": {
+      "recall": {
+        "estimativa": 0.9056603773584906,
+        "ic95": [
+          0.8285602678571429,
+          0.9772727272727273
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "especificidade": {
+        "estimativa": 0.8103448275862069,
+        "ic95": [
+          0.6981132075471698,
+          0.9016393442622951
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "f1": {
+        "estimativa": 0.8571428571428571,
+        "ic95": [
+          0.7789427107591989,
+          0.92
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "auc": {
+        "estimativa": 0.9294079375406636,
+        "ic95": [
+          0.8749988086160885,
+          0.9734048977284407
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    },
+    "efficientnet": {
+      "recall": {
+        "estimativa": 0.8867924528301887,
+        "ic95": [
+          0.8031967213114755,
+          0.9574468085106383
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "especificidade": {
+        "estimativa": 0.6206896551724138,
+        "ic95": [
+          0.47455396966993757,
+          0.755163883735312
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "f1": {
+        "estimativa": 0.7704918032786885,
+        "ic95": [
+          0.6721288515406163,
+          0.8493211298339192
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "auc": {
+        "estimativa": 0.8549121665582303,
+        "ic95": [
+          0.7831846679965803,
+          0.9173582915945395
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    }
+  },
+  "metricas_pontuais_teste": {
+    "baseline": {
+      "threshold": 0.4304952919483185,
+      "recall": 0.9433962264150944,
+      "especificidade": 0.8620689655172413,
+      "f1": 0.9009009009009009,
+      "auc": 0.9609629147690305,
+      "tp": 50,
+      "tn": 50,
+      "fp": 8,
+      "fn": 3
+    },
+    "resnet": {
+      "threshold": 0.3614325523376465,
+      "recall": 0.9056603773584906,
+      "especificidade": 0.8103448275862069,
+      "f1": 0.8571428571428571,
+      "auc": 0.9294079375406636,
+      "tp": 48,
+      "tn": 47,
+      "fp": 11,
+      "fn": 5
+    },
+    "efficientnet": {
+      "threshold": 0.399160772562027,
+      "recall": 0.8867924528301887,
+      "especificidade": 0.6206896551724138,
+      "f1": 0.7704918032786885,
+      "auc": 0.8549121665582303,
+      "tp": 47,
+      "tn": 36,
+      "fp": 22,
+      "fn": 6
+    }
+  },
+  "diferencas_ic95_bootstrap_paciente": {
+    "resnet_menos_baseline": {
+      "recall": {
+        "diferenca": -0.037735849056603765,
+        "ic95": [
+          -0.1132075471698113,
+          0.032271285034373244
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "especificidade": {
+        "diferenca": -0.051724137931034475,
+        "ic95": [
+          -0.17647058823529416,
+          0.06852500796431972
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "f1": {
+        "diferenca": -0.04375804375804382,
+        "ic95": [
+          -0.11359917219242652,
+          0.026908438708393913
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "auc": {
+        "diferenca": -0.031554977228366865,
+        "ic95": [
+          -0.07639989451727779,
+          0.005960914085914122
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    },
+    "efficientnet_menos_baseline": {
+      "recall": {
+        "diferenca": -0.05660377358490565,
+        "ic95": [
+          -0.15558823529411764,
+          0.04081632653061229
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "especificidade": {
+        "diferenca": -0.2413793103448275,
+        "ic95": [
+          -0.4,
+          -0.08058981657179035
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "f1": {
+        "diferenca": -0.13040909762221242,
+        "ic95": [
+          -0.2261699869709578,
+          -0.04380229438896524
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "auc": {
+        "diferenca": -0.10605074821080018,
+        "ic95": [
+          -0.17743468237704915,
+          -0.044469210438193775
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    },
+    "efficientnet_menos_resnet": {
+      "recall": {
+        "diferenca": -0.018867924528301883,
+        "ic95": [
+          -0.10419407894736839,
+          0.06252480158730145
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "especificidade": {
+        "diferenca": -0.18965517241379304,
+        "ic95": [
+          -0.29792553191489357,
+          -0.08925945378151266
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "f1": {
+        "diferenca": -0.0866510538641686,
+        "ic95": [
+          -0.16122403754834624,
+          -0.02391826383803043
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "auc": {
+        "diferenca": -0.07449577098243332,
+        "ic95": [
+          -0.15018657467920604,
+          -0.013160869422590104
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      }
+    }
+  },
+  "testes_pareados": {
+    "resnet_menos_baseline": {
+      "mcnemar_cluster_paciente": {
+        "modelo_a": "baseline",
+        "modelo_b": "resnet",
+        "somente_a_acerta": 11,
+        "somente_b_acerta": 6,
+        "p_valor": 0.2513491088102227,
+        "teste": "McNemar em cluster por paciente (Durkalski et al., 2003)",
+        "pacientes_discordantes": 16,
+        "estatistica_x2": 1.3157894736842106
+      },
+      "mcnemar_nodulo_referencia": {
+        "modelo_a": "baseline",
+        "modelo_b": "resnet",
+        "somente_a_acerta": 11,
+        "somente_b_acerta": 6,
+        "p_valor": 0.332305908203125,
+        "teste": "McNemar exato por nódulo"
+      },
+      "delong_cluster_paciente": {
+        "auc": [
+          0.9609629147690306,
+          0.9294079375406636
+        ],
+        "diferenca": -0.031554977228366976,
+        "erro_padrao": 0.02099245463551713,
+        "ic95": [
+          -0.07269943258561368,
+          0.009589478128879718
+        ],
+        "z": -1.5031580525594714,
+        "p_valor": 0.13279829166379262,
+        "correlacao_auc": 0.5294545184644229,
+        "teste": "DeLong em cluster por paciente (Obuchowski, 1997)"
+      },
+      "delong_nodulo_referencia": {
+        "auc": [
+          0.9609629147690306,
+          0.9294079375406636
+        ],
+        "diferenca": -0.031554977228366976,
+        "erro_padrao": 0.02048248047251981,
+        "ic95": [
+          -0.0716999015852088,
+          0.008589947128474842
+        ],
+        "z": -1.540583781866777,
+        "p_valor": 0.12341811758583215,
+        "correlacao_auc": 0.6093819754718763,
+        "teste": "DeLong por nódulo (DeLong et al., 1988)"
+      }
+    },
+    "efficientnet_menos_baseline": {
+      "mcnemar_cluster_paciente": {
+        "modelo_a": "baseline",
+        "modelo_b": "efficientnet",
+        "somente_a_acerta": 23,
+        "somente_b_acerta": 6,
+        "p_valor": 0.004059196365555054,
+        "teste": "McNemar em cluster por paciente (Durkalski et al., 2003)",
+        "pacientes_discordantes": 23,
+        "estatistica_x2": 8.257142857142858
+      },
+      "mcnemar_nodulo_referencia": {
+        "modelo_a": "baseline",
+        "modelo_b": "efficientnet",
+        "somente_a_acerta": 23,
+        "somente_b_acerta": 6,
+        "p_valor": 0.002315700054168701,
+        "teste": "McNemar exato por nódulo"
+      },
+      "delong_cluster_paciente": {
+        "auc": [
+          0.9609629147690306,
+          0.8549121665582303
+        ],
+        "diferenca": -0.1060507482108003,
+        "erro_padrao": 0.034534289421218535,
+        "ic95": [
+          -0.17373671224196946,
+          -0.03836478417963113
+        ],
+        "z": -3.0708825920026217,
+        "p_valor": 0.0021342705661592186,
+        "correlacao_auc": 0.24919161787343755,
+        "teste": "DeLong em cluster por paciente (Obuchowski, 1997)"
+      },
+      "delong_nodulo_referencia": {
+        "auc": [
+          0.9609629147690306,
+          0.8549121665582303
+        ],
+        "diferenca": -0.1060507482108003,
+        "erro_padrao": 0.03481596285846215,
+        "ic95": [
+          -0.1742887820387232,
+          -0.037812714382877394
+        ],
+        "z": -3.0460380671340324,
+        "p_valor": 0.0023187847571671887,
+        "correlacao_auc": 0.2861362605353185,
+        "teste": "DeLong por nódulo (DeLong et al., 1988)"
+      }
+    },
+    "efficientnet_menos_resnet": {
+      "mcnemar_cluster_paciente": {
+        "modelo_a": "resnet",
+        "modelo_b": "efficientnet",
+        "somente_a_acerta": 14,
+        "somente_b_acerta": 2,
+        "p_valor": 0.004677734981047265,
+        "teste": "McNemar em cluster por paciente (Durkalski et al., 2003)",
+        "pacientes_discordantes": 15,
+        "estatistica_x2": 8.0
+      },
+      "mcnemar_nodulo_referencia": {
+        "modelo_a": "resnet",
+        "modelo_b": "efficientnet",
+        "somente_a_acerta": 14,
+        "somente_b_acerta": 2,
+        "p_valor": 0.004180908203125,
+        "teste": "McNemar exato por nódulo"
+      },
+      "delong_cluster_paciente": {
+        "auc": [
+          0.9294079375406636,
+          0.8549121665582303
+        ],
+        "diferenca": -0.07449577098243332,
+        "erro_padrao": 0.03472155643685943,
+        "ic95": [
+          -0.14254877162264606,
+          -0.006442770342220558
+        ],
+        "z": -2.145519343808871,
+        "p_valor": 0.031911346498238,
+        "correlacao_auc": 0.3691811116820071,
+        "teste": "DeLong em cluster por paciente (Obuchowski, 1997)"
+      },
+      "delong_nodulo_referencia": {
+        "auc": [
+          0.9294079375406636,
+          0.8549121665582303
+        ],
+        "diferenca": -0.07449577098243332,
+        "erro_padrao": 0.033455997355868274,
+        "ic95": [
+          -0.14006832138403033,
+          -0.008923220580836305
+        ],
+        "z": -2.22667912691494,
+        "p_valor": 0.025968726418010325,
+        "correlacao_auc": 0.45213972441619793,
+        "teste": "DeLong por nódulo (DeLong et al., 1988)"
+      }
+    }
+  },
+  "bootstrap": {
+    "repeticoes": 2000,
+    "seed": 42,
+    "unidade": "patient_id"
+  }
+}
