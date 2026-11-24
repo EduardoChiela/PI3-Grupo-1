@@ -184,7 +184,28 @@
         "replicas_totais": 2000
       },
       "caminho_validacao": "mineracao/resultados/resnet_s5/final/predicoes_validacao.csv",
-      "max_f1_validacao": null
+      "max_f1_validacao": {
+        "limiar": 0.3614325523376465,
+        "f1_validacao": 0.8130081300813008,
+        "estimativa": 0.8571428571428571,
+        "ic95": [
+          0.780952380952381,
+          0.9230769230769231
+        ],
+        "replicas_validas": 2000,
+        "replicas_totais": 2000,
+        "teste": {
+          "threshold": 0.3614325523376465,
+          "recall": 0.9056603773584906,
+          "especificidade": 0.8103448275862069,
+          "f1": 0.8571428571428571,
+          "auc": 0.9294079375406636,
+          "tp": 48,
+          "tn": 47,
+          "fp": 11,
+          "fn": 5
+        }
+      }
     }
   }
 }

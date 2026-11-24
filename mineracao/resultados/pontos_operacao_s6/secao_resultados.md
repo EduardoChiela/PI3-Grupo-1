@@ -80,14 +80,14 @@ teste. O IC usa o limiar fixo, como na §3.
 |---|---|---|
 | F1 no limiar de **Youden** (o reportado na §3) | 0,901 [0,835; 0,951] | 0,857 [0,781; 0,923] |
 | ↳ limiar (Youden, validação) | 0,4305 | 0,3614 |
-| F1 no limiar de **máximo F1 da validação** (pedido no documento) | 0,901 [0,835; 0,951] | **pendente** — `predicoes_validacao.csv` da rodada final não versionado (ver abaixo) |
-| ↳ limiar (máximo F1, validação) | 0,4305 | pendente |
-| ↳ F1 na própria validação nesse limiar | 0,870 | pendente |
-| ↳ TP / FN / TN / FP no teste nesse limiar | 50 / 3 / 50 / 8 | pendente |
+| F1 no limiar de **máximo F1 da validação** (pedido no documento) | 0,901 [0,835; 0,951] | 0,857 [0,781; 0,923] |
+| ↳ limiar (máximo F1, validação) | 0,4305 | 0,3614 |
+| ↳ F1 na própria validação nesse limiar | 0,870 | 0,813 |
+| ↳ TP / FN / TN / FP no teste nesse limiar | 50 / 3 / 50 / 8 | 48 / 5 / 47 / 11 |
 
 Na CNN rasa (baseline), o máximo de F1 na validação (0,8696) é atingido num único limiar, e ele é **o mesmo do Youden**. Por isso os dois F1 do teste são idênticos. Os dois limiares são calculados separadamente, cada um pelo seu critério, sobre as mesmas predições de validação.
 
-> **Pendência — ResNet18 (`layer3` + `layer4`).** O arquivo `mineracao/resultados/resnet_s5/final/predicoes_validacao.csv` não está no repositório: a rodada final (#32, commit `d468daf`) versionou só o log e as predições de teste, e o `modelo_resnet.pt` também não foi guardado. Sem as probabilidades da validação não há como achar o limiar de máximo F1. Retreinar não serve: duas execuções com a mesma seed divergem (§9), então o limiar seria de outro modelo. Escolher o limiar no teste também não serve, porque seria escolher olhando o teste. Quando o CSV original for commitado, basta rodar `python -m mineracao.pontos_operacao` de novo: o script confere se ele reproduz o limiar de Youden do log e preenche esta célula.
+Na ResNet18 (`layer3` + `layer4`), o máximo de F1 na validação (0,8130) é atingido num único limiar, e ele é **o mesmo do Youden**. Por isso os dois F1 do teste são idênticos. Os dois limiares são calculados separadamente, cada um pelo seu critério, sobre as mesmas predições de validação.
 
 ### 12.4 Ponto de operação adotado pelo grupo (atividade 4.4)
 
