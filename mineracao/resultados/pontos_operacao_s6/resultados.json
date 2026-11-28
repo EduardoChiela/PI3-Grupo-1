@@ -110,6 +110,54 @@
         "replicas_validas": 2000,
         "replicas_totais": 2000
       }
+    },
+    "diametro": {
+      "sens_com_espec_minima": {
+        "sensibilidade": 0.8490566037735849,
+        "especificidade": 0.9137931034482759,
+        "limiar": 0.11560000000000001,
+        "tp": 45,
+        "fn": 8,
+        "tn": 53,
+        "fp": 5,
+        "ic95": {
+          "sensibilidade": [
+            0.728538961038961,
+            0.9473684210526315
+          ],
+          "especificidade": [
+            0.9,
+            1.0
+          ]
+        },
+        "interpolado_referencia": 0.8490566037735849,
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "espec_com_sens_minima": {
+        "sensibilidade": 0.8867924528301887,
+        "especificidade": 0.8448275862068966,
+        "limiar": 0.1075,
+        "tp": 47,
+        "fn": 6,
+        "tn": 49,
+        "fp": 9,
+        "ic95": {
+          "sensibilidade": [
+            0.851063829787234,
+            0.9344351389878831
+          ],
+          "especificidade": [
+            0.7213019443385437,
+            1.0
+          ]
+        },
+        "interpolado_referencia": 0.8448275862068966,
+        "replicas_validas": 2000,
+        "replicas_totais": 2000
+      },
+      "escala": "diametro_mm / 100",
+      "fonte": "selecao/nodulos_com_split.csv"
     }
   },
   "youden_teste": {
@@ -207,5 +255,9 @@
         }
       }
     }
+  },
+  "diametro": {
+    "escala": "diametro_mm / 100",
+    "fonte": "selecao/nodulos_com_split.csv"
   }
 }

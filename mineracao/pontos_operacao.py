@@ -52,8 +52,15 @@ N_REPETICOES = 2000
 ESPEC_MINIMA = 0.90
 SENS_MINIMA = 0.85
 MODELOS = ("baseline", "resnet")
-NOMES = {"baseline": "CNN rasa (baseline)", "resnet": "ResNet18 (`layer3` + `layer4`)"}
+# O diâmetro entra só nas duas linhas de ponto de operação: é um piso sem treino,
+# portanto não tem log, limiar escolhido na validação nem coluna de F1.
+COLUNAS = MODELOS + ("diametro",)
+NOMES = {"baseline": "CNN rasa (baseline)", "resnet": "ResNet18 (`layer3` + `layer4`)",
+         "diametro": "Diâmetro sozinho (piso, sem treino)"}
 PASTAS = {"baseline": RESULTADOS / "baseline", "resnet": RESULTADOS / "resnet_s5/final"}
+# Escala fixa que leva o diâmetro em mm para [0, 1], exigida por _vetores. É monótona e
+# não depende dos dados, portanto não altera a curva ROC nem o ponto escolhido.
+ESCALA_DIAMETRO_MM = 100.0
 
 
 # ------------------------------------------------------- curva e pontos ----
@@ -173,6 +180,33 @@ def carregar_teste(logs, manifesto) -> pd.DataFrame:
     return pareadas
 
 
+def pontos_do_diametro(manifesto) -> dict:
+    """Pontos de operação do piso que usa só o diâmetro, sem treino.
+
+    O escore é o diâmetro em mm dividido por uma constante fixa, para caber em [0, 1].
+    Por ser monótona e independente dos dados, essa escala não muda a ROC nem o ponto; o
+    limiar é devolvido de volta em mm, que é a unidade que se lê.
+    """
+    nod = pd.read_csv(RAIZ / "selecao/nodulos_com_split.csv")
+    teste = manifesto.loc[manifesto.split == "teste", ["nodule_id", "patient_id", "split"]]
+    dados = teste.merge(nod[["nodule_id", "diametro_mm"]], on="nodule_id", how="left",
+                        validate="one_to_one")
+    if dados.diametro_mm.isna().any():
+        raise ValueError("Nódulo de teste sem diametro_mm em nodulos_com_split.csv.")
+    dados["y_true"] = manifesto.set_index("nodule_id").loc[dados.nodule_id, "label"].eq(
+        "maligno").astype(int).to_numpy()
+    dados["y_prob"] = dados.diametro_mm / ESCALA_DIAMETRO_MM
+    if not dados.y_prob.between(0, 1).all():
+        raise ValueError(f"Diâmetro acima de {ESCALA_DIAMETRO_MM:.0f} mm; reveja a escala.")
+    dados = validar_com_manifesto(dados, manifesto)
+    return {
+        "sens_com_espec_minima": bootstrap_ponto(dados, "sensibilidade", ESPEC_MINIMA),
+        "espec_com_sens_minima": bootstrap_ponto(dados, "especificidade", SENS_MINIMA),
+        "escala": f"diametro_mm / {ESCALA_DIAMETRO_MM:.0f}",
+        "fonte": "selecao/nodulos_com_split.csv",
+    }
+
+
 def carregar_validacao(modelo, log, manifesto):
     """Devolve as predições de validação ou None se o CSV não estiver versionado."""
     caminho = PASTAS[modelo] / "predicoes_validacao.csv"
@@ -202,8 +236,9 @@ def _rel(caminho: Path) -> str:
 
 def gerar_secao(r) -> str:
     pc, f1 = r["pontos_clinicos"], r["f1"]
-    se = {m: pc[m]["sens_com_espec_minima"] for m in MODELOS}
-    es = {m: pc[m]["espec_com_sens_minima"] for m in MODELOS}
+    se = {m: pc[m]["sens_com_espec_minima"] for m in COLUNAS}
+    es = {m: pc[m]["espec_com_sens_minima"] for m in COLUNAS}
+    dm = "diametro"
     yd = r["youden_teste"]
     b, rn = "baseline", "resnet"
 
@@ -214,25 +249,31 @@ def gerar_secao(r) -> str:
     assert yd[b]["especificidade"] < ESPEC_MINIMA, "Youden da CNN já cumpre espec >= 0,90"
     assert yd[b]["recall"] >= SENS_MINIMA, "Youden da CNN deixou de cumprir sens >= 0,85"
     assert all(math.isclose(d["interpolado_referencia"], d[alvo])
-               for m in MODELOS for d, alvo in ((se[m], "sensibilidade"),
+               for m in COLUNAS for d, alvo in ((se[m], "sensibilidade"),
                                                 (es[m], "especificidade"))), \
         "interpolação deixou de coincidir com a regra adotada; revisar texto da 12.1"
 
+    def _limiar(d, m):
+        """Limiar do ponto. Para o diâmetro, devolvido em mm."""
+        if m == "diametro":
+            return f"{_f(d[m]['limiar'] * ESCALA_DIAMETRO_MM, 2)} mm"
+        return _f(d[m]["limiar"], 4)
+
     def linha_ponto(rotulo, d, alvo):
         return (f"| {rotulo} | " + " | ".join(
-            f"{_ic(d[m][alvo], d[m]['ic95'][alvo])}" for m in MODELOS) + " |")
+            f"{_ic(d[m][alvo], d[m]['ic95'][alvo])}" for m in COLUNAS) + " |")
 
     def linha_acomp(d, outra):
         return (f"| ↳ {outra} no ponto (limiar) | " + " | ".join(
-            f"{_f(d[m][outra])} ({_f(d[m]['limiar'], 4)})" for m in MODELOS) + " |")
+            f"{_f(d[m][outra])} ({_limiar(d, m)})" for m in COLUNAS) + " |")
 
     def linha_matriz(d):
         return ("| ↳ TP / FN / TN / FP | " + " | ".join(
-            "{tp} / {fn} / {tn} / {fp}".format(**d[m]) for m in MODELOS) + " |")
+            "{tp} / {fn} / {tn} / {fp}".format(**d[m]) for m in COLUNAS) + " |")
 
     tabela_pontos = "\n".join([
-        "| Ponto de operação (teste) | " + " | ".join(NOMES[m] for m in MODELOS) + " |",
-        "|---|---|---|",
+        "| Ponto de operação (teste) | " + " | ".join(NOMES[m] for m in COLUNAS) + " |",
+        "|---|---|---|---|",
         linha_ponto("**Sensibilidade com especificidade ≥ 0,90**", se, "sensibilidade"),
         linha_acomp(se, "especificidade"),
         linha_matriz(se),
@@ -240,8 +281,10 @@ def gerar_secao(r) -> str:
         linha_acomp(es, "sensibilidade"),
         linha_matriz(es),
         "| Referência: Youden da validação (§3), sens / espec (limiar) | " + " | ".join(
-            f"{_f(yd[m]['recall'])} / {_f(yd[m]['especificidade'])} "
-            f"({_f(yd[m]['threshold'], 4)})" for m in MODELOS) + " |",
+            (f"{_f(yd[m]['recall'])} / {_f(yd[m]['especificidade'])} "
+             f"({_f(yd[m]['threshold'], 4)})") if m in MODELOS
+            else "— (piso sem treino, não tem limiar escolhido na validação)"
+            for m in COLUNAS) + " |",
     ])
 
     def celula_f1(m, chave):
@@ -342,8 +385,10 @@ quase nunca passa exatamente por 0,90 ou 0,85. A regra adotada é:
    sensibilidade {_f(se[b]['interpolado_referencia'])} (CNN) e
    {_f(se[rn]['interpolado_referencia'])} (ResNet) em especificidade 0,90, e
    especificidade {_f(es[b]['interpolado_referencia'])} (CNN) e
-   {_f(es[rn]['interpolado_referencia'])} (ResNet) em sensibilidade 0,85. Nos
-   quatro casos o cruzamento cai num trecho plano da escada, então as duas
+   {_f(es[rn]['interpolado_referencia'])} (ResNet) em sensibilidade 0,85, e
+   {_f(se[dm]['interpolado_referencia'])} e {_f(es[dm]['interpolado_referencia'])}
+   para o diâmetro. Nos seis casos o cruzamento cai num trecho plano da escada,
+   então as duas
    regras coincidem nestes dados. Em outra amostra poderiam divergir.
 5. **IC 95%:** bootstrap reamostrando pacientes, como na §3. Em cada réplica o
    ponto é **reescolhido** pela mesma regra, porque o que se estima é "a
@@ -358,16 +403,25 @@ para operar o modelo daria um resultado otimista.
 
 {tabela_pontos}
 
-Réplicas válidas: no mínimo {min(pc[m][k]['replicas_validas'] for m in MODELOS for k in pc[m])} de {N_REPETICOES} em cada linha.
+Réplicas válidas: no mínimo {min(pc[m][k]['replicas_validas'] for m in COLUNAS for k in pc[m] if isinstance(pc[m][k], dict))} de {N_REPETICOES} em cada linha.
 
-**A ordem entre os modelos muda conforme o critério.** Com especificidade fixada
-em 0,90, a CNN tem a sensibilidade maior ({_f(se[b]['sensibilidade'])} contra
-{_f(se[rn]['sensibilidade'])}). Com sensibilidade fixada em 0,85, a ResNet tem
-a especificidade maior ({_f(es[rn]['especificidade'])} contra
-{_f(es[b]['especificidade'])}). As curvas se cruzam: nenhum modelo domina o
-outro em todos os pontos de operação, apesar de a CNN ter a AUC maior. As
+**A ordem muda conforme o critério, e o piso do diâmetro não fica para trás.**
+Com especificidade fixada em 0,90, quem encontra mais malignos é o **diâmetro
+sozinho** ({_f(se[dm]['sensibilidade'])}), à frente da CNN
+({_f(se[b]['sensibilidade'])}) e da ResNet ({_f(se[rn]['sensibilidade'])}). Com
+sensibilidade fixada em 0,85, a ordem se inverte: a ResNet descarta mais
+benignos ({_f(es[rn]['especificidade'])}), depois a CNN
+({_f(es[b]['especificidade'])}) e por último o diâmetro
+({_f(es[dm]['especificidade'])}). As curvas se cruzam: nenhum dos três domina os
+outros em todos os pontos de operação, apesar de a CNN ter a AUC maior. As
 diferenças são pequenas perto da largura dos intervalos e não foram testadas
 estatisticamente nesta seção.
+
+O diâmetro aparece aqui pelo mesmo motivo da §8: ele é o piso contra o qual todo
+modelo deste trabalho é comparado. Como não tem treino, não tem limiar escolhido
+na validação; os limiares da coluna dele são lidos na curva do teste e estão em
+milímetros, e devem ser entendidos como "classificar como maligno todo nódulo a
+partir desse diâmetro".
 
 ### 12.3 F1 no limiar de máximo F1 da validação
 
@@ -441,6 +495,8 @@ def main() -> None:
             "limiar": escolha["threshold"], "f1_validacao": escolha["f1"],
             **ic["f1"], "teste": calcular_metricas(y, dados.y_prob, escolha["threshold"])}
 
+    pontos["diametro"] = pontos_do_diametro(manifesto)
+
     # O F1 no Youden tem de reproduzir exatamente o da §3 (mesma seed e método).
     s5 = json.loads((RESULTADOS / "comparacao_s5/resultados.json").read_text(encoding="utf-8"))
     for m in MODELOS:
@@ -461,6 +517,8 @@ def main() -> None:
                   "f1_limiar": "maximo F1 na validacao; empate: maior limiar"},
         "bootstrap": {"repeticoes": N_REPETICOES, "seed": SEED},
         "pontos_clinicos": pontos, "youden_teste": youden, "f1": f1,
+        "diametro": {"escala": pontos["diametro"]["escala"],
+                     "fonte": pontos["diametro"]["fonte"]},
     }
     secao = gerar_secao(resultado)
 
