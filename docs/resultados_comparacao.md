@@ -1,7 +1,10 @@
 # Comparação CNN, ResNet e EfficientNet — Issues #18 e #44
 
-Números gerados por `python -m mineracao.comparacao` (seed 42, 2000 réplicas de
-bootstrap). A pasta vigente é `mineracao/resultados/comparacao_s5/`, com
+Números gerados por `python -m mineracao.comparacao --resnet mineracao/resultados/resnet_s5/final --saida mineracao/resultados/comparacao_s5`
+(seed 42, 2000 réplicas de bootstrap). **As duas flags são obrigatórias:** sem elas
+o script usa os padrões da Sprint 4, lê a ResNet de extrator congelado em
+`mineracao/resultados/resnet/` e escreve em `mineracao/resultados/comparacao/`, que
+é a pasta histórica. A pasta vigente é `mineracao/resultados/comparacao_s5/`, com
 `tabela_comparativa.md`, `resultados.json`, `roc_comparacao.png` e
 `predicoes_teste_pareadas.csv`. A comparação da EfficientNet usa
 `mineracao.comparacao_efficientnet`, com bootstrap e testes pareados sobre as
@@ -31,7 +34,12 @@ pasta `resnet_s5/final`), confere tudo e só então calcula.
   comparação passa as três tabelas por `validar_com_manifesto` e exige que
   cubram exatamente os 111 nódulos de teste do manifesto, com os mesmos
   pacientes e rótulos. Os logs registram o caminho do manifesto, não o hash;
-  o SHA-256 do manifesto atual (`207f44c7…16e4e0`) está em `resultados.json`.
+  o SHA-256 do manifesto está em `resultados.json` como `207f44c7…16e4e0`. **Esse
+  valor foi calculado num checkout Windows**, onde o git entrega o CSV com quebra de
+  linha CRLF. O mesmo arquivo como está versionado, com LF, tem hash
+  `afba0576…d97b97d5`, que é o valor registrado em `sprint5/protocolo.json`. São o
+  mesmo manifesto: ele foi commitado uma única vez, em `30c2da0` (19/09), e nunca
+  mais foi alterado. Quem conferir em Linux ou macOS encontrará o segundo valor.
 - **Predições × registro:** baseline e ResNet têm métricas recalculadas que
   reproduzem suas linhas `TESTE` dos logs. A EfficientNet reproduz o JSON da
   avaliação final; o script confere split, rótulos, pacientes e hash do `.npz`.
@@ -686,8 +694,10 @@ quase nunca passa exatamente por 0,90 ou 0,85. A regra adotada é:
    sensibilidade 0,811 (CNN) e
    0,774 (ResNet) em especificidade 0,90, e
    especificidade 0,879 (CNN) e
-   0,897 (ResNet) em sensibilidade 0,85. Nos
-   quatro casos o cruzamento cai num trecho plano da escada, então as duas
+   0,897 (ResNet) em sensibilidade 0,85, e
+   0,849 e 0,845
+   para o diâmetro. Nos seis casos o cruzamento cai num trecho plano da escada,
+   então as duas
    regras coincidem nestes dados. Em outra amostra poderiam divergir.
 5. **IC 95%:** bootstrap reamostrando pacientes, como na §3. Em cada réplica o
    ponto é **reescolhido** pela mesma regra, porque o que se estima é "a
@@ -700,26 +710,35 @@ para operar o modelo daria um resultado otimista.
 
 ### 12.2 Tabela (teste, IC 95% por paciente)
 
-| Ponto de operação (teste) | CNN rasa (baseline) | ResNet18 (`layer3` + `layer4`) |
-|---|---|---|
-| **Sensibilidade com especificidade ≥ 0,90** | 0,811 [0,685; 0,982] | 0,774 [0,627; 0,961] |
-| ↳ especificidade no ponto (limiar) | 0,948 (0,6863) | 0,914 (0,7199) |
-| ↳ TP / FN / TN / FP | 43 / 10 / 55 / 3 | 41 / 12 / 53 / 5 |
-| **Especificidade com sensibilidade ≥ 0,85** | 0,879 [0,792; 0,984] | 0,897 [0,750; 0,967] |
-| ↳ sensibilidade no ponto (limiar) | 0,906 (0,5012) | 0,887 (0,5355) |
-| ↳ TP / FN / TN / FP | 48 / 5 / 51 / 7 | 47 / 6 / 52 / 6 |
-| Referência: Youden da validação (§3), sens / espec (limiar) | 0,943 / 0,862 (0,4305) | 0,906 / 0,810 (0,3614) |
+| Ponto de operação (teste) | CNN rasa (baseline) | ResNet18 (`layer3` + `layer4`) | Diâmetro sozinho (piso, sem treino) |
+|---|---|---|---|
+| **Sensibilidade com especificidade ≥ 0,90** | 0,811 [0,685; 0,982] | 0,774 [0,627; 0,961] | 0,849 [0,729; 0,947] |
+| ↳ especificidade no ponto (limiar) | 0,948 (0,6863) | 0,914 (0,7199) | 0,914 (11,56 mm) |
+| ↳ TP / FN / TN / FP | 43 / 10 / 55 / 3 | 41 / 12 / 53 / 5 | 45 / 8 / 53 / 5 |
+| **Especificidade com sensibilidade ≥ 0,85** | 0,879 [0,792; 0,984] | 0,897 [0,750; 0,967] | 0,845 [0,721; 1,000] |
+| ↳ sensibilidade no ponto (limiar) | 0,906 (0,5012) | 0,887 (0,5355) | 0,887 (10,75 mm) |
+| ↳ TP / FN / TN / FP | 48 / 5 / 51 / 7 | 47 / 6 / 52 / 6 | 47 / 6 / 49 / 9 |
+| Referência: Youden da validação (§3), sens / espec (limiar) | 0,943 / 0,862 (0,4305) | 0,906 / 0,810 (0,3614) | — (piso sem treino, não tem limiar escolhido na validação) |
 
 Réplicas válidas: no mínimo 2000 de 2000 em cada linha.
 
-**A ordem entre os modelos muda conforme o critério.** Com especificidade fixada
-em 0,90, a CNN tem a sensibilidade maior (0,811 contra
-0,774). Com sensibilidade fixada em 0,85, a ResNet tem
-a especificidade maior (0,897 contra
-0,879). As curvas se cruzam: nenhum modelo domina o
-outro em todos os pontos de operação, apesar de a CNN ter a AUC maior. As
+**A ordem muda conforme o critério, e o piso do diâmetro não fica para trás.**
+Com especificidade fixada em 0,90, quem encontra mais malignos é o **diâmetro
+sozinho** (0,849), à frente da CNN
+(0,811) e da ResNet (0,774). Com
+sensibilidade fixada em 0,85, a ordem se inverte: a ResNet descarta mais
+benignos (0,897), depois a CNN
+(0,879) e por último o diâmetro
+(0,845). As curvas se cruzam: nenhum dos três domina os
+outros em todos os pontos de operação, apesar de a CNN ter a AUC maior. As
 diferenças são pequenas perto da largura dos intervalos e não foram testadas
 estatisticamente nesta seção.
+
+O diâmetro aparece aqui pelo mesmo motivo da §8: ele é o piso contra o qual todo
+modelo deste trabalho é comparado. Como não tem treino, não tem limiar escolhido
+na validação; os limiares da coluna dele são lidos na curva do teste e estão em
+milímetros, e devem ser entendidos como "classificar como maligno todo nódulo a
+partir desse diâmetro".
 
 ### 12.3 F1 no limiar de máximo F1 da validação
 
